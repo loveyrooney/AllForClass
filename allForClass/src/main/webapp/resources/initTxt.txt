@@ -1,0 +1,65 @@
+프로젝트 구조
+
+src
+  exception
+      CustomException
+	  ExceptionConf
+  aspect
+      RoleAdvice
+  interceptor
+	  LoginInterceptor
+  controller
+      MainController -  메인
+      UserController  -  회원가입, 로그인
+      MypageController - 마이페이지, 강의등록
+      PurchaseController  - 수강신청, 결제
+      RoomController - 수강페이지
+      AdminController - 관리자 메인, 강의수정/컨펌
+  dto
+     이건 개별적으로 짜시구요
+  dao
+     UserMapper
+     LectureMapper
+     PurchaseMapper
+     VideoMapper
+     RefMapper
+     ReplyMapper
+  service
+      MainServiceImpl
+      UserServiceImpl
+      MypageServiceImpl
+      PurchaseServiceImpl
+      RoomServiceImpl
+      AdminServiceImpl
+  resources
+     config
+	     logconf.xml
+		 aopconf.xml
+     mapper
+         user.xml
+         lecture.xml
+         puchase.xml
+         video.xml
+         ref.xml
+         reply.xml
+     db.properties
+     log.properties
+  webapp
+     resources  여기 밑에 파일들은 jsp 파일 이름이랑 똑같이
+        css
+         js
+     WEB-INF
+         views
+             하위 폴더 만드는거는 개발시작하고 봐야될거같구요
+             컨트롤러 리턴값 이름으로 jsp 파일
+         applicationContext.xml
+         dispatcher-servlet.xml
+         web.xml
+   test
+      java
+          MainTest
+      	  UserTest
+          MypageTest
+          PurchaseTest
+          RoomTest
+          AdminTest

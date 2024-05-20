@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <timestamp key="BY-DATE" datePattern="yyyy-MM-dd"/>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-4level[%logger.%method:%line]-%msg%n</pattern>
+        </layout>
+    </appender>
+    <root>
+        <level value="INFO"/>
+        <appende-ref ref="CONSOLE"/>
+    </root>
+    <logger name="com.chunjae.allforclass.controller">
+        <level value="INFO"/>
+    </logger>
+    <logger name="org.springframework.core">
+        <level value="INFO"/>
+    </logger>
+    <logger name="org.springframework.beans">
+        <level value="INFO"/>
+    </logger>
+    <logger name="org.springframework.context">
+        <level value="INFO"/>
+    </logger>
+</configuration>

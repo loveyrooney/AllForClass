@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <!-- db 세팅 -->
+    <context:property-placeholder location="classpath:db.properties"/>
+    <bean name="dbconf" class="com.zaxxer.hikari.HikariConfig">
+        <property name="driverClassName" value="${db.driver}"/>
+        <property name="jdbcUrl" value="${db.url}"/>
+        <property name="username" value="${db.user}"/>
+        <property name="password" value="${db.pwd}"/>
+    </bean>
+    <bean name="ds"
+        class="com.zaxxer.hikari.HikariDataSource"
+        destroy-method="close">
+        <constructor-arg ref="dbconf"/>
+    </bean>
+    <bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+       <property name="dataSource" ref="ds"/>
+       <property name="mapperLocations" value="classpath:mapper/**/*.xml"/>
+    </bean>
+    <!-- 어노테이션으로 빈 생성 하기 위한 컴포넌트 스캔 패키지 설정 -->
+    <context:component-scan base-package="com.chunjae.allforclass.service"/>
+    <context:component-scan base-package="com.chunjae.allforclass.dao"/>
+    <mybatis:scan base-package="com.chunjae.allforclass.dao"/>
+    <!-- transaction 세팅 -->
+    <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="ds"/>
+    </bean>
+    <tx:annotation-driven/>
+</beans>
