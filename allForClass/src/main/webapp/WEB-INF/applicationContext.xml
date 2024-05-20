@@ -11,6 +11,10 @@
         <property name="jdbcUrl" value="${db.url}"/>
         <property name="username" value="${db.user}"/>
         <property name="password" value="${db.pwd}"/>
+        <property name="maximumPoolSize" value="5"/>
+        <property name="maxLifetime" value="5000"/>
+        <property name="idleTimeout" value="2000"/>
+        <property name="minimumIdle" value="2"/>
     </bean>
     <bean name="ds"
         class="com.zaxxer.hikari.HikariDataSource"
