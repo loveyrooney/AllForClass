@@ -1,6 +1,7 @@
 package com.chunjae.allforclass.dto;
 
 public class LecDTO {
+
     private int lid;
     private String lname;
     private String tname;
