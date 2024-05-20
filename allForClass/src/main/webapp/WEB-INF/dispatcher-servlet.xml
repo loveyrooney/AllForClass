@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
     <!-- spring MVC annotation driven -->
     <mvc:annotation-driven/>
     <!-- webapp 내의 resources 디렉터리 설정 (css, js, upload 등의 리소스 관리) -->
@@ -15,15 +16,15 @@
     </bean>
     <!-- 어노테이션으로 빈 생성을 하기 위한 컴포넌트 스캔 패키지 설정 -->
     <context:component-scan base-package="com.chunjae.allforclass.controller"/>
-    <context:component-scan base-package="com.chunjae.allforclass.exception"/>
-    <!-- Login Interceptor 빈 생성 및 제외 경로 지정 세팅 (이거 어노테이션으로도 할수 있을것 같은데 나중에 공부하는 걸로) -->
-    <bean id="authInterrupt" class="com.chunjae.allforclass.interceptor.LoginInterceptor"/>
-    <mvc:interceptors>
-        <mvc:interceptor>
-            <mvc:mapping path="/*"/>
-            <mvc:exclude-mapping path="/login*"/>
-            <mvc:exclude-mapping path="/logout*"/>
-            <ref bean="authInterrupt"/>
-        </mvc:interceptor>
-    </mvc:interceptors>
+<!--    <context:component-scan base-package="com.chunjae.allforclass.exception"/>-->
+<!--    &lt;!&ndash; Login Interceptor 빈 생성 및 제외 경로 지정 세팅 (이거 어노테이션으로도 할수 있을것 같은데 나중에 공부하는 걸로) &ndash;&gt;-->
+<!--    <bean id="authInterrupt" class="com.chunjae.allforclass.interceptor.LoginInterceptor"/>-->
+<!--    <mvc:interceptors>-->
+<!--        <mvc:interceptor>-->
+<!--            <mvc:mapping path="/*"/>-->
+<!--            <mvc:exclude-mapping path="/login*"/>-->
+<!--            <mvc:exclude-mapping path="/logout*"/>-->
+<!--            <ref bean="authInterrupt"/>-->
+<!--        </mvc:interceptor>-->
+<!--    </mvc:interceptors>-->
 </beans>
