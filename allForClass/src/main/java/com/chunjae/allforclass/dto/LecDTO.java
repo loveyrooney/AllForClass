@@ -4,7 +4,7 @@ public class LecDTO {
 
     private int lid;
     private String lname;
-    private int teacherid;
+    private String tname;
     private int price;
     private String description;
     private String subject;
@@ -33,12 +33,12 @@ public class LecDTO {
         this.lname = lname;
     }
 
-    public int getTeacherid() {
-        return teacherid;
+    public String getTname() {
+        return tname;
     }
 
-    public void setTeacherid(int teacherid) {
-        this.teacherid = teacherid;
+    public void setTname(String tname) {
+        this.tname = tname;
     }
 
     public int getPrice() {

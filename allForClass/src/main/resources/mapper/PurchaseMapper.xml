@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chunjae.allforclass.dao.PurchaseMapper">
+    <select id="detailLec" parameterType="int" resultType="com.chunjae.allforclass.dto.LecDTO">
+        select l.lid as lid
+               ,l.lname as lname
+               ,u.uname as tname
+               ,l.price as price
+               ,l.description as description
+               ,l.subject as subject
+               ,l.entry as entry
+               ,l.startdate as startdate
+               ,l.timesession as timesession
+               ,l.imgpath as imgpath
+        from lecture l inner join user u
+        on l.teacher_id = u.uid
+        where l.lid = #{lid}
+    </select>
+</mapper>
