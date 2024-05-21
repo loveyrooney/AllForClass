@@ -1,10 +1,14 @@
 package com.chunjae.allforclass.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class RefDTO {
 
     private int refid;
     private int lid;
     private String refpath;
+
+    private MultipartFile[] files;
 
     public RefDTO() {
     }
@@ -31,5 +35,13 @@ public class RefDTO {
 
     public void setRefpath(String refpath) {
         this.refpath = refpath;
+    }
+
+    public MultipartFile[] getFiles() {
+        return files;
+    }
+
+    public void setFiles(MultipartFile[] files) {
+        this.files = files;
     }
 }
