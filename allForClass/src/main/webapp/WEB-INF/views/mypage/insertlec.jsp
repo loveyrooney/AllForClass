@@ -18,12 +18,16 @@
 <form method="post" action="insertlec_result" enctype="multipart/form-data">
 
     <div>
+        <div id="image_container">
+            <img id="green_image" src="/resources/images/insert_background.png">
+        </div>
         <label for="imgfile">강의 썸네일 등록</label><br>
-        <input type="file" id="imgfile" name="imgfile">
+        <input type="file" id="imgfile" name="imgfile" onchange="setPreview(event);">
     </div>
 
     <div>
         <ul>
+                <input name="tid" value="${tid}" hidden>
             <li>
                 <label for="subject">과목</label>
                 <select name="subject" id="subject">
@@ -38,7 +42,11 @@
             </li>
             <li>
                 <label for="price">가격</label>
-                <input type="text" name="price" id="price" required>
+                <input type="number" name="price" id="price" required>원
+            </li>
+            <li>
+                <label for="entry">수강인원</label>
+                <input type="number" name="entry" id="entry" required>명
             </li>
             <li>
                 <label for="startdate">개강일</label>
@@ -68,6 +76,25 @@
     </div>
 
 </form>
+
+
+<script>
+
+    let setPreview = function (event) {
+        let reader = new FileReader();
+        reader.onload = function (event) {
+            let img_container = document.getElementById('image_container');
+            let green_image = document.getElementById('green_image');
+            img_container.removeChild(green_image);
+
+            let image = document.createElement("img");
+            image.src = event.target.result;
+            image.id = 'green_image';
+            img_container.appendChild(image);
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
 
 </body>
 </html>

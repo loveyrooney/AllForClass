@@ -5,7 +5,7 @@ public class LecDTO {
     private int lid;
     private String lname;
     private String tname;
-
+    private int tid;
     private String temail;
     private int price;
     private String description;
@@ -113,5 +113,13 @@ public class LecDTO {
 
     public void setImgpath(String imgpath) {
         this.imgpath = imgpath;
+    }
+
+    public int getTid() {
+        return tid;
+    }
+
+    public void setTid(int tid) {
+        this.tid = tid;
     }
 }

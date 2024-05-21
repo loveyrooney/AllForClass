@@ -1,8 +1,35 @@
+import com.chunjae.allforclass.dto.LecDTO;
+import com.chunjae.allforclass.service.MypageService;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/applicationContext.xml")
 public class MypageTest {
+
+    @Autowired
+    private MypageService myservice;
+
+    @Test
+    public void inserttest(){
+        LecDTO dto = new LecDTO();
+        dto.setImgpath("aaa");
+        dto.setDescription("설명");
+        dto.setLname("강의명");
+        dto.setEntry(20);
+        dto.setPrice(22000);
+        dto.setStartdate("2024-06-30");
+        dto.setSubject("과목");
+        dto.setTimesession("time1*09:00-12:00");
+
+        int result = myservice.insertLec(dto);
+
+        assertEquals(1, result);
+    }
+
 }
