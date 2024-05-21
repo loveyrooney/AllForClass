@@ -4,33 +4,35 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chunjae.allforclass.dao.RoomMapper">
 
-    <insert id="insert" parameterType="hashmap" useGeneratedKeys="true" keyProperty="id" keyColumn="infoId">
-        insert lecture lecture(lid)
-        values (#{dto.lid})
-    </insert>
-    <insert id="subinsert" parameterType="hashmap">
-        insert into ref(refpath,refid)
+    <insert id="insertref" parameterType="hashmap">
+        insert into ref(refpath, lid)
         values
-        <foreach collection="filenames" item="item"
-                 separator=",">
-            (
-            #{item}
-            , #{id}
-            )
+        <foreach collection="filenames" item="item" separator=",">
+            (#{item}, #{refdto.lid})
         </foreach>
-
     </insert>
 
     <select id="detailref" resultType="com.chunjae.allforclass.dto.RefDTO" parameterType="int">
-        SELECT refpath
-        FROM ref r INNER JOIN lecture l
-        ON r.lid = l.lid
-        WHERE l.lid = ${lid}
+        select refpath
+        from ref r INNER JOIN lecture l
+        on r.lid = l.lid
+        where l.lid = ${lid}
 <!--        SELECT lid-->
 <!--        (select group_concat(filename) as filenames-->
 <!--        FROM ref-->
 <!--        WHERE ref.refid = lecture.lid) as filenames-->
 <!--        FROM lecture-->
     </select>
+
+    <select id="replylist" resultType="com.chunjae.allforclass.dto.ReplyDTO" parameterType="int">
+        select rid, uid, lid, content, writedate
+        from reply
+        where lid = #{lid}
+    </select>
+
+    <insert id="replyinsert" parameterType="com.chunjae.allforclass.dto.ReplyDTO">
+        insert into reply(uid, lid, content, writedate)
+        values(#{uid}, #{lid}, #{content}, DATE(NOW()))
+    </insert>
 
 </mapper>

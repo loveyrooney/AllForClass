@@ -45,7 +45,7 @@ public class RoomServiceImple implements RoomService {
     }
 
     @Override
-    public RefDTO detailref(int lid) {
+    public List<RefDTO> detailref(int lid) {
         return rmapper.detailref(lid);
     }
 
@@ -53,7 +53,7 @@ public class RoomServiceImple implements RoomService {
     @Override
     public int insertref(String path, RefDTO refdto) {
         Logger logger = LoggerFactory.getLogger(RoomServiceImple.class);
-        logger.info(".....  board service imple  dto...{}", refdto.getFiles().length);
+        logger.info(".....  room service imple  dto...{}", refdto.getFiles().length);
         HashMap<String, Object> o = new HashMap<>();
         o.put("refdto", refdto);
 
@@ -63,10 +63,9 @@ public class RoomServiceImple implements RoomService {
             o.put("filenames", filenames);
             logger.info("filenames....{}", filenames.get(0));
         }
-        rmapper.insert(o);
         int result = 0;
         if (refdto.getFiles() != null) {
-            result = rmapper.subinsert(o);
+            result = rmapper.insertref(o);
         }
         logger.info("key out {}", o.get("id"));
         logger.info("data complete... {}", result);
@@ -108,13 +107,14 @@ public class RoomServiceImple implements RoomService {
 
 
     @Override
-    public List<ReplyDTO> replylist() {
-        return null;
+    public List<ReplyDTO> replylist(int lid) {
+        List<ReplyDTO> rlist = rmapper.replylist(lid);
+        return rlist;
     }
 
     @Override
-    public int replyinsert(HashMap<String, Object> hm) {
-        return 0;
+    public int replyinsert(ReplyDTO rdto) {
+        return rmapper.replyinsert(rdto);
     }
 
 }

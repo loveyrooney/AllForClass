@@ -19,8 +19,6 @@
 <hr>
 
 
-
-
 <%-- 강의 자료 설명 부분--%>
 과목 > ${ldto.subject}<br>
 ${ldto.lname}<br>
@@ -28,45 +26,36 @@ ${ldto.lname}<br>
 <hr>
 
 
-
 <%-- 자료 다운로드 / 등록 부분--%>
 <button type="button">수강하기</button>
-<button type="button">자료 다운로드</button>
 
-수업자료: ${refdto.refpath}
-
-<form method="post" action="insertref" enctype="multipart/form-data">
-    <input type="file" id="files" name="files" multiple><br>
+수업자료 :
+<ul>
+    <c:forEach var="i" items="${reflist}" >
+        <li>${i.refpath}<button type="button">자료 다운로드</button></li>
+    </c:forEach>
+</ul>
+<form method="post" action="/insertref" enctype="multipart/form-data">
+    <input type="hidden" name="lid" id="reflid" value="${ldto.lid}">
+    <input type="file" name="files" id="files" multiple><br>
     <input type="submit" value="업로드"/><br>
 </form>
 <hr>
 
 
-
-
 <%-- 강의 설명 부분--%>
-${discription}
+${ldto.description}
 <hr>
-
-
 
 
 <%-- 댓글 부분--%>
 <form>
-    <textarea name="content" id="content"></textarea>
-    <input type="hidden" name="lid" id="lid" value="${lid}">
+    <input type="text" name="content" id="content">
+    <input type="hidden" name="rlid" id="rlid" value="${ldto.lid}">
     <button type="button" id="append">쓰기</button>
 </form>
-<ul id="replyList">
-    <li></li>
-    <%--<c:forEach>--%>
-    <%--    --%>
-    <%--</c:forEach>--%>
-</ul>
+<ul id="replyList"></ul>
 <hr>
-
-
-
 
 </body>
 </html>
