@@ -13,7 +13,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        Logger logger = LoggerFactory.getLogger("LoginInterrupt.class");
+        Logger logger = LoggerFactory.getLogger("LoginInterceptor.class");
         logger.info("PreHandler!!!!!");
 
         HttpSession session = request.getSession(false);
