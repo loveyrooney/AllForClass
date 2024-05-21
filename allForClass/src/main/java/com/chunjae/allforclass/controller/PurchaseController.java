@@ -21,13 +21,20 @@ public class PurchaseController {
     }
     @GetMapping("/detail_lec/{lid}")
     public String detail_lec(@PathVariable int lid, HttpServletRequest request, Model model){
-        HttpSession session = request.getSession();
-        String role = uservice.checkRole((int)session.getAttribute("sessionId"));
+        HttpSession session = request.getSession(false);
+        if(session!=null){
+            int sessionId = (int)session.getAttribute("sessionId");
+            String role = uservice.checkRole(sessionId);
+            boolean isReserved = pservice.isReserved(sessionId,lid);
+            model.addAttribute("role",role);
+            model.addAttribute("isReserved",isReserved);
+        }
         LecDTO dto = pservice.detailLec(lid);
-        model.addAttribute("role",role);
         model.addAttribute("dto",dto);
         model.addAttribute("body","purchase/detail_lec.jsp");
         model.addAttribute("title","모두의 국영수 - "+dto.getLname());
         return "main";
     }
+
+
 }

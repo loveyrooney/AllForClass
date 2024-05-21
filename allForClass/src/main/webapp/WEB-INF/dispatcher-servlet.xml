@@ -30,7 +30,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/*/**"/>
-            <mvc:exclude-mapping path="/detail/*"/>
+            <mvc:exclude-mapping path="/detail_lec/*"/>
             <mvc:exclude-mapping path="/main"/>
             <mvc:exclude-mapping path="/login*"/>
             <mvc:exclude-mapping path="/logout*"/>
