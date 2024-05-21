@@ -67,5 +67,12 @@ public class UserController {
         return "redirect:login";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("sessionId") != null)
+            session.invalidate();
+        return "redirect:/main";
+    }
 
 }
