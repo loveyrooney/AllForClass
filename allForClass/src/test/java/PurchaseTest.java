@@ -14,6 +14,6 @@ public class PurchaseTest {
 
     @Test
     public void detailLec(){
-        Assertions.assertEquals("박지성", pservice.detailLec(1).getTeacher_name());
+        Assertions.assertEquals("박지성", pservice.detailLec(1).getTname());
     }
 }
