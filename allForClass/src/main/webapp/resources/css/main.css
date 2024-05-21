@@ -1,0 +1,76 @@
+.poor-story-regular {
+    font-family: "Poor Story", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#header a {
+    font-size: larger;
+    text-decoration: none;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: nowrap;
+    margin: 0 10vw;
+}
+
+.home img {
+    width: 200px;
+    left: 100px;
+}
+
+.search input {
+    height: 35px;
+    width: 250px;
+    background: #ECFBFB;
+    border: 1px solid silver;
+    border-radius: 100px;
+    padding: 0 20px;
+}
+
+.search button {
+    background: transparent;
+    position: relative;
+    left: -50px;
+    top: 10px;
+    border: transparent;
+}
+
+.search button img {
+    height: 30px;
+}
+
+.login {
+    font-size: larger;
+    text-decoration: none;
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    color: #1CBCBD;
+}
+
+.login:hover {
+    background-color: #1CBCBD;
+    color: white;
+    border-radius: 10px;
+}
+
+.mypage img {
+    height: 50px;
+    right: 100px;
+}
+
+#jsp_body {
+    border: 1px solid silver;
+    margin: 0 10vw;
+}
+
+#footer {
+    border: 1px solid silver;
+    margin: 0 10vw;
+}
