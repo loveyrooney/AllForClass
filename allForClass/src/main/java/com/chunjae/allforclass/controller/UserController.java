@@ -39,7 +39,6 @@ public class UserController {
 
         if (email != null && pwd != null) {
             boolean login = userService.checkUser(email, pwd);
-
             if (login == true) {  //로그인 성공
                 int uid = userService.findUid(email);
                 session.setAttribute("sessionId", uid);
