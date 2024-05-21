@@ -1,6 +1,8 @@
 package com.chunjae.allforclass.service;
 
-import java.util.Optional;
+
+import com.chunjae.allforclass.dto.UserDTO;
+
 
 public interface UserService {
 
@@ -9,4 +11,7 @@ public interface UserService {
     int findUid(String email);
 
     String checkRole(int sessionId);
+    
+    int join(UserDTO dto);
+
 }
