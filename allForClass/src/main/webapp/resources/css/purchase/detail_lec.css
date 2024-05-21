@@ -1,0 +1,59 @@
+.detail_wrap {
+    padding: 50px;
+}
+
+.lec_thumbnail img {
+    width: 300px;
+}
+
+.lec_thumbnail p, .lec_info ul li:nth-child(2), .lec_info ul li:nth-child(4) {
+    font-size: larger;
+    font-weight: 700;
+    margin: 20px;
+}
+
+.lec_info {
+    position: relative;
+    top: -240px;
+    left: 350px;
+    width: 300px;
+}
+
+.lec_info ul {
+    margin: 0;
+    padding: 0;
+}
+
+.lec_info ul li {
+    list-style: none;
+    margin: 10px 0;
+}
+
+.btns a {
+    text-decoration: none;
+    display: inline-block;
+    width: 120px;
+    height: 35px;
+    border: 2px solid #78C2AD;
+    text-align: center;
+    line-height: 35px;
+    border-radius: 20px;
+    background: #78C2AD;
+    font-weight: 700;
+    color: black;
+}
+
+.btns a:hover {
+    background: #ECFBFB;
+}
+
+.lec_enter_btn {
+    position: relative;
+    left: 50px;
+}
+
+.lec_description {
+    position: relative;
+    top: -200px;
+}
+
