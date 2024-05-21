@@ -1,6 +1,7 @@
 package com.chunjae.allforclass.dao;
 
 import com.chunjae.allforclass.dto.RefDTO;
+import com.chunjae.allforclass.dto.ReplyDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -10,10 +11,11 @@ import java.util.List;
 @Mapper
 @Repository
 public interface RoomMapper {
-    int insert(HashMap<String, Object> o);
-    int subinsert(HashMap<String, Object> o);
+    int insertref(HashMap<String, Object> o);
 
-    List<RefDTO> list();
+    List<RefDTO> detailref(int lid);
 
-    RefDTO detailref(int lid);
+    List<ReplyDTO> replylist(int lid);
+
+    int replyinsert(ReplyDTO rdto);
 }

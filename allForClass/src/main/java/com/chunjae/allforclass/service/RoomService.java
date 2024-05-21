@@ -13,11 +13,11 @@ public interface RoomService {
 
     PurDTO enterroom(int pid);
 
-    RefDTO detailref(int lid);
-
-    List<ReplyDTO> replylist();
-
-    int replyinsert(HashMap<String, Object> hm);
-
+    List<RefDTO> detailref(int lid);
     int insertref(String realpath, RefDTO refdto);
+
+    List<ReplyDTO> replylist(int lid);
+
+    int replyinsert(ReplyDTO rdto);
+
 }
