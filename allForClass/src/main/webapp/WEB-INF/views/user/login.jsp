@@ -26,7 +26,7 @@
         </li>
         <li class="login_btn">
             <button type="submit" class="login_btn">로그인</button>
-            <button type="button" class="login_join">회원가입>></button>
+            <a href="/join"><button type="button" class="login_join">회원가입>></button></a>
         </li>
     </ul>
 </form>

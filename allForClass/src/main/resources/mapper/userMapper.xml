@@ -15,4 +15,17 @@
         from user
         where email=#{email}
     </select>
+
+    <insert id="join" parameterType="com.chunjae.allforclass.dto.UserDTO">
+        insert into user (email
+                        , pwd
+                        , uname
+                        , role
+                        )
+        values (#{email}
+              , #{pwd}
+              , #{uname}
+              , #{role}
+              )
+    </insert>
 </mapper>
