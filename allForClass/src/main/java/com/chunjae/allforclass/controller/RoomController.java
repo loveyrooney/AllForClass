@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class RoomController {
         this.rservice = rservice;
     }
 
-    @GetMapping("/room")
+    @GetMapping("/room/{lid}")
     public String room(@PathVariable int lid, Model model) {
         LecDTO ldto = rservice.detailLec(lid);
         VideoDTO vdto = rservice.detailvideo(lid);
@@ -34,44 +33,37 @@ public class RoomController {
 //        model.addAttribute("pdto", pdto);
         model.addAttribute("refdto", refdto);
 
-        model.addAttribute("body", "room.jsp");
+        model.addAttribute("body", "room/room.jsp");
         model.addAttribute("title", "온라인 강의 시청하기 - online class");
         return "main";
     }
 
     @PostMapping("/insertref")
-    public String insertref(HttpServletRequest request, RefDTO refdto, Model model) {
-//        String base = "/uploadImg";
-
+    public String insertref(RefDTO refdto) {
+        String base = "/uploadImg";
         String realpath = "D:\\YSH\\upload";
         System.out.println("realpath....." + realpath);
-//        try {
-//            rservice.insertref(realpath, refdto);
-//        } catch (IOException e) {
-//            System.out.println(e);
-//        }
-        return "redirect:/room";
+        rservice.insertref(realpath, refdto);
+
+        return "redirect:/room/1";
     }
 
     @GetMapping("/replylist/{lid}")
-    public @ResponseBody List<ReplyDTO> replyList(@PathVariable int lid, Model model){
+    public @ResponseBody List<ReplyDTO> replyList(@PathVariable int lid, Model model) {
         List<ReplyDTO> rlist = rservice.replylist();
         model.addAttribute("rlist", rlist);
         return rlist;
     }
+
     @PostMapping("/replyinsert")
-    public @ResponseBody HashMap<String, Object> replyInsert(@RequestBody HashMap<String, Object> hm){
+    public @ResponseBody HashMap<String, Object> replyInsert(@RequestBody HashMap<String, Object> hm) {
         int result = rservice.replyinsert(hm);
         return hm;
     }
 
-//        VideoDTO vdto = new VideoDTO();
+
 //        VideoDTO insertvdto = roomservice.insertvideo(vdto);
 
-//        RefDTO refdto = new RefDTO();
-//        RefDTO insertrdto = roomservice.insertref(refdto);
-//
-//        ReplyDTO rdto = new ReplyDTO();
 //        roomservice.delReply(rid);
 
 }

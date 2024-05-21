@@ -22,20 +22,22 @@
 
 
 <%-- 강의 자료 설명 부분--%>
-과목 > ${ldto.subject}
-${ldto.lname}
-강사 : ${ldto.uname} [${ldto.email}]
+과목 > ${ldto.subject}<br>
+${ldto.lname}<br>
+강사 : ${ldto.tname} [${ldto.temail}]<br>
 <hr>
 
 
 
 <%-- 자료 다운로드 / 등록 부분--%>
-${refpath}
 <button type="button">수강하기</button>
 <button type="button">자료 다운로드</button>
 
+수업자료: ${refdto.refpath}
+
 <form method="post" action="insertref" enctype="multipart/form-data">
-    <input type="file" value="자료 등록 하기">
+    <input type="file" id="files" name="files" multiple><br>
+    <input type="submit" value="업로드"/><br>
 </form>
 <hr>
 
