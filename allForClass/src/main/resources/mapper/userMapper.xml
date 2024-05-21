@@ -9,11 +9,16 @@
         from user
         where email=#{email} and pwd=#{pwd}
     </select>
-
     <select id="findUid" parameterType="string" resultType="int">
         select uid
         from user
         where email=#{email}
+    </select>
+
+    <select id="checkRole" parameterType="int" resultType="int">
+        select role
+        from user
+        where uid = #{sessionId}
     </select>
 
     <insert id="join" parameterType="com.chunjae.allforclass.dto.UserDTO">
@@ -28,4 +33,5 @@
               , #{role}
               )
     </insert>
+
 </mapper>

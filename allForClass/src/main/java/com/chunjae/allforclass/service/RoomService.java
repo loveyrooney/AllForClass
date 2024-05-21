@@ -19,5 +19,5 @@ public interface RoomService {
 
     int replyinsert(HashMap<String, Object> hm);
 
-    void insertref(String realpath, RefDTO refdto);
+    int insertref(String realpath, RefDTO refdto);
 }

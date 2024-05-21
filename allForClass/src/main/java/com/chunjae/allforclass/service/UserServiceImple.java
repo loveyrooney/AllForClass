@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 @Service
 public class UserServiceImple implements UserService{
@@ -34,7 +35,26 @@ public class UserServiceImple implements UserService{
 
     @Override
     public int findUid(String email) {
-        return userMapper.findUid(email);
+        Integer result = userMapper.findUid(email);
+        if(result==null)
+            return 0;
+        else
+            return result;
+    }
+
+    @Override
+    public String checkRole(int sessionId) {
+        Integer result = userMapper.checkRole(sessionId);
+        String role = "";
+        if(result!=null){
+            if(result==1)
+                role = "student";
+            else if(result==2)
+                role = "teacher";
+            else
+                role = "admin";
+        }
+        return role;
     }
 
     @Override
