@@ -9,17 +9,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <body>
-<div id="header">
+<div class="header">
     <a class="home" href="/main"><img src="/resources/images/logo.png" alt="logo"></a>
-<%--    <c:choose>--%>
-<%--        <c:when test="${empty sessionScope.sessionID}">--%>
-<%--            <a class="login" href="login.do"><span>로그인</span></a>--%>
-<%--        </c:when>--%>
-<%--        <c:otherwise>--%>
-<%--            <a class="login" href="logout.do"><span>로그아웃</span></a>--%>
-            <a class="mypage" href="/mypage"><span>마이페이지</span></a>
-<%--        </c:otherwise>--%>
-<%--    </c:choose>--%>
+    <div class="search">
+        <input type="text" name="search" placeholder="찾고 싶은 강의가 있나요?">
+        <button type="submit"><img src="/resources/images/search.png"></button>
+    </div>
+    <div class="users">
+        <%--    <c:choose>--%>
+        <%--        <c:when test="${empty sessionScope.sessionID}">--%>
+        <%--            <a class="login" href="login.do"><span>로그인</span></a>--%>
+        <%--        </c:when>--%>
+        <%--        <c:otherwise>--%>
+        <a class="login" href="/logout"><span>로그아웃</span></a>
+        <a class="mypage" href="/mypage"><img src="/resources/images/mypage.png" alt="mypage_icon"></a>
+        <%--        </c:otherwise>--%>
+        <%--    </c:choose>--%>
+    </div>
 </div>
 </body>
 </html>
