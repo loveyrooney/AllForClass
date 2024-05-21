@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chunjae.allforclass.dao.MypageMapper">
+    <insert id="insertLec" parameterType="com.chunjae.allforclass.dto.LecDTO">
+        INSERT INTO lecture( lname
+                          , teacher_id
+                          , price
+                          , description
+                          , subject
+                          , entry
+                          , startdate
+                          , timesession
+                          , imgpath )
+        VALUES ( #{lname}, #{tid}, #{price}, #{description}, #{subject}, #{entry}, #{startdate}, #{timesession}, #{imgpath});
+    </insert>
+
+
+</mapper>

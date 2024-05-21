@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -24,11 +25,11 @@ import java.util.UUID;
 @Controller
 public class MypageController {
 
-/*    private final MypageService myservice;
+    private final MypageService myservice;
 
     public MypageController(MypageService myservice){
         this.myservice=myservice;
-    }*/
+    }
 
 
     /**마이페이지 이동*/
@@ -41,7 +42,10 @@ public class MypageController {
 
     /**강의 등록 폼*/
     @GetMapping("/insertlec")
-    public String insertlec(Model model) {
+    public String insertlec(HttpServletRequest request, Model model) {
+
+        HttpSession session = request.getSession();
+        int tid = (int)session.getAttribute("sessionId");
 
         /*개강일 지정 가능 날짜 - 등록일 열흘 이후로 지정가능*/
         Date date = new Date();
@@ -54,6 +58,7 @@ public class MypageController {
         String datestr = format.format(cal.getTime());
 
         model.addAttribute("datestr", datestr);
+        model.addAttribute("tid", tid);
 
         model.addAttribute("body","mypage/insertlec.jsp");
         model.addAttribute("title","모두의 국영수 - 강의등록신청");
@@ -64,7 +69,9 @@ public class MypageController {
     /**강의 등록*/
     @PostMapping("/insertlec_result")
     public String insertlec_result(@RequestParam MultipartFile imgfile
-            ,  LecDTO dto, HttpServletRequest request, Model model){
+                                 , LecDTO dto
+                                 , HttpServletRequest request
+    ){
 
         /*이미지 파일 업로드*/
         String base="/uploadImg";
@@ -72,9 +79,6 @@ public class MypageController {
         try {
             // 실제 경로 받음
             String realpath= request.getSession().getServletContext().getRealPath(base);
-
-            System.out.println(realpath);
-
 
             if (!imgfile.isEmpty()) {
 
@@ -99,6 +103,9 @@ public class MypageController {
         } catch (IOException e) {
             System.out.println(e);
         }
+
+        /*DB에 입력*/
+        int result = myservice.insertLec(dto);
 
         return "redirect:/mypage";
     }
