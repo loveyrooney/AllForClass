@@ -10,6 +10,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="/resources/css/purchase/detail_lec.css">
+    <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
 </head>
 <body>
 <div class="detail_wrap">
@@ -25,16 +26,19 @@
             <li>${dto.price}원 | 20명 중 2명 남음</li>
             <li class="btns">
                 <c:choose>
-                    <c:when test="">
-                        <a class="lec_regi_btn" href="">수강하기</a>
+                    <c:when test="${!empty isReserved and !isReserved}">
+                        <button class="lec_regi_btn" type="button" onclick="requestPayment()">수강하기</button>
+                    </c:when>
+                    <c:when test="${!empty isReserved and isReserved}">
+                        <button class="lec_regi_btn" type="button" onclick="">수강취소</button>
                     </c:when>
                     <c:otherwise>
-                        <a class="lec_regi_btn" href="">수강취소</a>
+                        <a class="lec_regi_btn" href="/login">수강하기</a>
                     </c:otherwise>
                 </c:choose>
-<%--                <c:if test="">--%>
+                <c:if test="${!empty role}">
                     <a class="lec_enter_btn" href="">강의실 입장</a>
-<%--                </c:if>--%>
+                </c:if>
             </li>
         </ul>
     </section>
@@ -43,5 +47,23 @@
         <p>${dto.description}</p>
     </section>
 </div>
+<script>
+    <%--function requestPayment() {--%>
+    <%--    PortOne.requestPayment({--%>
+    <%--        storeId: "store-4ff4af41-85e3-4559-8eb8-0d08a2c6ceec", // 고객사 storeId로 변경해주세요.--%>
+    <%--        channelKey: "channel-key-9987cb87-6458-4888-b94e-68d9a2da896d", // 콘솔 결제 연동 화면에서 채널 연동 시 생성된 채널 키를 입력해주세요.--%>
+    <%--        paymentId: `payment${crypto.randomUUID()}`,--%>
+    <%--        orderName: "나이키 와플 트레이너 2 SD",--%>
+    <%--        totalAmount: 1000,--%>
+    <%--        currency: "CURRENCY_KRW",--%>
+    <%--        payMethod: "CARD",--%>
+    <%--        customer: {--%>
+    <%--            fullName: "포트원",--%>
+    <%--            phoneNumber: "010-0000-1234",--%>
+    <%--            email: "test@portone.io",--%>
+    <%--        },--%>
+    <%--    });--%>
+    <%--}--%>
+</script>
 </body>
 </html>
