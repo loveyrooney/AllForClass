@@ -34,6 +34,7 @@
             <mvc:exclude-mapping path="/main"/>
             <mvc:exclude-mapping path="/login*"/>
             <mvc:exclude-mapping path="/logout*"/>
+            <mvc:exclude-mapping path="/join*"/>
             <ref bean="authInterrupt"/>
         </mvc:interceptor>
     </mvc:interceptors>
