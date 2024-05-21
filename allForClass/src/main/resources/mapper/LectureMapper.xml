@@ -2,11 +2,12 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.chunjae.allforclass.dao.PurchaseMapper">
+<mapper namespace="com.chunjae.allforclass.dao.LectureMapper">
     <select id="detailLec" parameterType="int" resultType="com.chunjae.allforclass.dto.LecDTO">
         select l.lid as lid
                ,l.lname as lname
                ,u.uname as tname
+               ,u.email as temail
                ,l.price as price
                ,l.description as description
                ,l.subject as subject

@@ -1,23 +1,23 @@
 package com.chunjae.allforclass.service;
 
-import com.chunjae.allforclass.dto.RefDTO;
-import com.chunjae.allforclass.dto.ReplyDTO;
-import com.chunjae.allforclass.dto.VideoDTO;
+import com.chunjae.allforclass.dto.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface RoomService {
-    String enterroom(int pid);
+
+    LecDTO detailLec(int lid);
 
     VideoDTO detailvideo(int lid);
+
+    PurDTO enterroom(int pid);
 
     RefDTO detailref(int lid);
 
     List<ReplyDTO> replylist();
 
-    VideoDTO insertvideo(VideoDTO vdto);
+    int replyinsert(HashMap<String, Object> hm);
 
-    RefDTO insertref(RefDTO rdto);
-
-    void delReply(int rid);
+    void insertref(String realpath, RefDTO refdto);
 }

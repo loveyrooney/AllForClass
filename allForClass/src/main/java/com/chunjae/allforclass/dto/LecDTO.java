@@ -5,6 +5,8 @@ public class LecDTO {
     private int lid;
     private String lname;
     private String tname;
+
+    private String temail;
     private int price;
     private String description;
     private String subject;
@@ -35,6 +37,14 @@ public class LecDTO {
 
     public String getTname() {
         return tname;
+    }
+
+    public String getTemail() {
+        return temail;
+    }
+
+    public void setTemail(String temail) {
+        this.temail = temail;
     }
 
     public void setTname(String tname) {
