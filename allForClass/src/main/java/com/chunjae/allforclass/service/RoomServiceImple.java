@@ -1,35 +1,34 @@
 package com.chunjae.allforclass.service;
 
 import com.chunjae.allforclass.dao.*;
-import com.chunjae.allforclass.dto.RefDTO;
-import com.chunjae.allforclass.dto.ReplyDTO;
-import com.chunjae.allforclass.dto.VideoDTO;
+import com.chunjae.allforclass.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
 public class RoomServiceImple implements RoomService{
 
-    private static final Logger logger = LoggerFactory.getLogger(RoomServiceImple.class);
+//    private static final Logger logger = LoggerFactory.getLogger(RoomServiceImple.class);
 
-    @Autowired
-    private LectureMapper lectureMapper;
-    @Autowired
-    private PurchaseMapper purchaseMapper;
-    @Autowired
-    private RefMapper refMapper;
-    @Autowired
-    private ReplyMapper replyMapper;
-    @Autowired
-    private VideoMapper videoMapper;
+    private final LectureMapper lmapper;
+    private final PurchaseMapper pmapper;
+    private final RoomMapper rmapper;
+
+    public RoomServiceImple(LectureMapper lmapper, PurchaseMapper pmapper, RoomMapper rmapper){
+        this.lmapper = lmapper;
+        this.pmapper = pmapper;
+        this.rmapper = rmapper;
+    }
 
     @Override
-    public String enterroom(int pid) {
-        return null;
+    public LecDTO detailLec(int lid) {
+        return lmapper.detailLec(lid);
     }
 
     @Override
@@ -38,9 +37,20 @@ public class RoomServiceImple implements RoomService{
     }
 
     @Override
+    public PurDTO enterroom(int pid) {
+        return null;
+    }
+
+    @Override
     public RefDTO detailref(int lid) {
         return null;
     }
+
+//    @Transactional
+//    @Override
+//    public void insertref(String realpath, RefDTO refdto) throws IOException {
+//
+//    }
 
     @Override
     public List<ReplyDTO> replylist() {
@@ -48,17 +58,13 @@ public class RoomServiceImple implements RoomService{
     }
 
     @Override
-    public VideoDTO insertvideo(VideoDTO vdto) {
-        return null;
+    public int replyinsert(HashMap<String, Object> hm) {
+        return 0;
     }
 
     @Override
-    public RefDTO insertref(RefDTO rdto) {
-        return null;
-    }
-
-    @Override
-    public void delReply(int rid) {
+    public void insertref(String realpath, RefDTO refdto) {
 
     }
+
 }
