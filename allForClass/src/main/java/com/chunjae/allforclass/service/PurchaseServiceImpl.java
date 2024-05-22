@@ -3,6 +3,7 @@ package com.chunjae.allforclass.service;
 import com.chunjae.allforclass.dao.LectureMapper;
 import com.chunjae.allforclass.dao.PurchaseMapper;
 import com.chunjae.allforclass.dto.LecDTO;
+import com.chunjae.allforclass.dto.PurDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -33,4 +34,5 @@ public class PurchaseServiceImpl implements PurchaseService{
             isRererved = true;
         return isRererved;
     }
+
 }

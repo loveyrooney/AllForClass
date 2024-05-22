@@ -8,4 +8,13 @@
         from purchase
         where uid = #{sessionId} and lid = #{lid}
     </select>
+    <select id="detailPur" parameterType="hashmap" resultType="com.chunjae.allforclass.dto.PurDTO">
+        select u.uname as uname
+             , u.email as email
+             , p.payid as payid
+        from purchase p inner join user u
+          on p.uid = u.uid
+        where p.uid = #{sessionId}
+          and p.lid = #{lid}
+    </select>
 </mapper>

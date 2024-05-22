@@ -11,6 +11,7 @@
 <head>
     <link rel="stylesheet" href="/resources/css/purchase/detail_lec.css">
     <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
+    <script src="/resources/js/purchase/detail_lec.js"></script>
 </head>
 <body>
 <div class="detail_wrap">
@@ -21,16 +22,16 @@
     <section class="lec_info">
         <ul>
             <li>과목> ${dto.subject}</li>
-            <li>${dto.lname}</li>
+            <li id="lname">${dto.lname}</li>
             <li>강사 : ${dto.tname} (${dto.temail})</li>
-            <li>${dto.price}원 | 20명 중 2명 남음</li>
+            <li><span id="price">${dto.price}</span>원 | 20명 중 2명 남음</li>
             <li class="btns">
                 <c:choose>
                     <c:when test="${!empty isReserved and !isReserved}">
-                        <button class="lec_regi_btn" type="button" onclick="requestPayment()">수강하기</button>
+                        <button class="lec_regi_btn" id="pay" type="button">수강하기</button>
                     </c:when>
                     <c:when test="${!empty isReserved and isReserved}">
-                        <button class="lec_regi_btn" type="button" onclick="">수강취소</button>
+                        <button class="lec_regi_btn" id="refund" type="button">수강취소</button>
                     </c:when>
                     <c:otherwise>
                         <a class="lec_regi_btn" href="/login">수강하기</a>
@@ -48,22 +49,20 @@
     </section>
 </div>
 <script>
-    <%--function requestPayment() {--%>
-    <%--    PortOne.requestPayment({--%>
-    <%--        storeId: "store-4ff4af41-85e3-4559-8eb8-0d08a2c6ceec", // 고객사 storeId로 변경해주세요.--%>
-    <%--        channelKey: "channel-key-9987cb87-6458-4888-b94e-68d9a2da896d", // 콘솔 결제 연동 화면에서 채널 연동 시 생성된 채널 키를 입력해주세요.--%>
-    <%--        paymentId: `payment${crypto.randomUUID()}`,--%>
-    <%--        orderName: "나이키 와플 트레이너 2 SD",--%>
-    <%--        totalAmount: 1000,--%>
-    <%--        currency: "CURRENCY_KRW",--%>
-    <%--        payMethod: "CARD",--%>
-    <%--        customer: {--%>
-    <%--            fullName: "포트원",--%>
-    <%--            phoneNumber: "010-0000-1234",--%>
-    <%--            email: "test@portone.io",--%>
-    <%--        },--%>
-    <%--    });--%>
-    <%--}--%>
+    let inits = {
+        lid: ${dto.lid}
+    }
+    if(${!empty sessionScope.sessionId})
+        inits['uid'] = ${sessionScope.sessionId}
+    if(${!empty storeId and !empty channelKey}){
+        inits['storeId'] = ${storeId}
+        inits['channelKey'] = ${channelKey}
+    }
+    if(${!empty user}){
+        inits['fullName'] = ${user.uname}
+        inits['email'] = ${user.email}
+    }
+    init(inits);
 </script>
 </body>
 </html>

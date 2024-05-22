@@ -64,4 +64,9 @@ public class UserServiceImple implements UserService{
 
         return result;
     }
+
+    @Override
+    public HashMap<String,Object> findUser(int sessionId) {
+        return userMapper.findUser(sessionId);
+    }
 }

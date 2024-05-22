@@ -40,6 +40,7 @@ bin/
 
 ##
 db.properties
+pay.properties
 /gradle/
 /gradlew
 /gradlew.bat
