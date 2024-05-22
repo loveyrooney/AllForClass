@@ -17,11 +17,6 @@
         from ref r INNER JOIN lecture l
         on r.lid = l.lid
         where l.lid = ${lid}
-<!--        SELECT lid-->
-<!--        (select group_concat(filename) as filenames-->
-<!--        FROM ref-->
-<!--        WHERE ref.refid = lecture.lid) as filenames-->
-<!--        FROM lecture-->
     </select>
 
     <select id="replylist" resultType="com.chunjae.allforclass.dto.ReplyDTO" parameterType="int">
@@ -35,4 +30,14 @@
         values(#{uid}, #{lid}, #{content}, DATE(NOW()))
     </insert>
 
+    <delete id="replydelete" parameterType="int">
+        delete from reply
+        where rid = #{rid};
+    </delete>
+
+    <select id="detailvideo" resultType="com.chunjae.allforclass.dto.VideoDTO" parameterType="int">
+        select title, videopath
+        from video
+        where lid = #{lid}
+    </select>
 </mapper>

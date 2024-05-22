@@ -36,7 +36,7 @@ public class RoomServiceImple implements RoomService {
 
     @Override
     public VideoDTO detailvideo(int lid) {
-        return null;
+        return rmapper.detailvideo(lid);
     }
 
     @Override
@@ -115,6 +115,11 @@ public class RoomServiceImple implements RoomService {
     @Override
     public int replyinsert(ReplyDTO rdto) {
         return rmapper.replyinsert(rdto);
+    }
+
+    @Override
+    public int replydelte(int rid) {
+        return rmapper.replydelete(rid);
     }
 
 }

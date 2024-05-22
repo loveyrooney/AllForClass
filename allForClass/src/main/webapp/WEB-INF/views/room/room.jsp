@@ -10,52 +10,72 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" href="/resources/css/room/room.css">
-    <script src="/resources/js/room/reply.js"></script>
+    <link rel="stylesheet" href="/resources/css/room/classroom.css">
+    <script src="/resources/js/room/classroom.js"></script>
 </head>
 <body>
-
+role: ${role}/
+sessionId(uid): ${sessionId}
 <%-- 강의 영상 부분 --%>
-<hr>
+<div id="container">
+    <div id="video">
+        <img src="/resources/images/default.png" alt="default img">
+        <ul>
+            <li>영상제목: ${vdto.title}</li>
+            <li>영상경로: ${vdto.videopath}</li>
+        </ul>
+    </div>
+    <div id="lec_detail">
+        <%-- 강의 자료 설명 부분--%>
+        <ul id=>
+            <li><h3>과목 > ${ldto.subject}</h3></li>
+            <li><h2>${ldto.lname}</h2></li>
+            <li><h4>강사 : ${ldto.tname} [${ldto.temail}]</h4></li>
+        </ul>
+
+        <%-- 자료 등록 부분 / 강사에게만 보이게 --%>
+        <ul>
+            <c:forEach var="i" items="${reflist}" varStatus="status">
+                <c:set var="decodedRef" value="${decodeRef[status.index]}"/>
+                <c:forTokens var="path" items="${i.refpath}" delims=",">
+                    <li><a href="/download/${path}">${decodedRef}</a></li>
+                </c:forTokens>
+            </c:forEach>
+        </ul>
+
+        <form method="post" action="/insertref" enctype="multipart/form-data">
+            <input type="hidden" name="lid" id="reflid" value="${ldto.lid}">
+            <input type="hidden" name="sessionId" id="sessionId" value="${sessionId}">
+            <%--    <input type="hidden" name="role" id="role" value="${role}">--%>
+            <div id="file_upload">
+                <input type="file" name="files" id="files" multiple>
+                <label class="label_file" for="files">강의 자료 선택</label>
+                <span class="span_file">선택된 파일이 없습니다.</span>
+            </div>
+            <ul>
+                <li>
+                    <button type="button">수강하기</button>
+                    <button type="submit">강의 자료 추가</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+
+    <%-- 강의 설명 부분--%>
+    <div id="lec_description">
+        ${ldto.description}
+    </div>
 
 
-<%-- 강의 자료 설명 부분--%>
-과목 > ${ldto.subject}<br>
-${ldto.lname}<br>
-강사 : ${ldto.tname} [${ldto.temail}]<br>
-<hr>
-
-
-<%-- 자료 다운로드 / 등록 부분--%>
-<button type="button">수강하기</button>
-
-수업자료 :
-<ul>
-    <c:forEach var="i" items="${reflist}" >
-        <li>${i.refpath}<button type="button">자료 다운로드</button></li>
-    </c:forEach>
-</ul>
-<form method="post" action="/insertref" enctype="multipart/form-data">
-    <input type="hidden" name="lid" id="reflid" value="${ldto.lid}">
-    <input type="file" name="files" id="files" multiple><br>
-    <input type="submit" value="업로드"/><br>
-</form>
-<hr>
-
-
-<%-- 강의 설명 부분--%>
-${ldto.description}
-<hr>
-
-
-<%-- 댓글 부분--%>
-<form>
-    <input type="text" name="content" id="content">
-    <input type="hidden" name="rlid" id="rlid" value="${ldto.lid}">
-    <button type="button" id="append">쓰기</button>
-</form>
-<ul id="replyList"></ul>
-<hr>
-
+    <%-- 댓글 부분--%>
+    <div id="reply">
+        <form>
+            <input type="text" name="content" id="content">
+            <input type="hidden" name="rlid" id="rlid" value="${ldto.lid}">
+            <button type="button" id="append">쓰기</button>
+        </form>
+        <ul id="replyList"></ul>
+    </div>
+</div>
 </body>
 </html>
