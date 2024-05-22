@@ -19,4 +19,24 @@
         on l.teacher_id = u.uid
         where l.lid = #{lid}
     </select>
+
+    <select id="findLecList" parameterType="hashmap" resultType="com.chunjae.allforclass.dto.LecDTO">
+        select lid
+             , lname
+             , teacher_id
+             , price
+             , description
+             , subject
+             , entry
+             , startdate
+             , timesession
+             , confirm
+             , imgpath
+        from lecture
+        where confirm=true
+              AND startdate BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 8 DAY)
+        order by startdate
+    </select>
+    <!--컨펌 true, 오늘 날짜기준 오늘 부터 startdate+8일까지 출력-->
+
 </mapper>

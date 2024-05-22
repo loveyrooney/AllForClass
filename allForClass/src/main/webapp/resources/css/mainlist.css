@@ -1,0 +1,22 @@
+.mainlist_lec{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.mainlist_lec ul li{
+    list-style: none;
+}
+
+.mainlist_lec img{
+    width: 200px;
+    height: 230px;
+}
+
+.mainlist_lecname{
+    font-size: 1.2rem;
+}
+
+
+.mainlist_lecprice{
+    font-size: 1rem;
+}
