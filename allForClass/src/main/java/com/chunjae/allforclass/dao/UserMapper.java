@@ -17,4 +17,5 @@ public interface UserMapper {
   
     int join(UserDTO dto);
 
+    HashMap<String,Object> findUser(int sessionId);
 }

@@ -33,5 +33,10 @@
               , #{role}
               )
     </insert>
-
+    <select id="findUser" parameterType="int" resultType="hashmap">
+        select uname
+               ,email
+        from user
+        where uid = #{sessionId}
+    </select>
 </mapper>

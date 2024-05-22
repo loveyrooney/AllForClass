@@ -47,7 +47,7 @@
     background: #ECFBFB;
 }
 
-.lec_enter_btn {
+.lec_enter_btn, .lec_regi_btn {
     position: relative;
     left: 50px;
     text-decoration: none;
@@ -65,7 +65,7 @@
     font-size: medium;
 }
 
-.lec_enter_btn:hover {
+.lec_enter_btn:hover, .lec_regi_btn:hover {
     background: #ECFBFB;
 }
 

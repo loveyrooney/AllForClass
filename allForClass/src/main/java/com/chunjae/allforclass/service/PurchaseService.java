@@ -6,4 +6,5 @@ public interface PurchaseService {
 
     LecDTO detailLec(int lid);
     boolean isReserved(int sessionId, int lid);
+
 }

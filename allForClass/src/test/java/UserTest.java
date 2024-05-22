@@ -32,4 +32,8 @@ public class UserTest {
         Assertions.assertEquals("student",userService.checkRole(1));
     }
 
+    @Test
+    public void t4(){
+        Assertions.assertEquals("김남일",userService.findUser(1).get("uname"));
+    }
 }
