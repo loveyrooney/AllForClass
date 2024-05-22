@@ -1,12 +1,16 @@
 package com.chunjae.allforclass.controller;
 
+import com.chunjae.allforclass.dto.CalDTO;
 import com.chunjae.allforclass.dto.LecDTO;
+import com.chunjae.allforclass.dto.UserDTO;
 import com.chunjae.allforclass.service.MypageService;
 import com.chunjae.allforclass.service.PurchaseService;
+import com.chunjae.allforclass.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,21 +24,30 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
 public class MypageController {
 
     private final MypageService myservice;
-
     public MypageController(MypageService myservice){
         this.myservice=myservice;
     }
 
 
     /**마이페이지 이동*/
-    @GetMapping("/mypage")
-    public String mypage(Model model){
+    @GetMapping("/mypage/{uid}")
+    public String mypage(@PathVariable int uid, Model model){
+
+        //회원 정보 가져오기
+        UserDTO dto = myservice.detailMe(uid);
+
+        // 수강 강의 리스트
+        List<CalDTO> list = myservice.findPurList(uid);
+
+        model.addAttribute("dto", dto);
+        model.addAttribute("list", list);
         model.addAttribute("body","mypage/mypage.jsp");
         model.addAttribute("title","모두의 국영수 - 마이페이지");
         return "main";
@@ -47,7 +60,7 @@ public class MypageController {
         HttpSession session = request.getSession();
         int tid = (int)session.getAttribute("sessionId");
 
-        /*개강일 지정 가능 날짜 - 등록일 열흘 이후로 지정가능*/
+        //개강일 지정 가능 날짜 - 등록일 열흘 이후로 지정가능
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd"); // 포멧 지정
 
@@ -73,7 +86,7 @@ public class MypageController {
                                  , HttpServletRequest request
     ){
 
-        /*이미지 파일 업로드*/
+        //이미지 파일 업로드
         String base="/uploadImg";
 
         try {
@@ -82,19 +95,19 @@ public class MypageController {
 
             if (!imgfile.isEmpty()) {
 
-                /*랜덤값 받아오기 */
+                //랜덤값 받아오기
                 UUID uuid = UUID.randomUUID();
 
-                /*uuid로 파일명 앞에 랜덤값 붙여줌*/
+                //uuid로 파일명 앞에 랜덤값 붙여줌
                 String imgname = uuid+"_"+imgfile.getOriginalFilename();
 
-                /*한글, 띄어쓰기 등등 오류 발생 가능성 있어 인코딩 필요*/
+                //한글, 띄어쓰기 등등 오류 발생 가능성 있어 인코딩 필요
                 imgname= URLEncoder.encode(imgname, StandardCharsets.UTF_8)
                         .replace("+", "%20");
                 String filename = uuid + "_" +imgname;
 
                 File file = new File(realpath, filename);
-                imgfile.transferTo(file);  /*파일 업로드*/
+                imgfile.transferTo(file);  //파일 업로드
 
                 // dto imgpath에 경로 입력
                 dto.setImgpath(filename);
@@ -104,7 +117,7 @@ public class MypageController {
             System.out.println(e);
         }
 
-        /*DB에 입력*/
+        //DB에 입력
         int result = myservice.insertLec(dto);
 
         return "redirect:/mypage";

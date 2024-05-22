@@ -16,5 +16,26 @@
         VALUES ( #{lname}, #{tid}, #{price}, #{description}, #{subject}, #{entry}, #{startdate}, #{timesession}, #{imgpath});
     </insert>
 
+    <select id="detailMe" parameterType="int" resultType="com.chunjae.allforclass.dto.UserDTO">
+        SELECT uid, email, pwd, uname, role, disable
+        FROM user
+        WHERE uid = #{uid}
+    </select>
+
+    <select id="findPurList" parameterType="int" resultType="com.chunjae.allforclass.dto.CalDTO">
+        SELECT p.lid AS lid
+             , lname
+             , uname AS tname
+             , subject
+             , startdate
+             , SUBSTRING_INDEX(timesession, '*', -1) as timesession
+        FROM purchase p INNER JOIN lecture l
+             ON p.lid = l.lid
+             INNER JOIN user u
+             ON l.teacher_id=u.uid
+        WHERE p.uid = #{uid}
+        ORDER BY startdate, timesession;
+    </select>
+
 
 </mapper>
