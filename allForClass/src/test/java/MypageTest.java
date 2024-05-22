@@ -1,3 +1,4 @@
+import com.chunjae.allforclass.dto.CalDTO;
 import com.chunjae.allforclass.dto.LecDTO;
 import com.chunjae.allforclass.service.MypageService;
 import org.junit.jupiter.api.Test;
@@ -5,6 +6,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -30,6 +34,13 @@ public class MypageTest {
         int result = myservice.insertLec(dto);
 
         assertEquals(1, result);
+    }
+
+    @Test
+    public void findlectest(){
+        List<CalDTO> list = myservice.findPurList(113);
+
+        assertEquals("홍길동", list.get(0).getLname());
     }
 
 }

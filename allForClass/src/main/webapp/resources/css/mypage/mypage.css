@@ -1,0 +1,11 @@
+/*      !*이벤트 글자가 잘리지 않음*!
+      .fc-event-title.fc-sticky{
+          white-space: normal;
+      }*/
+/*줄바꿈이 가능하도록 함*/
+.fc-daygrid-event { white-space: pre; }
+
+#calendar{
+    color: darkslategrey;
+    margin: auto;
+}
