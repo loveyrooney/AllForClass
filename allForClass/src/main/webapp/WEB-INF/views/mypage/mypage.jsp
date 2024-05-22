@@ -12,7 +12,7 @@
     <title>Title</title>
     <link rel="stylesheet" href="/resources/css/mypage/mypage.css">
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
-<%--    <script src="/resources/js/mypage/mypage.js"></script>--%>
+    <script src="/resources/js/mypage/mypage.js"></script>
 </head>
 <body>
 <%--환영 문구--%>
@@ -28,38 +28,14 @@
     </ul>
 </div>
 
-
-<%--수강 강의 목록--%>
-<c:forEach var="item" items="${list}">
-    ${item.lname}
-    ${item.tname}
-    ${item.subject}
-    ${item.startdate}
-    ${item.timesession}<br>
-</c:forEach>
-
-
 <%--캘린더--%>
 <div id='calendar'></div>
 
 
 <script>
-
-/*    init(${item.lname});*/
-    var calendar;
-    //캘린더에 이벤트 추가
-    document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth'
-            , events : [
-                {title:"09:00-12:00\n[국어] 고등1국어 홍길동ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇdddddddddㅇㅇ"
-                    , start : "2024-05-21"
-                    , color : 'pink'}
-            ]
-        });
-        calendar.render();
-    });
+    // 스크립트로 계정 아이디 값 넘겨주기
+    init(${dto.uid});
 </script>
+
 </body>
 </html>

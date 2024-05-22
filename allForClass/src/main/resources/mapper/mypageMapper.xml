@@ -34,7 +34,6 @@
              INNER JOIN user u
              ON l.teacher_id=u.uid
         WHERE p.uid = #{uid}
-        ORDER BY startdate, timesession;
     </select>
 
 

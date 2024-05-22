@@ -4,15 +4,11 @@ import com.chunjae.allforclass.dto.CalDTO;
 import com.chunjae.allforclass.dto.LecDTO;
 import com.chunjae.allforclass.dto.UserDTO;
 import com.chunjae.allforclass.service.MypageService;
-import com.chunjae.allforclass.service.PurchaseService;
-import com.chunjae.allforclass.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,14 +18,12 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 public class MypageController {
 
+    private Logger logger = LoggerFactory.getLogger(MypageController.class);
     private final MypageService myservice;
     public MypageController(MypageService myservice){
         this.myservice=myservice;
@@ -43,14 +37,49 @@ public class MypageController {
         //회원 정보 가져오기
         UserDTO dto = myservice.detailMe(uid);
 
-        // 수강 강의 리스트
-        List<CalDTO> list = myservice.findPurList(uid);
-
         model.addAttribute("dto", dto);
-        model.addAttribute("list", list);
         model.addAttribute("body","mypage/mypage.jsp");
         model.addAttribute("title","모두의 국영수 - 마이페이지");
         return "main";
+    }
+
+    /**수강 강의 목록 json 파일 전달*/
+    @GetMapping("/cal_list/{uid}")
+    public @ResponseBody List<Map<String, Object>> cal_list(@PathVariable int uid){
+
+        // 수강 강의 리스트
+        List<CalDTO> list = myservice.findPurList(uid);
+
+        // 지난강의는 배경색 다르게 하기위하여 현재 날짜 가져옴
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd"); // 포멧 지정
+        Calendar cal = Calendar.getInstance();
+        String datestr = format.format(cal.getTime());
+
+        //hashMap으로 캘린더 이벤트 형식 만들기
+        List<Map<String, Object>> eventList = new ArrayList<>();
+
+        for(int i = 0; i < list.size(); i++) {
+            Map<String, Object> event = new HashMap<>();
+            event.put("title", list.get(i).getTimesession()+"\n"
+                               +"["+list.get(i).getSubject()+"] "
+                               +list.get(i).getTname()+"\n"
+                               +list.get(i).getLname());
+            event.put("start", list.get(i).getStartdate());
+            event.put("textColor", "black");
+
+            if (list.get(i).getStartdate().compareTo(datestr) < 0) {
+                event.put("color", "#CCD1D1");
+            } else if(list.get(i).getSubject().equals("국어")){
+                event.put("color", "#14C4C5");
+            } else if(list.get(i).getSubject().equals("영어")){
+                event.put("color", "#FCD266");
+            } else {
+                event.put("color", "#F57896");
+            }
+            eventList.add(event);
+        }
+
+        return eventList;
     }
 
     /**강의 등록 폼*/
