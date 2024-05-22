@@ -1,5 +1,6 @@
 import com.chunjae.allforclass.dto.CalDTO;
 import com.chunjae.allforclass.dto.LecDTO;
+import com.chunjae.allforclass.dto.UserDTO;
 import com.chunjae.allforclass.service.MypageService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,7 +41,13 @@ public class MypageTest {
     public void findlectest(){
         List<CalDTO> list = myservice.findPurList(113);
 
-        assertEquals("홍길동", list.get(0).getLname());
+        assertEquals("수학test", list.get(3).getLname());
+    }
+
+    @Test
+    public void userTest(){
+        UserDTO dto = myservice.detailMe(113);
+        assertEquals(113, dto.getUid());
     }
 
 }
