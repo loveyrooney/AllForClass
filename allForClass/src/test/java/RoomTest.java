@@ -1,3 +1,4 @@
+import com.chunjae.allforclass.dto.RefDTO;
 import com.chunjae.allforclass.dto.ReplyDTO;
 import com.chunjae.allforclass.service.RoomService;
 import org.junit.jupiter.api.Test;
@@ -7,7 +8,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -44,4 +48,15 @@ public class RoomTest {
         rservice.replyinsert(dto);
     }
 
+    @Test
+    public void refTest1(){
+        List<RefDTO> reflist = rservice.detailref(1);
+
+        for(int i=0; i<reflist.size(); i++) {
+            String refname = rservice.detailref(1).get(i).getRefpath();
+            refname = URLDecoder.decode(refname, StandardCharsets.UTF_8).substring(37);
+            System.out.println("........"+refname);
+        }
+
+    }
 }

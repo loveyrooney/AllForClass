@@ -66,8 +66,9 @@
 }
 
 #jsp_body {
-    border: 1px solid silver;
+    border: 1px solid #1CBCBC;
     margin: 0 10vw;
+    border-radius: 15px;
 }
 
 #footer {
