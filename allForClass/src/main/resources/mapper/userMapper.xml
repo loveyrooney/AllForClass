@@ -39,4 +39,10 @@
         from user
         where uid = #{sessionId}
     </select>
+
+    <select id="emailCheck" parameterType="string" resultType="int">
+        select count(email)
+        from user
+        where email=#{email}
+    </select>
 </mapper>

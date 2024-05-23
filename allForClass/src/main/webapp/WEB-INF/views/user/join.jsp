@@ -9,6 +9,17 @@
 <html>
 <head>
     <title>Title</title>
+    <script defer src="/resources/js/user/join.js"></script>
+    <style>
+        .email_already{
+            display: none;
+            collapse: red;
+        }
+        .email_ok{
+            display: none;
+            color: lightgreen;
+        }
+    </style>
 </head>
 <body>
 <div class="join_wrap">
@@ -16,26 +27,31 @@
     <form method="post" action="/join_result">
         <ul>
             <li class="join_box">
-                <label for="email" class="login_txt">이 메 일</label>
-                <input type="text" name="email" id="email" class="login_input" required>
+                <label for="email" class="join_title">이 메 일</label>
+                <input type="text" name="email" id="email" class="login_input" placeholder="email"
+                        required>
+                <input type="button" value="중복 체크" id="emailCk" <%-- onclick="checkEmail()"--%>>
+                <%--<span id="email_ok" class="email_ok">사용 가능한 이메일입니다.</span>
+                <span id="email_already" class="email_already">중복된 이메일입니다.</span>--%>
+                <div id="check"></div>
             </li>
             <li class="join_box">
-                <label for="pwd" class="login_txt">비밀번호</label>
-                <input type="password" name="pwd" id="pwd"  class="login_input" required>
+                <label for="pwd" class="join_title">비밀번호</label>
+                <input type="password" name="pwd" id="pwd"  class="login_input" placeholder="password" required>
             </li>
             <li class="join_box">
-                <label for="uname" class="login_txt">이  름</label>
+                <label for="uname" class="join_title">이  름</label>
                 <input type="text" name="uname" id="uname" class="login_input" required>
             </li>
             <li class="join_box">
-                <label for="role">회원 구분</label>
+                <label for="role" class="join_title">회원 구분</label>
                 <select name="role" id="role">
                     <option value="1">수강생</option>
                     <option value="2">강사</option>
                     <option value="3" hidden>관리자</option>
                 </select>
             </li>
-            <button type="submit" class="login_btn">가입하기</button>
+            <button type="submit" class="join_btn">가입하기</button>
         </ul>
     </form>
 
