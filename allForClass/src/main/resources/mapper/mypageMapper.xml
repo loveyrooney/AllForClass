@@ -5,15 +5,16 @@
 <mapper namespace="com.chunjae.allforclass.dao.MypageMapper">
     <insert id="insertLec" parameterType="com.chunjae.allforclass.dto.LecDTO">
         INSERT INTO lecture( lname
-                          , teacher_id
-                          , price
-                          , description
-                          , subject
-                          , entry
-                          , startdate
-                          , timesession
-                          , imgpath )
-        VALUES ( #{lname}, #{tid}, #{price}, #{description}, #{subject}, #{entry}, #{startdate}, #{timesession}, #{imgpath});
+        , teacher_id
+        , price
+        , description
+        , subject
+        , entry
+        , startdate
+        , timesession
+        , imgpath )
+        VALUES ( #{lname}, #{tid}, #{price}, #{description}, #{subject}, #{entry}, #{startdate}, #{timesession},
+        #{imgpath});
     </insert>
 
     <select id="detailMe" parameterType="int" resultType="com.chunjae.allforclass.dto.UserDTO">
@@ -24,17 +25,33 @@
 
     <select id="findPurList" parameterType="int" resultType="com.chunjae.allforclass.dto.CalDTO">
         SELECT p.lid AS lid
-             , lname
-             , uname AS tname
-             , subject
-             , startdate
-             , SUBSTRING_INDEX(timesession, '*', -1) as timesession
+        , lname
+        , uname AS tname
+        , subject
+        , startdate
+        , SUBSTRING_INDEX(timesession, '*', -1) as timesession
         FROM purchase p INNER JOIN lecture l
-             ON p.lid = l.lid
-             INNER JOIN user u
-             ON l.teacher_id=u.uid
+        ON p.lid = l.lid
+        INNER JOIN user u
+        ON l.teacher_id=u.uid
         WHERE p.uid = #{uid}
     </select>
 
-
+    <select id="findPastMyLecList" parameterType="hashmap" resultType="com.chunjae.allforclass.dto.LecDTO">
+        SELECT subject
+        , lname
+        , price
+        , startdate
+        , timesession
+        FROM lecture
+        WHERE teacher_id = #{uid}
+        <![CDATA[
+              AND startdate < #{curr_day}
+        ]]>
+        <if test="curr_session != '5'">
+        <![CDATA[
+                or ( startdate = #{curr_day} and SUBSTRING(timesession, 5, 1) <= #{curr_session} )
+        ]]>
+        </if>
+    </select>
 </mapper>

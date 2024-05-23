@@ -10,4 +10,5 @@ public interface MypageService {
     int insertLec(LecDTO dto);
     UserDTO detailMe(int uid);
     List<CalDTO> findPurList(int uid);
+    List<LecDTO> findPastMyLecList(String curr_day, String curr_session, int uid);
 }

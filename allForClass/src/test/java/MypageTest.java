@@ -50,4 +50,12 @@ public class MypageTest {
         assertEquals(113, dto.getUid());
     }
 
+    @Test
+    public void pastlecTest(){
+        List<LecDTO> list = myservice.findPastMyLecList("2024-05-23", "2", 116);
+
+        assertEquals("강의시간테스트2", list.get(2).getLname());
+
+    }
+
 }
