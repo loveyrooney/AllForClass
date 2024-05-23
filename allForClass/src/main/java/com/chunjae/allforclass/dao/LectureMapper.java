@@ -14,4 +14,5 @@ public interface LectureMapper {
 
     List<LecDTO> findLecList(HashMap<String, Object> hm);
 
+    Integer checkPrice(int lid);
 }
