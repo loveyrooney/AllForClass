@@ -6,6 +6,7 @@ public class PurDTO {
     private String pdate;
     private int uid;
     private int lid;
+    private String payid;
 
     public PurDTO() {
     }
@@ -40,5 +41,13 @@ public class PurDTO {
 
     public void setLid(int lid) {
         this.lid = lid;
+    }
+
+    public String getPayid() {
+        return payid;
+    }
+
+    public void setPayid(String payid) {
+        this.payid = payid;
     }
 }

@@ -26,18 +26,18 @@
     <context:component-scan base-package="com.chunjae.allforclass.controller"/>
     <context:component-scan base-package="com.chunjae.allforclass.exception"/>
     <!-- Login Interceptor 빈 생성 및 제외 경로 지정 세팅 (이거 어노테이션으로도 할수 있을것 같은데 나중에 공부하는 걸로) -->
-    <bean id="authInterrupt" class="com.chunjae.allforclass.interceptor.LoginInterceptor"/>
-    <mvc:interceptors>
-        <mvc:interceptor>
-            <mvc:mapping path="/*/**"/>
-            <mvc:exclude-mapping path="/detail_lec/*"/>
-            <mvc:exclude-mapping path="/main"/>
-            <mvc:exclude-mapping path="/login*"/>
-            <mvc:exclude-mapping path="/logout*"/>
-            <mvc:exclude-mapping path="/join*"/>
-            <mvc:exclude-mapping path="/getImage/**"/>
-            <mvc:exclude-mapping path="/resources/**"/>
-            <ref bean="authInterrupt"/>
-        </mvc:interceptor>
-    </mvc:interceptors>
+<!--    <bean id="authInterrupt" class="com.chunjae.allforclass.interceptor.LoginInterceptor"/>-->
+<!--    <mvc:interceptors>-->
+<!--        <mvc:interceptor>-->
+<!--            <mvc:mapping path="/*/**"/>-->
+<!--            <mvc:exclude-mapping path="/detail_lec/*"/>-->
+<!--            <mvc:exclude-mapping path="/main"/>-->
+<!--            <mvc:exclude-mapping path="/login*"/>-->
+<!--            <mvc:exclude-mapping path="/logout*"/>-->
+<!--            <mvc:exclude-mapping path="/join*"/>-->
+<!--            <mvc:exclude-mapping path="/getImage/**"/>-->
+<!--            <mvc:exclude-mapping path="/resources/**"/>-->
+<!--            <ref bean="authInterrupt"/>-->
+<!--        </mvc:interceptor>-->
+<!--    </mvc:interceptors>-->
 </beans>

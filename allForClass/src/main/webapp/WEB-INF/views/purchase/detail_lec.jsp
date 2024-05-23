@@ -10,8 +10,8 @@
 <html>
 <head>
     <link rel="stylesheet" href="/resources/css/purchase/detail_lec.css">
-    <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
     <script src="/resources/js/purchase/detail_lec.js"></script>
+    <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
 </head>
 <body>
 <div class="detail_wrap">
@@ -50,18 +50,20 @@
 </div>
 <script>
     let inits = {
-        lid: ${dto.lid}
+        p_lid: ${dto.lid}
+        ,p_uid:0
+        ,storeId:''
+        ,channelKey:''
+        ,fullName:''
+        ,email:''
+        ,p_pid:0
     }
-    if(${!empty sessionScope.sessionId})
-        inits['uid'] = ${sessionScope.sessionId}
-    if(${!empty storeId and !empty channelKey}){
-        inits['storeId'] = ${storeId}
-        inits['channelKey'] = ${channelKey}
-    }
-    if(${!empty user}){
-        inits['fullName'] = ${user.uname}
-        inits['email'] = ${user.email}
-    }
+    inits['p_uid'] = ${sessionScope.sessionId}
+    inits['storeId'] = `${storeId}`;
+    inits['channelKey'] = `${channelKey}`;
+    inits['fullName'] = `${user.uname}`;
+    inits['email'] = `${user.email}`;
+    inits['p_pid'] = ${pid}
     init(inits);
 </script>
 </body>

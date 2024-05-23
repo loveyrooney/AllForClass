@@ -1,8 +1,6 @@
 package com.chunjae.allforclass.controller;
 
 import com.chunjae.allforclass.dto.LecDTO;
-import com.chunjae.allforclass.dto.PurDTO;
-import com.chunjae.allforclass.dto.UserDTO;
 import com.chunjae.allforclass.service.PurchaseService;
 import com.chunjae.allforclass.service.UserService;
 import org.slf4j.Logger;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -36,13 +33,19 @@ public class PurchaseController {
     }
 
     private final Logger logger = LoggerFactory.getLogger("PurchaseController.class");
+
+    // 결제 관련 정보 보관 (모든 인스턴스에서 같은 정보를 사용하므로 static)
     private static HashMap<String,String> payprops = new HashMap<>();
+
+    // 결제 관련 정보 세팅 메서드 (해당 메서드를 실행하지 않는 경우도 있으므로 인스턴스 메서드)
     private void initProps() {
+        // 결제 관련 정보를 properties 파일에서 가져오기
         ClassPathResource resource = new ClassPathResource("pay.properties");
         try{
             Path path = Paths.get(resource.getURI());
             List<String> content = Files.readAllLines(path);
             for(String s:content){
+                // = 기준 0번째는 key, 1번째는 value
                 payprops.put(s.split("=")[0],s.split("=")[1]);
             }
         } catch (IOException e){
@@ -53,22 +56,27 @@ public class PurchaseController {
     @GetMapping("/detail_lec/{lid}")
     public String detail_lec(@PathVariable int lid, HttpServletRequest request, Model model){
         HttpSession session = request.getSession(false);
-        if(session!=null){
+        if(session!=null){ // 세션이 있는경우 사용자의 role check
             int sessionId = (int)session.getAttribute("sessionId");
             String role = uservice.checkRole(sessionId);
             model.addAttribute("role",role);
-            if(role.equals("student")){
-                boolean isReserved = pservice.isReserved(sessionId,lid);
-                if(!isReserved){
-                    initProps();
+            if(role.equals("student")){  // 사용자의 role 이 수강생인 경우
+                initProps();
+                int pid = pservice.isReserved(sessionId,lid);
+                if(pid==0){ // 해당 강의를 수강신청 한 적 없는 경우
                     HashMap<String,Object> user = uservice.findUser(sessionId);
                     model.addAttribute("user",user);
                     model.addAttribute("storeId", payprops.get("STORE_ID"));
                     model.addAttribute("channelKey", payprops.get("CHANNEL_KEY"));
+                    model.addAttribute("isReserved",false);
+                } else { // 해당 강의를 수강신청한 경우
+                    model.addAttribute("pid",pid);
+                    model.addAttribute("isReserved",true);
                 }
-                model.addAttribute("isReserved",isReserved);
+
             }
         }
+        // 모든 사용자에게 공통으로 보여질 정보
         LecDTO dto = pservice.detailLec(lid);
         model.addAttribute("dto",dto);
         model.addAttribute("body","purchase/detail_lec.jsp");
@@ -81,36 +89,50 @@ public class PurchaseController {
         logger.info("payment paymentId : {}",hm.get("paymentId"));
         logger.info("payment uid : {}", hm.get("uid"));
         logger.info("payment lid : {}", hm.get("lid"));
-        int priceFromDB = 1000;
+        int lid = (int)hm.get("lid");
+        String payid = (String) hm.get("paymentId");
+        // 결제 단건 조회 api 비동기 방식 요청
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://api.portone.io/payments/"+hm.get("paymentId")))
+                .uri(URI.create("https://api.portone.io/payments/"+payid))
                 .header("Authorization", "PortOne "+payprops.get("V2_SECRET"))
                 .method("GET", HttpRequest.BodyPublishers.ofString("{}"))
                 .build();
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info("payment complete : {}",response);
+        // 결과 리턴할 해시 맵
         HashMap<String,Object> result = new HashMap<>();
+        int priceFromDB = pservice.checkPrice(lid);
+        // 결제 정보의 paymentId 와 price 가 우리 DB 정보와 일치하는지 체크
         if(response.body().contains("\"paid\":"+priceFromDB)
-                && response.body().contains("\"id\":\""+hm.get("paymentId")+"\"")){
-            result.put("correct",true);
+                && response.body().contains("\"id\":\""+payid+"\"")){
+            boolean correct = pservice.insertPur(hm);
+            result.put("correct",correct);
             result.put("msg","정상 결제되었습니다.");
         } else {
-            result.put("correct",false);
+            result.put("correct", false);
             result.put("msg","결제가 실패하였습니다.");
         }
         return result;
     }
 
-    @GetMapping("/payment/cancel/{uid}")
-    public @ResponseBody HashMap<String, Object> payRefund(@PathVariable int uid) throws IOException, InterruptedException{
+    @GetMapping("/payment/cancel/{pid}")
+    public @ResponseBody HashMap<String, Object> payRefund(@PathVariable int pid) throws IOException, InterruptedException{
+        // 우리 DB에 있는 사용자 pid 를 통해 결제 시 발급받은 paymentId 조회 (결제 paymentId 외부 노출 안하기 위해서)
+        String payid = pservice.findPayid(pid);
+        // 결제 취소 api 비동기 방식 요청
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://api.portone.io/payments/"+uid+"/cancel"))
+                .uri(URI.create("https://api.portone.io/payments/"+payid+"/cancel"))
                 .header("Authorization", "PortOne "+payprops.get("V2_SECRET"))
                 .method("POST", HttpRequest.BodyPublishers.ofString("{\"reason\":\"reason\"}"))
                 .build();
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info("payment cancel : {}",response);
+        // 결과 리턴할 해시 맵
         HashMap<String,Object> result = new HashMap<>();
         if(response.statusCode()==200){
-            result.put("correct",true);
+            // 결제 취소가 성공한 경우 우리 DB 에서 결제 정보 삭제
+            boolean correct = pservice.deletePur(pid);
+            result.put("correct",correct);
             result.put("msg","정상 환불되었습니다.");
         } else {
             result.put("correct",false);
