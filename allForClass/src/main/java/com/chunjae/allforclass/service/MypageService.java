@@ -11,4 +11,6 @@ public interface MypageService {
     UserDTO detailMe(int uid);
     List<CalDTO> findPurList(int uid);
     List<LecDTO> findPastMyLecList(String curr_day, String curr_session, int uid);
+    List<LecDTO> findConfirmedMyLecList(String curr_day, String curr_session, int uid);
+    List<LecDTO> findWaitMyLecList(int uid);
 }

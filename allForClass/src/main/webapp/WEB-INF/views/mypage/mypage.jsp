@@ -52,10 +52,10 @@
     <c:when test="${dto.role == 2}">
         <%--강사면 강의 리스트 보여주기--%>
         <ul>
-            <li><button id="pastlec" type="button">지난 강의</button></li>
+            <li id="pastlec">지난 강의</li>
             <li id="confirmlec">예정된 강의</li>
             <li id="waitlec">승인 대기 중</li>
-            <li><button class="mypage_btn" type="button">강의 등록 신청</button></li>
+            <li><a href="/insertlec">강의 등록 신청</a></li>
         </ul>
 
         <table>

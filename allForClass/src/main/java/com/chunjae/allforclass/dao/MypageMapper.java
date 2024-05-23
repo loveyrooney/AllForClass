@@ -14,4 +14,6 @@ public interface MypageMapper {
     UserDTO detailMe(int uid);
     List<CalDTO> findPurList(int uid);
     List<LecDTO> findPastMyLecList(HashMap<String, Object> hm);
+    List<LecDTO> findConfirmedMyLecList(HashMap<String, Object> hm);
+    List<LecDTO> findWaitMyLecList(int uid);
 }
