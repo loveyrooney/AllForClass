@@ -26,8 +26,8 @@
     <div class="mainlist_lec">
         <c:forEach var="item" items="${list}" >
             <ul>
-                    <li><a href="/detail_lec/${lid}"><img src="/getImage/${item.imgpath}" alt="lecture_img"></a></li>
-                    <li class="mainlist_lecname"><a href="/detail_lec/${lid}">${item.lname}</a></li>
+                    <li><a href="/detail_lec/${item.lid}"><img src="/getImage/${item.imgpath}" alt="lecture_img"></a></li>
+                    <li class="mainlist_lecname"><a href="/detail_lec/${item.lid}">${item.lname}</a></li>
                     <li class="mainlist_lecprice"><fmt:formatNumber pattern="###,###,###" value="${item.price}"/>원</li>
             </ul>
         </c:forEach>

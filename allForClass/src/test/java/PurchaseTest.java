@@ -58,4 +58,9 @@ public class PurchaseTest {
     public void deletePur(){
         Assertions.assertEquals(true,pservice.deletePur(2));
     }
+
+    @Test
+    public void countPur(){
+        Assertions.assertEquals(1,pservice.countPur(2));
+    }
 }

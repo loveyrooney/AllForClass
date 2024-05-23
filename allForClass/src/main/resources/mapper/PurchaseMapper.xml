@@ -30,4 +30,9 @@
         delete from purchase
         where pid = #{pid}
     </delete>
+    <select id="countPur" parameterType="int" resultType="int">
+        select count(*)
+        from purchase
+        where lid = #{lid}
+    </select>
 </mapper>

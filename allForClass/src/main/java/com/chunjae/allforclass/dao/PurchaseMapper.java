@@ -17,4 +17,6 @@ public interface PurchaseMapper {
     String findPayid(int pid);
 
     int deletePur(int pid);
+
+    int countPur(int lid);
 }
