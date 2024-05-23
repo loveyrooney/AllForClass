@@ -68,10 +68,10 @@ public class PurchaseController {
                     model.addAttribute("user",user);
                     model.addAttribute("storeId", payprops.get("STORE_ID"));
                     model.addAttribute("channelKey", payprops.get("CHANNEL_KEY"));
-                    model.addAttribute("isReserved",false);
+                    model.addAttribute("isReserved",0);
                 } else { // 해당 강의를 수강신청한 경우
                     model.addAttribute("pid",pid);
-                    model.addAttribute("isReserved",true);
+                    model.addAttribute("isReserved",1);
                 }
 
             }

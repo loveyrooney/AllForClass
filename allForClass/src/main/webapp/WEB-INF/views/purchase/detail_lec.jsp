@@ -26,21 +26,27 @@
             <li>강사 : ${dto.tname} (${dto.temail})</li>
             <li><span id="price">${dto.price}</span>원 | ${dto.entry}명 중 <span id="reserve">${reserve}</span>명 남음</li>
             <li class="btns">
-                <c:choose>
-                    <c:when test="${reserve>0}">
-                        <c:when test="${!empty isReserved and !isReserved}">
-                            <button class="lec_regi_btn" id="pay" type="button">수강하기</button>
-                        </c:when>
-                    </c:when>
-                    <c:when test="${!empty isReserved and isReserved}">
-                        <button class="lec_regi_btn" id="refund" type="button">수강취소</button>
-                    </c:when>
-                    <c:otherwise>
-                        <a class="lec_regi_btn" href="/login">수강하기</a>
-                    </c:otherwise>
-                </c:choose>
+                <c:if test="${!empty isReserved and isReserved==1}">
+                    <button class="lec_regi_btn" id="refund" type="button">수강취소</button>
+                </c:if>
+                <c:if test="${reserve>0}">
+                    <c:if test="${!empty role and role.equals('student') and !empty isReserved and isReserved==0}">
+                        <button class="lec_regi_btn" id="pay" type="button">수강하기</button>
+                    </c:if>
+                    <c:if test="${empty role}">
+                        <a class="lec_enter_btn" href="/login">수강하기</a>
+                    </c:if>
+                </c:if>
+                <c:if test="${reserve<=0}">
+                    <button class="lec_block_btn" type="button">수강마감</button>
+                </c:if>
                 <c:if test="${!empty role}">
-                    <a class="lec_enter_btn" href="/room/${dto.lid}">강의실 입장</a>
+                    <c:if test="${!role.equals('student')}">
+                        <a class="lec_enter_btn" href="/room/${dto.lid}">강의실 입장</a>
+                    </c:if>
+                    <c:if test="${role.equals('student') and isReserved==1}">
+                        <a class="lec_enter_btn" href="/room/${dto.lid}">강의실 입장</a>
+                    </c:if>
                 </c:if>
             </li>
         </ul>

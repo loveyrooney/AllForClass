@@ -65,6 +65,24 @@
     font-size: medium;
 }
 
+.lec_block_btn {
+    position: relative;
+    left: 50px;
+    text-decoration: none;
+    display: inline-block;
+    width: 120px;
+    height: 35px;
+    border: 2px solid grey;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 20px;
+    background: silver;
+    color: dimgray;
+    font-family: "Poor Story", system-ui;
+    font-weight: 700;
+    font-size: medium;
+}
+
 .lec_enter_btn:hover, .lec_regi_btn:hover {
     background: #ECFBFB;
 }
