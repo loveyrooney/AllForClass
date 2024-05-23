@@ -56,12 +56,12 @@ public class RoomController {
 
         LecDTO ldto = rservice.detailLec(lid);
         VideoDTO vdto = rservice.detailvideo(lid);
-//        PurDTO pdto = rservice.enterroom(pid);
         List<RefDTO> reflist = rservice.detailref(lid);
+//        PurDTO pdto = rservice.enterroom(pid);
 
+//        model.addAttribute("pdto", pdto);
         model.addAttribute("ldto", ldto);
         model.addAttribute("vdto", vdto);
-//        model.addAttribute("pdto", pdto);
 
         // 첨부 파일 이름 디코드
         List<String> decodeRef = new ArrayList<>();
@@ -84,10 +84,10 @@ public class RoomController {
     public String insertref(HttpServletRequest request, RefDTO refdto) {
 
 //        logger.info(".....insert ref method......");
-//        logger.info("..... getlid {}", refdto.getLid());
-//        logger.info("..... getrfile....  {}", refdto.getFiles()[0].getOriginalFilename());
+        logger.info("..... getlid {}", refdto.getLid());
+//        logger.info("..... getfile....  {}", refdto.getFiles()[0].getOriginalFilename());
 
-        String path = "/uploadImg";
+        String path = "/uploadFile";
         String realpath = "D:\\moduUpload";
 //        String realpath = request.getSession().getServletContext().getRealPath(path);
         rservice.insertref(realpath, refdto);

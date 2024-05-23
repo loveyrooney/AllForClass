@@ -1,5 +1,7 @@
 package com.chunjae.allforclass.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class LecDTO {
 
     private int lid;

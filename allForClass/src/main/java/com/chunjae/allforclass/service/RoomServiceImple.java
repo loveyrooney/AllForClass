@@ -81,15 +81,21 @@ public class RoomServiceImple implements RoomService {
             UUID uuid = UUID.randomUUID();
 
             String fname = refdto.getFiles()[i].getOriginalFilename();
-            System.out.println("original filename ,..." + fname);
+            if(!"".equals(fname)){
+                System.out.println("original filename ,..." + fname);
+                System.out.println("fname...." + fname);
+                fname = URLEncoder.encode(fname, StandardCharsets.UTF_8)
+                        .replace("+", "%20");
+                String filename = uuid + "_" + fname;
+                saveFile[i] = new File(path, filename);
+                System.out.println("filename....length : " + filename.length());
+                filenames[i] = filename;
+            }else{
+                // 500 에러 null pointer exception
+                System.out.println("file not selected");
+                return null;
+            }
 
-            System.out.println("fname...." + fname);
-            fname = URLEncoder.encode(fname, StandardCharsets.UTF_8)
-                    .replace("+", "%20");
-            String filename = uuid + "_" + fname;
-            saveFile[i] = new File(path, filename);
-            System.out.println("filename....length : " + filename.length());
-            filenames[i] = filename;
         } // file 생성
 
         try {

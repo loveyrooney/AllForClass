@@ -1,3 +1,4 @@
+import com.chunjae.allforclass.dto.LecDTO;
 import com.chunjae.allforclass.dto.RefDTO;
 import com.chunjae.allforclass.dto.ReplyDTO;
 import com.chunjae.allforclass.service.RoomService;
@@ -59,4 +60,5 @@ public class RoomTest {
         }
 
     }
+
 }
