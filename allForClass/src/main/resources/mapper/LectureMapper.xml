@@ -37,6 +37,12 @@
               AND startdate BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 8 DAY)
         order by startdate
     </select>
+
+    <select id="checkPrice" parameterType="int" resultType="int">
+        select price
+        from lecture
+        where lid = #{lid}
+    </select>
     <!--컨펌 true, 오늘 날짜기준 오늘 부터 startdate+8일까지 출력-->
 
 </mapper>

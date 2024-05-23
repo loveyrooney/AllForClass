@@ -12,4 +12,9 @@ public interface PurchaseMapper {
 
     Integer isReserved(HashMap<String,Object> hm);
 
+    int insertPur(HashMap<String, Object> hm);
+
+    String findPayid(int pid);
+
+    int deletePur(int pid);
 }

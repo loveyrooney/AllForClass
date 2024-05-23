@@ -6,6 +6,7 @@ import com.chunjae.allforclass.dto.LecDTO;
 import com.chunjae.allforclass.dto.PurDTO;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 
 @Service
@@ -24,15 +25,44 @@ public class PurchaseServiceImpl implements PurchaseService{
     }
 
     @Override
-    public boolean isReserved(int sessionId, int lid) {
-        boolean isRererved = false;
+    public int isReserved(int sessionId, int lid) {
+        int isReserved = 0;
         HashMap<String,Object> hm = new HashMap<>();
         hm.put("sessionId",sessionId);
         hm.put("lid",lid);
         Integer result = pmapper.isReserved(hm);
-        if(result!=0)
-            isRererved = true;
-        return isRererved;
+        if(result !=null)
+            isReserved = result;
+        return isReserved;
     }
 
+    @Override
+    public int checkPrice(int lid) {
+        int price = 0;
+        Integer result = lmapper.checkPrice(lid);
+        if(result!=null)
+            price = result;
+        return price;
+    }
+
+    @Override
+    public boolean insertPur(HashMap<String, Object> hm){
+        int result = pmapper.insertPur(hm);
+        //if(result==0){}
+        return true;
+    }
+
+    @Override
+    public String findPayid(int pid) {
+        return pmapper.findPayid(pid);
+    }
+
+    @Override
+    public boolean deletePur(int pid) {
+        boolean correct = false;
+        int result = pmapper.deletePur(pid);
+        if(result!=0)
+            correct = true;
+        return correct;
+    }
 }
