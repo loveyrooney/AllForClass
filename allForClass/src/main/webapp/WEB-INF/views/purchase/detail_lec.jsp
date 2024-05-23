@@ -24,11 +24,13 @@
             <li>과목> ${dto.subject}</li>
             <li id="lname">${dto.lname}</li>
             <li>강사 : ${dto.tname} (${dto.temail})</li>
-            <li><span id="price">${dto.price}</span>원 | 20명 중 2명 남음</li>
+            <li><span id="price">${dto.price}</span>원 | ${dto.entry}명 중 <span id="reserve">${reserve}</span>명 남음</li>
             <li class="btns">
                 <c:choose>
-                    <c:when test="${!empty isReserved and !isReserved}">
-                        <button class="lec_regi_btn" id="pay" type="button">수강하기</button>
+                    <c:when test="${reserve>0}">
+                        <c:when test="${!empty isReserved and !isReserved}">
+                            <button class="lec_regi_btn" id="pay" type="button">수강하기</button>
+                        </c:when>
                     </c:when>
                     <c:when test="${!empty isReserved and isReserved}">
                         <button class="lec_regi_btn" id="refund" type="button">수강취소</button>
@@ -38,7 +40,7 @@
                     </c:otherwise>
                 </c:choose>
                 <c:if test="${!empty role}">
-                    <a class="lec_enter_btn" href="">강의실 입장</a>
+                    <a class="lec_enter_btn" href="/room/${dto.lid}">강의실 입장</a>
                 </c:if>
             </li>
         </ul>
@@ -51,6 +53,7 @@
 <script>
     let inits = {
         p_lid: ${dto.lid}
+        ,entry: ${dto.entry}
         ,p_uid:0
         ,storeId:''
         ,channelKey:''

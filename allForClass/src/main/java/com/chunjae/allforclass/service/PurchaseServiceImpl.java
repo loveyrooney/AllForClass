@@ -65,4 +65,9 @@ public class PurchaseServiceImpl implements PurchaseService{
             correct = true;
         return correct;
     }
+
+    @Override
+    public int countPur(int lid) {
+        return pmapper.countPur(lid);
+    }
 }

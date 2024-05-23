@@ -16,4 +16,6 @@ public interface PurchaseService {
     String findPayid(int pid);
 
     boolean deletePur(int pid);
+
+    int countPur(int lid);
 }

@@ -78,7 +78,9 @@ public class PurchaseController {
         }
         // 모든 사용자에게 공통으로 보여질 정보
         LecDTO dto = pservice.detailLec(lid);
+        int reserve = pservice.countPur(lid);
         model.addAttribute("dto",dto);
+        model.addAttribute("reserve",dto.getEntry()-reserve);
         model.addAttribute("body","purchase/detail_lec.jsp");
         model.addAttribute("title","모두의 국영수 - "+dto.getLname());
         return "main";
