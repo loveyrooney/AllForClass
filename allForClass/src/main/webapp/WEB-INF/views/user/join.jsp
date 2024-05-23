@@ -10,16 +10,6 @@
 <head>
     <title>Title</title>
     <script defer src="/resources/js/user/join.js"></script>
-    <style>
-        .email_already{
-            display: none;
-            collapse: red;
-        }
-        .email_ok{
-            display: none;
-            color: lightgreen;
-        }
-    </style>
 </head>
 <body>
 <div class="join_wrap">
