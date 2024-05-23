@@ -8,6 +8,7 @@ import com.chunjae.allforclass.dto.LecDTO;
 import com.chunjae.allforclass.dto.UserDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -40,6 +41,19 @@ public class MypageServiceImple implements MypageService{
     public List<CalDTO> findPurList(int uid) {
         List<CalDTO> list = mymapper.findPurList(uid);
 
+        return list;
+    }
+
+    /**지난 강의 목록*/
+    @Override
+    public List<LecDTO> findPastMyLecList(String curr_day, String curr_session, int uid) {
+
+        HashMap<String, Object> hm = new HashMap<>();
+        hm.put("curr_day", curr_day);
+        hm.put("curr_session", curr_session);
+        hm.put("uid", uid);
+
+        List<LecDTO> list = mymapper.findPastMyLecList(hm);
 
         return list;
     }

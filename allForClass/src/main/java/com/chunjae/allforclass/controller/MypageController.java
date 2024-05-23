@@ -43,7 +43,7 @@ public class MypageController {
         return "main";
     }
 
-    /**수강 강의 목록 json 파일 전달*/
+    /**수강생 신청 강의 목록 json*/
     @GetMapping("/cal_list/{uid}")
     public @ResponseBody List<Map<String, Object>> cal_list(@PathVariable int uid){
 
@@ -60,6 +60,7 @@ public class MypageController {
 
         for(int i = 0; i < list.size(); i++) {
             Map<String, Object> event = new HashMap<>();
+            event.put("url", "/detail_lec/"+list.get(i).getLid());
             event.put("title", list.get(i).getTimesession()+"\n"
                                +"["+list.get(i).getSubject()+"] "
                                +list.get(i).getTname()+"\n"
@@ -91,7 +92,7 @@ public class MypageController {
 
         //개강일 지정 가능 날짜 - 등록일 열흘 이후로 지정가능
         Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd"); // 포멧 지정
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd"); // 포맷 지정
 
         Calendar cal = Calendar.getInstance(); // 날짜 계산을 위해 Calendar 추상클래스 선언 및 getInstance() 메서드 사용
         cal.setTime(date);
@@ -114,7 +115,6 @@ public class MypageController {
                                  , LecDTO dto
                                  , HttpServletRequest request
     ){
-
         //이미지 파일 업로드
         String base="/uploadImg";
 
@@ -150,6 +150,39 @@ public class MypageController {
         int result = myservice.insertLec(dto);
 
         return "redirect:/mypage";
+    }
+
+    /**지난 강의 목록 json*/
+    @GetMapping("/pastmylec/{uid}")
+    public @ResponseBody List<LecDTO> pastmylec(@PathVariable int uid){
+
+        // 현재 날짜와 시간 확인
+        SimpleDateFormat format_day = new SimpleDateFormat("yyyy-MM-dd"); // 날짜포맷
+        SimpleDateFormat format_time = new SimpleDateFormat("HH:mm"); // 시간포맷
+
+        Calendar cal = Calendar.getInstance();
+        String curr_day = format_day.format(cal.getTime());  // 2024-05-23
+        String curr_time = format_time.format(cal.getTime());  // 10:49
+
+        String curr_session = "";
+
+        if("00:00".compareTo(curr_time) < 0 && "12:00".compareTo(curr_time) >= 0){
+            curr_session="1";
+        } else if("12:00".compareTo(curr_time) < 0 && "15:00".compareTo(curr_time) >= 0){
+            curr_session="2";
+        } else if("15:00".compareTo(curr_time) < 0 && "18:00".compareTo(curr_time) >= 0){
+            curr_session="3";
+        } else if("18:00".compareTo(curr_time) < 0 && "21:00".compareTo(curr_time) >= 0){
+            curr_session="4";
+        } else {
+            curr_session="time5";
+
+            cal.add(Calendar.DATE, 1); // time4 이후면 날짜에 하루 더한다
+            curr_day = format_day.format(cal.getTime());
+        }
+
+        List<LecDTO> list = myservice.findPastMyLecList(curr_day, curr_session, uid);
+        return list;
     }
 
 
