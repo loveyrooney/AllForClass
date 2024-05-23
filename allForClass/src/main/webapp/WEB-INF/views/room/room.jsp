@@ -15,9 +15,10 @@
 </head>
 <body>
 role: ${role}/
-sessionId(uid): ${sessionId}
-<%-- 강의 영상 부분 --%>
+sessionId(uid): ${sessionId}/
+tid: ${ldto.tid}
 <div id="container">
+    <%-- 강의 영상  --%>
     <div id="video">
         <img src="/resources/images/default.png" alt="default img">
         <ul>
@@ -25,16 +26,18 @@ sessionId(uid): ${sessionId}
             <li>영상경로: ${vdto.videopath}</li>
         </ul>
     </div>
+
+    <%-- 강의 자료 설명 --%>
     <div id="lec_detail">
-        <%-- 강의 자료 설명 부분--%>
-        <ul id=>
+        <ul id=lec_info>
             <li><h3>과목 > ${ldto.subject}</h3></li>
             <li><h2>${ldto.lname}</h2></li>
             <li><h4>강사 : ${ldto.tname} [${ldto.temail}]</h4></li>
         </ul>
 
-        <%-- 자료 등록 부분 / 강사에게만 보이게 --%>
-        <ul>
+        <%-- 등록된 자료 리스트 / 다운로드 --%>
+        강의자료
+        <ul id="reflist">
             <c:forEach var="i" items="${reflist}" varStatus="status">
                 <c:set var="decodedRef" value="${decodeRef[status.index]}"/>
                 <c:forTokens var="path" items="${i.refpath}" delims=",">
@@ -43,37 +46,38 @@ sessionId(uid): ${sessionId}
             </c:forEach>
         </ul>
 
+        <%-- 자료 등록  --%>
         <form method="post" action="/insertref" enctype="multipart/form-data">
             <input type="hidden" name="lid" id="reflid" value="${ldto.lid}">
             <input type="hidden" name="sessionId" id="sessionId" value="${sessionId}">
-            <%--    <input type="hidden" name="role" id="role" value="${role}">--%>
+            <input type="hidden" name="role" id="role" value="${role}">
+            <input type="hidden" name="tid" id="tid" value="${ldto.tid}">
+
             <div id="file_upload">
                 <input type="file" name="files" id="files" multiple>
-                <label class="label_file" for="files">강의 자료 선택</label>
                 <span class="span_file">선택된 파일이 없습니다.</span>
+                <label class="label_file_btn" for="files">강의 자료 선택</label>
+                <button type="submit">강의 자료 추가</button>
             </div>
-            <ul>
-                <li>
-                    <button type="button">수강하기</button>
-                    <button type="submit">강의 자료 추가</button>
-                </li>
-            </ul>
         </form>
+        <%--        <button type="button">수강하기</button>--%>
     </div>
 
-    <%-- 강의 설명 부분--%>
+    <%-- 강의 설명 --%>
     <div id="lec_description">
         ${ldto.description}
     </div>
 
 
-    <%-- 댓글 부분--%>
+    <%-- 댓글 --%>
     <div id="reply">
         <form>
-            <input type="text" name="content" id="content">
             <input type="hidden" name="rlid" id="rlid" value="${ldto.lid}">
-            <button type="button" id="append">쓰기</button>
+
+            <input type="text" name="content" id="content">
+            <button type="button" id="append_btn">쓰기</button>
         </form>
+        <%-- 댓글 리스트 --%>
         <ul id="replyList"></ul>
     </div>
 </div>
