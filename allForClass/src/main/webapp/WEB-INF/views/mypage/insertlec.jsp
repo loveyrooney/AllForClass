@@ -42,11 +42,11 @@
             </li>
             <li>
                 <label for="price">가격</label>
-                <input type="number" name="price" id="price" required>원
+                <input type="number" name="price" id="price" required> 원
             </li>
             <li>
                 <label for="entry">수강인원</label>
-                <input type="number" name="entry" id="entry" required>명
+                <input type="number" name="entry" id="entry" required> 명
             </li>
             <li>
                 <label for="startdate">개강일</label>

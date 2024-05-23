@@ -156,6 +156,39 @@ public class MypageController {
     @GetMapping("/pastmylec/{uid}")
     public @ResponseBody List<LecDTO> pastmylec(@PathVariable int uid){
 
+        // 현재 날짜와 시간 확인  -> 다른 곳에서도 쓰이니깐 따로 메서드 만들 것
+        SimpleDateFormat format_day = new SimpleDateFormat("yyyy-MM-dd"); // 날짜포맷
+        SimpleDateFormat format_time = new SimpleDateFormat("HH:mm"); // 시간포맷
+
+        Calendar cal = Calendar.getInstance();
+        String curr_day = format_day.format(cal.getTime());  // 2024-05-23
+        String curr_time = format_time.format(cal.getTime());  // 10:49
+
+        String curr_session = "";
+
+        if("00:00".compareTo(curr_time) < 0 && "12:00".compareTo(curr_time) >= 0){
+            curr_session="1";
+        } else if("12:00".compareTo(curr_time) < 0 && "15:00".compareTo(curr_time) >= 0){
+            curr_session="2";
+        } else if("15:00".compareTo(curr_time) < 0 && "18:00".compareTo(curr_time) >= 0){
+            curr_session="3";
+        } else if("18:00".compareTo(curr_time) < 0 && "21:00".compareTo(curr_time) >= 0){
+            curr_session="4";
+        } else {
+            curr_session="5";
+
+            cal.add(Calendar.DATE, 1); // time4 이후면 날짜에 하루 더한다
+            curr_day = format_day.format(cal.getTime());
+        }
+
+        List<LecDTO> list = myservice.findPastMyLecList(curr_day, curr_session, uid);
+        return list;
+    }
+
+    /**예정된 강의 목록 json*/
+    @GetMapping("/confirmedmylec/{uid}")
+    public @ResponseBody List<LecDTO> confirmedmylec(@PathVariable int uid){
+
         // 현재 날짜와 시간 확인
         SimpleDateFormat format_day = new SimpleDateFormat("yyyy-MM-dd"); // 날짜포맷
         SimpleDateFormat format_time = new SimpleDateFormat("HH:mm"); // 시간포맷
@@ -175,15 +208,23 @@ public class MypageController {
         } else if("18:00".compareTo(curr_time) < 0 && "21:00".compareTo(curr_time) >= 0){
             curr_session="4";
         } else {
-            curr_session="time5";
-
-            cal.add(Calendar.DATE, 1); // time4 이후면 날짜에 하루 더한다
-            curr_day = format_day.format(cal.getTime());
+            curr_session="5";
         }
 
-        List<LecDTO> list = myservice.findPastMyLecList(curr_day, curr_session, uid);
+        List<LecDTO> list = myservice.findConfirmedMyLecList(curr_day, curr_session, uid);
+
         return list;
     }
+
+    /**승인 대기 강의 목록 json*/
+    @GetMapping("/waitmylec/{uid}")
+    public @ResponseBody List<LecDTO> waitmylec(@PathVariable int uid){
+        List<LecDTO> list = myservice.findWaitMyLecList(uid);
+
+        return list;
+    }
+
+
 
 
 }

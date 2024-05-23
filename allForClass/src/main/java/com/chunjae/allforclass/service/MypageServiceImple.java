@@ -57,4 +57,23 @@ public class MypageServiceImple implements MypageService{
 
         return list;
     }
+
+    /**예정 강의 목록*/
+    @Override
+    public List<LecDTO> findConfirmedMyLecList(String curr_day, String curr_session, int uid) {
+
+        HashMap<String, Object> hm = new HashMap<>();
+        hm.put("curr_day", curr_day);
+        hm.put("curr_session", curr_session);
+        hm.put("uid", uid);
+
+        List<LecDTO> list = mymapper.findConfirmedMyLecList(hm);
+        return list;
+    }
+
+    @Override
+    public List<LecDTO> findWaitMyLecList(int uid) {
+        List<LecDTO> list = mymapper.findWaitMyLecList(uid);
+        return list;
+    }
 }
