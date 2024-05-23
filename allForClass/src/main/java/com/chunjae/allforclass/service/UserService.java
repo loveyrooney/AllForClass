@@ -17,4 +17,7 @@ public interface UserService {
     int join(UserDTO dto);
 
     HashMap<String,Object> findUser(int sessionId);
+
+
+    int emailCheck(String email);
 }

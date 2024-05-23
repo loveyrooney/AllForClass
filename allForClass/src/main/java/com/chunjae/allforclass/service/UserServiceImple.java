@@ -69,4 +69,14 @@ public class UserServiceImple implements UserService{
     public HashMap<String,Object> findUser(int sessionId) {
         return userMapper.findUser(sessionId);
     }
+
+
+
+    @Override
+    public int emailCheck(String email) {
+        int cnt = userMapper.emailCheck(email);
+        return cnt;
+    }
+
+
 }

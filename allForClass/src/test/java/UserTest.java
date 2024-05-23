@@ -36,4 +36,12 @@ public class UserTest {
     public void t4(){
         Assertions.assertEquals("김남일",userService.findUser(1).get("uname"));
     }
+
+
+    @Test
+    public void t5(){
+        int result = userService.emailCheck("qwe");
+
+        Assertions.assertEquals(1, result);
+    }
 }
