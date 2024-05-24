@@ -18,4 +18,6 @@ public interface PurchaseService {
     boolean deletePur(int pid);
 
     int countPur(int lid);
+
+    int checkSchedule(HashMap<String, Object> hm);
 }

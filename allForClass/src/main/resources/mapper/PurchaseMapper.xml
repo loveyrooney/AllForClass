@@ -35,4 +35,12 @@
         from purchase
         where lid = #{lid}
     </select>
+    <select id="checkSchedule" parameterType="hashmap" resultType="int">
+        select count(*)
+        from purchase p inner join lecture l
+          on p.lid = l.lid
+        where p.uid = #{uid}
+          and l.startdate = #{startdate}
+          and l.timesession = #{timesession}
+    </select>
 </mapper>

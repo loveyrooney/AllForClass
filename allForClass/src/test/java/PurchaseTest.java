@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 
 @ExtendWith(SpringExtension.class)
@@ -62,5 +63,18 @@ public class PurchaseTest {
     @Test
     public void countPur(){
         Assertions.assertEquals(1,pservice.countPur(2));
+    }
+    @Test
+    public void checkSchedule(){
+        HashMap<String,Object> hm = new HashMap<>();
+        hm.put("uid",3);
+        hm.put("startdate","2024-05-30");
+        hm.put("timesession","Time1*09:00-12:00");
+        Assertions.assertEquals(0,pservice.checkSchedule(hm));
+    }
+
+    @Test
+    public void date(){
+        Assertions.assertEquals(true,LocalDate.now().isAfter(LocalDate.parse("2024-05-23")));
     }
 }

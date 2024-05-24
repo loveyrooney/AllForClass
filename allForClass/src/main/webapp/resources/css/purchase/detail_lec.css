@@ -6,7 +6,7 @@
     width: 300px;
 }
 
-.lec_thumbnail p, .lec_info ul li:nth-child(2), .lec_info ul li:nth-child(4) {
+.lec_thumbnail p span, .lec_info ul li:nth-child(2), .lec_info ul li:nth-child(4) {
     font-size: larger;
     font-weight: 700;
     margin: 20px;

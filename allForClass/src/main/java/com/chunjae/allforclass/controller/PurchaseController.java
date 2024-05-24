@@ -20,6 +20,7 @@ import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
@@ -55,42 +56,69 @@ public class PurchaseController {
 
     @GetMapping("/detail_lec/{lid}")
     public String detail_lec(@PathVariable int lid, HttpServletRequest request, Model model){
+        // 모든 사용자에게 공통으로 보여질 정보 - 강의 상세정보, 수강신청 오픈기간 여부
+        LecDTO dto = pservice.detailLec(lid);
+        model.addAttribute("dto",dto);
+        boolean available = LocalDate.now().isBefore(LocalDate.parse(dto.getStartdate()));
+        if(available)
+            model.addAttribute("available",1);
+        else
+            model.addAttribute("available",0);
+        // 해당 강의의 결제 건이 몇 개 있는지 체크
+        int reserve = pservice.countPur(lid);
+        model.addAttribute("reserve",dto.getEntry()-reserve);
+        // 로그인 사용자에게 보여질 정보
         HttpSession session = request.getSession(false);
-        if(session!=null){ // 세션이 있는경우 사용자의 role check
+        if(session!=null && session.getAttribute("sessionId")!=null){ // 세션이 있는경우 사용자의 role check
             int sessionId = (int)session.getAttribute("sessionId");
             String role = uservice.checkRole(sessionId);
             model.addAttribute("role",role);
-            if(role.equals("student")){  // 사용자의 role 이 수강생인 경우
-                initProps();
-                int pid = pservice.isReserved(sessionId,lid);
-                if(pid==0){ // 해당 강의를 수강신청 한 적 없는 경우
-                    HashMap<String,Object> user = uservice.findUser(sessionId);
-                    model.addAttribute("user",user);
-                    model.addAttribute("storeId", payprops.get("STORE_ID"));
-                    model.addAttribute("channelKey", payprops.get("CHANNEL_KEY"));
-                    model.addAttribute("isReserved",0);
-                } else { // 해당 강의를 수강신청한 경우
-                    model.addAttribute("pid",pid);
-                    model.addAttribute("isReserved",1);
+                if(role.equals("student")){  // 사용자의 role 이 수강생인 경우
+                    initProps();
+                    int pid = pservice.isReserved(sessionId,lid);
+                    if(pid==0){ // 해당 강의를 수강신청 한 적 없는 경우
+                        HashMap<String,Object> user = uservice.findUser(sessionId);
+                        model.addAttribute("user",user);
+                        model.addAttribute("storeId", payprops.get("STORE_ID"));
+                        model.addAttribute("channelKey", payprops.get("CHANNEL_KEY"));
+                    } else { // 해당 강의를 수강신청한 경우
+                        model.addAttribute("pid",pid);
+                        model.addAttribute("enterroom",1);
+                    }
+                } else {
+                    model.addAttribute("enterroom",1);
                 }
-
-            }
         }
-        // 모든 사용자에게 공통으로 보여질 정보
-        LecDTO dto = pservice.detailLec(lid);
-        int reserve = pservice.countPur(lid);
-        model.addAttribute("dto",dto);
-        model.addAttribute("reserve",dto.getEntry()-reserve);
         model.addAttribute("body","purchase/detail_lec.jsp");
         model.addAttribute("title","모두의 국영수 - "+dto.getLname());
         return "main";
     }
 
+    @PostMapping("/checkschedule/{lid}")
+    public @ResponseBody HashMap<String,Object> checkschedule(@PathVariable int lid, @RequestBody HashMap<String,Object> hm){
+        // 해당 스케줄에 사용자가 이미 결제한 강의가 있는지 체크, 없으면 0, 있으면 1
+        int checkSchedule = pservice.checkSchedule(hm);
+        // 해당 강의의 결제 건이 몇 개 있는지 체크
+        int reserve = pservice.countPur(lid);
+        HashMap<String,Object> data = new HashMap<>();
+        // 결제자가 정원미만이고, 스케줄이 비어있는 경우 수강신청 가능
+         if((int)hm.get("entry")-reserve>0){
+            if (checkSchedule == 0) {
+                data.put("available", 1);
+            } else {
+                data.put("available",0);
+                data.put("msg","해당 스케줄에 이미 수강신청한 강의가 있습니다.");
+            }
+        }else {
+            data.put("available",0);
+            data.put("msg","수강 정원이 꽉 찼습니다.");
+        }
+        return data;
+    }
+
     @PostMapping("/payment/complete")
     public @ResponseBody HashMap<String, Object> paycomplete(@RequestBody HashMap<String,Object> hm) throws IOException, InterruptedException {
         logger.info("payment paymentId : {}",hm.get("paymentId"));
-        logger.info("payment uid : {}", hm.get("uid"));
-        logger.info("payment lid : {}", hm.get("lid"));
         int lid = (int)hm.get("lid");
         String payid = (String) hm.get("paymentId");
         // 결제 단건 조회 api 비동기 방식 요청
