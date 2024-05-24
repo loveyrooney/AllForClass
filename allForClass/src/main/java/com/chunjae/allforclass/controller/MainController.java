@@ -11,8 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.FileInputStream;
@@ -20,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,12 +32,16 @@ public class MainController {
         this.mainService=mainService;
     }
 
-    @GetMapping("/main")
-    public String main(boolean confirm, Model model){
+    @GetMapping({"/main", "/searchlec"})
+    public String main(boolean confirm
+                     , @RequestParam(required = false, defaultValue = "")String searchtxt
+                     , Model model){
 
-        List<LecDTO> list = mainService.findLecList(confirm);
+        List<LecDTO> list = mainService.findLecList(confirm, searchtxt);
 
         model.addAttribute("list", list);
+        model.addAttribute("searchtxt", searchtxt);
+
 
         model.addAttribute("body","mainlist.jsp");
         model.addAttribute("title","모두의 국영수 - main");

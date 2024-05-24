@@ -18,12 +18,14 @@ public class MainServiceImple implements MainService{
     }
 
     @Override
-    public List<LecDTO> findLecList(boolean confirm) {
+    public List<LecDTO> findLecList(boolean confirm, String searchtxt) {
         HashMap<String, Object> hm = new HashMap<>();
         hm.put("confirm", confirm);
+        hm.put("searchtxt", searchtxt);
 
         List<LecDTO> list = lectureMapper.findLecList(hm);
 
         return list;
     }
+
 }
