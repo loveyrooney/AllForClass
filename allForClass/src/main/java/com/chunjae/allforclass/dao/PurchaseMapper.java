@@ -19,4 +19,6 @@ public interface PurchaseMapper {
     int deletePur(int pid);
 
     int countPur(int lid);
+
+    int checkSchedule(HashMap<String, Object> hm);
 }

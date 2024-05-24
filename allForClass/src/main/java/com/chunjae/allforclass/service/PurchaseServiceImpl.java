@@ -70,4 +70,9 @@ public class PurchaseServiceImpl implements PurchaseService{
     public int countPur(int lid) {
         return pmapper.countPur(lid);
     }
+
+    @Override
+    public int checkSchedule(HashMap<String, Object> hm) {
+        return pmapper.checkSchedule(hm);
+    }
 }
