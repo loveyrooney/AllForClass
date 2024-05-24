@@ -24,7 +24,8 @@ async function notified(paymentId) {
 
 async function requestPayment() {
     let prompt = window.prompt("연락처를 적어주세요 000-0000-0000");
-    if (prompt != null && prompt !== '') {
+    let regex = /^\d{3}-\d{4}-\d{4}$/;
+    if (prompt != null && prompt !== '' && regex.test(prompt)) {
         //console.log(prompt);
         //console.log(params);
         const response = await PortOne.requestPayment({
