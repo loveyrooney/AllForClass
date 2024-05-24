@@ -39,9 +39,10 @@ public class AdminController {
 //        List<LecDTO> confirmList = aservice.cList(confirm);
         List<LecDTO> leclist = aservice.lecList();
         // role 1:user, 2:teacher
-//        List<UserDTO> userlist = aservice.uList();
+        List<UserDTO> uList = aservice.uList();
 
         model.addAttribute("leclist", leclist);
+        model.addAttribute("uList", uList);
         model.addAttribute("body", "admin/admin.jsp");
         model.addAttribute("title","관리자 페이지");
         return "main";

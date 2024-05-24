@@ -40,6 +40,13 @@ public class RoomTest {
 
     @Transactional
     @Test
+    public void replyTest1() {
+
+        System.out.println("ReplyList ...... "+rservice.replylist(1).get(0).getUrole());
+    }
+
+    @Transactional
+    @Test
     public void replyTest2() {
         ReplyDTO dto = new ReplyDTO();
         dto.setUid(3);

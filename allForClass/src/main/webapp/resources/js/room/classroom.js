@@ -21,8 +21,18 @@ const replylistjson = function () {
             // console.log(item);
             // console.log(sessionId);
             // console.log(item.uid);
+            // console.log(item.urole);
+            if(item.urole === 1){
+                item.urole = 'student';
+            }else if(item.urole === 2){
+                item.urole = 'teacher';
+            }else{
+                item.urole = 'admin';
+            }
+
             let ele_li = document.createElement('li');
-            let ele_txt1 = document.createTextNode(item.content);
+            let ele_txt1 = document.createTextNode("["+item.urole+item.uid+"] "+item.content);
+            // let ele_txt1 = document.createTextNode("["+item.uid+"] "+item.content);
             ele_li.appendChild(ele_txt1);
 
             if (String(sessionId) === String(item.uid)) {
@@ -87,13 +97,14 @@ window.onload = function () {
             console.log('you can upload');
             let ele_visible = document.getElementById('file_upload');
             ele_visible.style.visibility = 'visible';
-        } else {
-            console.log('your id: ' + sessionId);
         }
+        // else {
+        //     console.log('your id: ' + sessionId);
+        // }
     }
     uploaderCheck();
-
     replylistjson();
+
     // 댓글 추가
     document.querySelector('#append_btn').onclick = function () {
         let content = document.querySelector('#content').value;
