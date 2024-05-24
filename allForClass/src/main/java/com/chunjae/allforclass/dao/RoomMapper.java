@@ -23,4 +23,6 @@ public interface RoomMapper {
     int replydelete(int rid);
 
     VideoDTO detailvideo(int lid);
+
+    int insertVid(VideoDTO vdto);
 }

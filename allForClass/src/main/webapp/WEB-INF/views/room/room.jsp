@@ -19,9 +19,21 @@ role: ${role} / sessionId(uid): ${sessionId} / tid: ${ldto.tid} /
 <div id="container">
     <%-- 강의 영상  --%>
     <div id="video">
-<%--         <img src="/resources/images/default.png" alt="default_img"> --%>
-<%--        <iframe src=""></iframe>--%>
+        <%--         <img src="/resources/images/default.png" alt="default_img"> --%>
+        <%--        <iframe src=""></iframe>--%>
         <video src="/getVideo/${vdto.videopath}" controls>대체텍스트</video>
+
+        <form method="post" action="/insertvid" enctype="multipart/form-data">
+            <input type="hidden" name="lid" id="vlid" value="${ldto.lid}">
+
+            <input type="text" name="title" id="title">
+            <div id="video_upload">
+                <input type="file" name="vidfile" id="vidfile">
+                <span class="span_file">선택된 파일이 없습니다.</span>
+                <label class="label_file_btn" for="vidfile">영상 선택</label>
+                <button type="submit">영상 추가</button>
+            </div>
+        </form>
     </div>
 
     <%-- 강의 자료 설명 --%>
@@ -57,7 +69,6 @@ role: ${role} / sessionId(uid): ${sessionId} / tid: ${ldto.tid} /
                 <button type="submit">강의 자료 추가</button>
             </div>
         </form>
-        <%--        <button type="button">수강하기</button>--%>
     </div>
 
     <%-- 강의 설명 --%>

@@ -22,16 +22,16 @@ const replylistjson = function () {
             // console.log(sessionId);
             // console.log(item.uid);
             // console.log(item.urole);
-            if(item.urole === 1){
+            if (item.urole === 1) {
                 item.urole = 'student';
-            }else if(item.urole === 2){
+            } else if (item.urole === 2) {
                 item.urole = 'teacher';
-            }else{
+            } else {
                 item.urole = 'admin';
             }
 
             let ele_li = document.createElement('li');
-            let ele_txt1 = document.createTextNode("["+item.urole+item.uid+"] "+item.content);
+            let ele_txt1 = document.createTextNode("[" + item.urole + item.uid + "] " + item.content);
             // let ele_txt1 = document.createTextNode("["+item.uid+"] "+item.content);
             ele_li.appendChild(ele_txt1);
 
@@ -86,7 +86,8 @@ const replydelete = function (rid) {
 }
 
 window.onload = function () {
-    // 파일 업로드
+
+    // 파일 업로드 접근 제한
     const uploaderCheck = function () {
         let role = document.querySelector('#role').value;
         let tid = document.querySelector('#tid').value;
@@ -143,15 +144,37 @@ window.onload = function () {
             }).finally(() => {
                 console.log("reply insert finally");
             });
-        }else{
+        } else {
             alert('내용을 입력하세요!');
         }
-
     }
+    // 댓글 추가 엔터키 동작
+    document.querySelector('#content').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            document.querySelector('#append_btn').onclick();
+        }
+    });
 
     // 파일 버튼 커스텀
-    document.getElementById('files').addEventListener('change', function () {
-        let files = this.files;
+    // document.getElementById('files').addEventListener('change', function () {
+    //     let files = this.files;
+    //     let fileNames = [];
+    //
+    //     for (let i = 0; i < files.length; i++) {
+    //         fileNames.push(files[i].name);
+    //     }
+    //
+    //     let fileListHtml = fileNames.join('<br>');
+    //     let spanFileElement = this.parentElement.querySelector('.span_file');
+    //
+    //     if (spanFileElement) {
+    //         spanFileElement.innerHTML = fileListHtml || '선택된 파일이 없습니다.';
+    //     }
+    // });
+
+    function customFileInput(event) {
+        let files = event.target.files;
         let fileNames = [];
 
         for (let i = 0; i < files.length; i++) {
@@ -159,10 +182,13 @@ window.onload = function () {
         }
 
         let fileListHtml = fileNames.join('<br>');
-        let spanFileElement = this.parentElement.querySelector('.span_file');
+        let spanFileElement = event.target.parentElement.querySelector('.span_file');
 
         if (spanFileElement) {
             spanFileElement.innerHTML = fileListHtml || '선택된 파일이 없습니다.';
         }
-    });
+    }
+
+    document.getElementById('vidfile').addEventListener('change', customFileInput);
+    document.getElementById('files').addEventListener('change', customFileInput);
 }

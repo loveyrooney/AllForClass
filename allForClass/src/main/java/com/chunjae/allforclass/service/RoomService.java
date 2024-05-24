@@ -21,4 +21,6 @@ public interface RoomService {
     int replyinsert(ReplyDTO rdto);
 
     int replydelte(int rid);
+
+    int insertVid(VideoDTO vdto);
 }
