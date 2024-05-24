@@ -2,7 +2,7 @@
       .fc-event-title.fc-sticky{
           white-space: normal;
       }*/
-/*줄바꿈이 가능하도록 함*/
+/*캘린더 이벤트 줄바꿈이 가능하도록 함*/
 .fc-daygrid-event { white-space: pre; }
 
 #calendar{

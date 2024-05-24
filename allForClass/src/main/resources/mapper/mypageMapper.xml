@@ -5,14 +5,14 @@
 <mapper namespace="com.chunjae.allforclass.dao.MypageMapper">
     <insert id="insertLec" parameterType="com.chunjae.allforclass.dto.LecDTO">
         INSERT INTO lecture( lname
-                           , teacher_id
-                           , price
-                           , description
-                           , subject
-                           , entry
-                           , startdate
-                           , timesession
-                           , imgpath )
+        , teacher_id
+        , price
+        , description
+        , subject
+        , entry
+        , startdate
+        , timesession
+        , imgpath )
         VALUES ( #{lname}, #{tid}, #{price}, #{description}, #{subject}, #{entry}, #{startdate}, #{timesession},
         #{imgpath});
     </insert>
@@ -25,11 +25,11 @@
 
     <select id="findPurList" parameterType="int" resultType="com.chunjae.allforclass.dto.CalDTO">
         SELECT p.lid AS lid
-             , lname
-             , uname AS tname
-             , subject
-             , startdate
-             , SUBSTRING_INDEX(timesession, '*', -1) as timesession
+        , lname
+        , uname AS tname
+        , subject
+        , startdate
+        , SUBSTRING_INDEX(timesession, '*', -1) as timesession
         FROM purchase p INNER JOIN lecture l
         ON p.lid = l.lid
         INNER JOIN user u
@@ -37,7 +37,7 @@
         WHERE p.uid = #{uid}
     </select>
 
-    <select id="findPastMyLecList" parameterType="hashmap" resultType="com.chunjae.allforclass.dto.LecDTO">
+    <select id="findMyLecList" parameterType="hashmap" resultType="com.chunjae.allforclass.dto.LecDTO">
         SELECT subject
              , lname
              , price
@@ -45,46 +45,75 @@
              , timesession
         FROM lecture
         WHERE teacher_id = #{uid}
-        <![CDATA[
-              AND startdate < #{curr_day}
-        ]]>
-        <if test="!curr_session.equals('5')">
-        <![CDATA[
-                or ( startdate = #{curr_day} and SUBSTRING(timesession, 5, 1) < #{curr_session} )
-        ]]>
+        <if test="lectype!=null and lectype !='' and !lectype.equals('')">
+            <choose>
+                <when test="lectype=='pastmylec'">
+                    AND confirm = 1
+                    <![CDATA[
+                    AND startdate < #{curr_day}
+                    ]]>
+                    <if test="!curr_session.equals('5')">
+                        <![CDATA[
+                        or ( startdate = #{curr_day} and SUBSTRING(timesession, 5, 1) < #{curr_session} )
+                        ]]>
+                    </if>
+                    ORDER BY startdate DESC, timesession DESC
+                </when>
+                <when test="lectype=='confirmedmylec'">
+                    AND confirm = 1
+                    <![CDATA[
+                    AND startdate > #{curr_day}
+                    ]]>
+                    <if test="!curr_session.equals('5')">
+                        <![CDATA[
+                        or ( startdate = #{curr_day} and SUBSTRING(timesession, 5, 1) >= #{curr_session} )
+                        ]]>
+                    </if>
+                    ORDER BY startdate, timesession
+                </when>
+                <when test="lectype=='waitmylec'">
+                    AND confirm = 0
+                    ORDER BY startdate, timesession
+                </when>
+            </choose>
         </if>
-        ORDER BY startdate DESC, timesession DESC
     </select>
 
-    <select id="findConfirmedMyLecList" parameterType="hashmap" resultType="com.chunjae.allforclass.dto.LecDTO">
-        SELECT subject
-             , lname
-             , price
-             , startdate
-             , timesession
+    <select id="lecTotalCount" parameterType="hashmap" resultType="int">
+        SELECT count(*)
         FROM lecture
         WHERE teacher_id = #{uid}
-              AND confirm = 1
-        <![CDATA[
-              AND startdate > #{curr_day}
-        ]]>
-        <if test="!curr_session.equals('5')">
-            <![CDATA[
-                or ( startdate = #{curr_day} and SUBSTRING(timesession, 5, 1) >= #{curr_session} )
-        ]]>
+        <if test="lectype!=null and lectype !='' and !lectype.equals('')">
+            <choose>
+                <when test="lectype=='pastmylec'">
+                    AND confirm = 1
+                    <![CDATA[
+                    AND startdate < #{curr_day}
+                    ]]>
+                    <if test="!curr_session.equals('5')">
+                        <![CDATA[
+                        or ( startdate = #{curr_day} and SUBSTRING(timesession, 5, 1) < #{curr_session} )
+                        ]]>
+                    </if>
+                    ORDER BY startdate DESC, timesession DESC
+                </when>
+                <when test="lectype=='confirmedmylec'">
+                    AND confirm = 1
+                    <![CDATA[
+                    AND startdate > #{curr_day}
+                    ]]>
+                    <if test="!curr_session.equals('5')">
+                        <![CDATA[
+                        or ( startdate = #{curr_day} and SUBSTRING(timesession, 5, 1) >= #{curr_session} )
+                        ]]>
+                    </if>
+                    ORDER BY startdate, timesession
+                </when>
+                <when test="lectype=='waitmylec'">
+                    AND confirm = 0
+                    ORDER BY startdate, timesession
+                </when>
+            </choose>
         </if>
-        ORDER BY startdate, timesession
-    </select>
-
-    <select id="findWaitMyLecList" parameterType="int" resultType="com.chunjae.allforclass.dto.LecDTO">
-        SELECT subject
-             , lname
-             , price
-             , startdate
-             , timesession
-        FROM lecture
-        WHERE teacher_id = #{uid}
-        AND confirm = 0
-        ORDER BY startdate, timesession
     </select>
 </mapper>

@@ -73,13 +73,18 @@
         </table>
 
 
+        <%--페이징 부분--%>
+        <button id="prev_button">이전</button>
+        <div id="page_container"></div>
+        <button id="next_button">다음</button>
+
 
     </c:when>
 </c:choose>
 
 
 <script>
-    // 스크립트로 계정 아이디 값 넘겨주기
+    // 스크립트로 회원계정 아이디 값 넘겨주기
     init(${dto.uid});
 </script>
 

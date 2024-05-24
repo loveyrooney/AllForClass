@@ -51,17 +51,9 @@ public class MypageTest {
     }
 
     @Test
-    public void pastlecTest(){
-        List<LecDTO> list = myservice.findPastMyLecList("2024-05-23", "5", 116);
-
-        assertEquals(4, list.size());
-
-    }
-    @Test
-    public void confirmeTest(){
-        List<LecDTO> list = myservice.findConfirmedMyLecList("2024-05-23", "5", 116);
-
-        assertEquals("강의시간테스트3", list.get(1).getLname());
+    public void lecCountTest() {
+        int result = myservice.lecTotalCount("pastmylec", "2024-05-24", "1", 116);
+        assertEquals(64, result);
     }
 
 }
