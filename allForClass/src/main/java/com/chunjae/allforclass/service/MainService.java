@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface MainService {
 
+    List<LecDTO> findLecList(boolean confirm, String searchtxt);
 
-    List<LecDTO> findLecList(boolean confirm);
 }
