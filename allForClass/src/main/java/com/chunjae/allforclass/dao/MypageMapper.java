@@ -13,7 +13,6 @@ public interface MypageMapper {
     int insertLec(LecDTO dto);
     UserDTO detailMe(int uid);
     List<CalDTO> findPurList(int uid);
-    List<LecDTO> findPastMyLecList(HashMap<String, Object> hm);
-    List<LecDTO> findConfirmedMyLecList(HashMap<String, Object> hm);
-    List<LecDTO> findWaitMyLecList(int uid);
+    List<LecDTO> findMyLecList(HashMap<String, Object> hm);
+    int lecTotalCount(HashMap<String, Object> hm);
 }

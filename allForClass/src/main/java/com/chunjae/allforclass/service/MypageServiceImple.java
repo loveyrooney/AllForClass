@@ -44,36 +44,30 @@ public class MypageServiceImple implements MypageService{
         return list;
     }
 
-    /**지난 강의 목록*/
+    /**등록한 강의 목록*/
     @Override
-    public List<LecDTO> findPastMyLecList(String curr_day, String curr_session, int uid) {
-
+    public List<LecDTO> findMyLecList(String lectype, String curr_day, String curr_session, int uid) {
         HashMap<String, Object> hm = new HashMap<>();
+        hm.put("lectype", lectype);
         hm.put("curr_day", curr_day);
         hm.put("curr_session", curr_session);
         hm.put("uid", uid);
 
-        List<LecDTO> list = mymapper.findPastMyLecList(hm);
+        List<LecDTO> list = mymapper.findMyLecList(hm);
 
         return list;
     }
 
-    /**예정 강의 목록*/
+    /**등록한 강의 목록 총 갯수*/
     @Override
-    public List<LecDTO> findConfirmedMyLecList(String curr_day, String curr_session, int uid) {
-
+    public int lecTotalCount(String lectype, String curr_day, String curr_session, int uid) {
         HashMap<String, Object> hm = new HashMap<>();
+        hm.put("lectype", lectype);
         hm.put("curr_day", curr_day);
         hm.put("curr_session", curr_session);
         hm.put("uid", uid);
 
-        List<LecDTO> list = mymapper.findConfirmedMyLecList(hm);
-        return list;
-    }
-
-    @Override
-    public List<LecDTO> findWaitMyLecList(int uid) {
-        List<LecDTO> list = mymapper.findWaitMyLecList(uid);
-        return list;
+        int totalCount = mymapper.lecTotalCount(hm);
+        return totalCount;
     }
 }

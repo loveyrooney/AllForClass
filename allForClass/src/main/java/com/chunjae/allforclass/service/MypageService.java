@@ -10,7 +10,6 @@ public interface MypageService {
     int insertLec(LecDTO dto);
     UserDTO detailMe(int uid);
     List<CalDTO> findPurList(int uid);
-    List<LecDTO> findPastMyLecList(String curr_day, String curr_session, int uid);
-    List<LecDTO> findConfirmedMyLecList(String curr_day, String curr_session, int uid);
-    List<LecDTO> findWaitMyLecList(int uid);
+    List<LecDTO> findMyLecList(String lectype, String curr_day, String curr_session, int uid);
+    int lecTotalCount(String lectype, String curr_day, String curr_session, int uid);
 }

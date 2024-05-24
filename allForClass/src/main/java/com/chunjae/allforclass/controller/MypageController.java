@@ -156,7 +156,7 @@ public class MypageController {
     @GetMapping("/pastmylec/{uid}")
     public @ResponseBody List<LecDTO> pastmylec(@PathVariable int uid){
 
-        // 현재 날짜와 시간 확인  -> 다른 곳에서도 쓰이니깐 따로 메서드 만들 것
+        // 현재 날짜와 시간 확인  -> 다른 곳에서도 쓰이니깐 나중에 따로 메서드 만들 것
         SimpleDateFormat format_day = new SimpleDateFormat("yyyy-MM-dd"); // 날짜포맷
         SimpleDateFormat format_time = new SimpleDateFormat("HH:mm"); // 시간포맷
 
@@ -181,7 +181,13 @@ public class MypageController {
             curr_day = format_day.format(cal.getTime());
         }
 
-        List<LecDTO> list = myservice.findPastMyLecList(curr_day, curr_session, uid);
+        // 리스트 가져올때 지난강의/예정된 강의/승인예정인지 구분위해 변수 추가 - 클래스이름으로
+        String lectype = "pastmylec";
+
+        //리스트 가져오기
+        HashMap<String, Object> hm = new HashMap<>();
+        List<LecDTO> list = myservice.findMyLecList(lectype, curr_day, curr_session, uid);
+
         return list;
     }
 
@@ -211,20 +217,27 @@ public class MypageController {
             curr_session="5";
         }
 
-        List<LecDTO> list = myservice.findConfirmedMyLecList(curr_day, curr_session, uid);
+        // 리스트 가져올때 지난강의/예정된 강의/승인예정인지 구분위해 변수 추가 - 클래스이름으로
+        String lectype = "confirmedmylec";
 
+        //리스트 가져오기
+        List<LecDTO> list = myservice.findMyLecList(lectype, curr_day, curr_session, uid);
         return list;
     }
 
     /**승인 대기 강의 목록 json*/
     @GetMapping("/waitmylec/{uid}")
     public @ResponseBody List<LecDTO> waitmylec(@PathVariable int uid){
-        List<LecDTO> list = myservice.findWaitMyLecList(uid);
 
+        String curr_day = "";
+        String curr_session = "";
+
+        // 리스트 가져올때 지난강의/예정된 강의/승인예정인지 구분위해 변수 추가 - 클래스이름으로
+        String lectype = "waitmylec";
+
+        //리스트 가져오기
+        List<LecDTO> list = myservice.findMyLecList(lectype, curr_day, curr_session, uid);
         return list;
     }
-
-
-
 
 }
