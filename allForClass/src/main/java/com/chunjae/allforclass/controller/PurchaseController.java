@@ -146,17 +146,21 @@ public class PurchaseController {
     }
 
     @GetMapping("/payment/cancel/{pid}")
-    public @ResponseBody HashMap<String, Object> payRefund(@PathVariable int pid) throws IOException, InterruptedException{
+    public @ResponseBody HashMap<String, Object> payRefund(@PathVariable int pid) throws IOException,InterruptedException{
         // 우리 DB에 있는 사용자 pid 를 통해 결제 시 발급받은 paymentId 조회 (결제 paymentId 외부 노출 안하기 위해서)
         String payid = pservice.findPayid(pid);
         // 결제 취소 api 비동기 방식 요청
+        System.setProperty("javax.net.debug", "ssl,handshake");
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.portone.io/payments/"+payid+"/cancel"))
                 .header("Authorization", "PortOne "+payprops.get("V2_SECRET"))
+                .header("Content-Type", "application/json")
                 .method("POST", HttpRequest.BodyPublishers.ofString("{\"reason\":\"reason\"}"))
                 .build();
+        System.out.println("으아가가가 : "+request.uri());
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        logger.info("payment cancel : {}",response);
+        logger.info("payment cancel : {}",response.body());
+        logger.info("payment cancel status : {}", response.statusCode());
         // 결과 리턴할 해시 맵
         HashMap<String,Object> result = new HashMap<>();
         if(response.statusCode()==200){
