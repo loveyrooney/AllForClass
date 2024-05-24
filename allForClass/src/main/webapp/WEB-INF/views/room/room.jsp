@@ -14,25 +14,22 @@
     <script src="/resources/js/room/classroom.js"></script>
 </head>
 <body>
-role: ${role}/
-sessionId(uid): ${sessionId}/
-tid: ${ldto.tid}
+role: ${role} / sessionId(uid): ${sessionId} / tid: ${ldto.tid} /
+영상제목: ${vdto.title} / 영상경로: ${vdto.videopath}
 <div id="container">
     <%-- 강의 영상  --%>
     <div id="video">
-        <img src="/resources/images/default.png" alt="default img">
-        <ul>
-            <li>영상제목: ${vdto.title}</li>
-            <li>영상경로: ${vdto.videopath}</li>
-        </ul>
+<%--         <img src="/resources/images/default.png" alt="default_img"> --%>
+<%--        <iframe src=""></iframe>--%>
+        <video src="/getVideo/${vdto.videopath}" controls>대체텍스트</video>
     </div>
 
     <%-- 강의 자료 설명 --%>
     <div id="lec_detail">
         <ul id=lec_info>
             <li><h3>과목 > ${ldto.subject}</h3></li>
-            <li><h2>${ldto.lname}</h2></li>
-            <li><h4>강사 : ${ldto.tname} [${ldto.temail}]</h4></li>
+            <li><h1>${ldto.lname}</h1></li>
+            <li><h3>강사 : ${ldto.tname} [${ldto.temail}]</h3></li>
         </ul>
 
         <%-- 등록된 자료 리스트 / 다운로드 --%>
@@ -67,7 +64,6 @@ tid: ${ldto.tid}
     <div id="lec_description">
         ${ldto.description}
     </div>
-
 
     <%-- 댓글 --%>
     <div id="reply">

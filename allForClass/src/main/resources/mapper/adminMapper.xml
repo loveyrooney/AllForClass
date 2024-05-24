@@ -9,18 +9,26 @@
         from lecture
     </select>
 
-<!--    <select id="uList" resultType="com.chunjae.allforclass.dto.UserDTO">-->
-<!--        select uid-->
-<!--                , email-->
-<!--                , uname-->
-<!--                , role-->
-<!--                , disable-->
-<!--        from user-->
-<!--        <where>-->
+    <select id="uList" resultType="com.chunjae.allforclass.dto.UserDTO">
+        select uid
+                , email
+                , uname
+                , role
+                , disable
+        from user
+        <where>
 <!--            <choose>-->
-<!--                <when test=""></when>-->
+<!--                <when test="role = 1">-->
+<!--                    role = 1-->
+<!--                </when>-->
+<!--                <when test="role = 2">-->
+<!--                    role = 2-->
+<!--                </when>-->
+<!--                <otherwise>-->
+                    role in (1, 2)
+<!--                </otherwise>-->
 <!--            </choose>-->
-<!--        </where>-->
-<!--    </select>-->
+        </where>
+    </select>
 
 </mapper>

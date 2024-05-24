@@ -16,13 +16,20 @@
         select refpath
         from ref r INNER JOIN lecture l
         on r.lid = l.lid
-        where l.lid = ${lid}
+        where l.lid = #{lid}
     </select>
 
     <select id="replylist" resultType="com.chunjae.allforclass.dto.ReplyDTO" parameterType="int">
-        select rid, uid, lid, content, writedate
-        from reply
-        where lid = #{lid}
+        SELECT r.rid as rid
+            , r.uid as uid
+            , r.lid as lid
+            , r.content as content
+            , r.writedate
+            , u.role as urole
+        FROM user u INNER JOIN purchase p
+        ON u.uid = p.uid INNER JOIN reply r
+        ON p.uid = r.uid
+        WHERE r.lid = #{lid}
     </select>
 
     <insert id="replyinsert" parameterType="com.chunjae.allforclass.dto.ReplyDTO">

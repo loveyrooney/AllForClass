@@ -11,44 +11,81 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="/resources/css/admin/admin.css">
+    <script src="/resources/js/admin/admin.js"></script>
 </head>
 <body>
 <div id="container">
-<ul id="upper_tab">
-    <li>
-        <button>승인 대기 리스트</button>
-    </li>
-    <li>
-        <button>강의 리스트</button>
-    </li>
-    <li>
-        <button>회원 리스트</button>
-    </li>
-</ul>
-<table>
-    <thead>
-    <tr>
-        <th>과목</th>
-        <th>강의명</th>
-        <th>가격</th>
-        <th>개강일</th>
-        <th>강의세션</th>
-        <th>정원</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach var="i" items="${leclist}">
+    <ul id="upper_tab">
+        <li>
+            <button class="tablink">승인 대기 리스트</button>
+        </li>
+        <li>
+            <button class="tablink">강의 리스트</button>
+        </li>
+        <li>
+            <button class="tablink">회원 리스트</button>
+        </li>
+    </ul>
+
+    <table id="tab1" class="content">
+        <thead>
         <tr>
-            <td>${i.subject}</td>
-            <td>${i.lname}</td>
-            <td>${i.price}</td>
-            <td>${i.startdate}</td>
-            <td>${i.timesession}</td>
-            <td>${i.entry}</td>
+            <th></th>
         </tr>
-    </c:forEach>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        <tr>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table id="tab2" class="content">
+        <thead>
+        <tr>
+            <th>과목</th>
+            <th>강의명</th>
+            <th>가격</th>
+            <th>개강일</th>
+            <th>강의세션</th>
+            <th>정원</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="i" items="${leclist}">
+            <tr>
+                <td>${i.subject}</td>
+                <td>${i.lname}</td>
+                <td>${i.price}</td>
+                <td>${i.startdate}</td>
+                <td>${i.timesession}</td>
+                <td>${i.entry}</td>
+            </tr>
+        </c:forEach>
+
+        </tbody>
+    </table>
+
+    <table id="tab3" class="content">
+        <thead>
+        <tr>
+            <th>아이디</th>
+            <th>이메일</th>
+            <th>이름</th>
+            <th>탈퇴여부</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="i" items="${uList}">
+            <tr>
+                <td>${i.uid}</td>
+                <td>${i.email}</td>
+                <td>${i.uname}</td>
+                <td>${i.disable}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>

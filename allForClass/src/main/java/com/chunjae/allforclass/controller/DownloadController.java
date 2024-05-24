@@ -30,7 +30,7 @@ public class DownloadController {
 
         Logger logger = LoggerFactory.getLogger(DownloadController.class);
 
-        String path = "/uploadImg";
+        String path = "/uploadFile";
         String realpath = "D:\\moduUpload";
 //        String realpath = request.getSession().getServletContext().getRealPath(path);
         logger.info("realpath.....{}" + realpath);
