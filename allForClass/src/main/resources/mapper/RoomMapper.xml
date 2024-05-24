@@ -47,4 +47,9 @@
         from video
         where lid = #{lid}
     </select>
+
+    <insert id="insertVid" parameterType="com.chunjae.allforclass.dto.VideoDTO">
+        INSERT INTO video(lid, title, videopath)
+        VALUES(#{lid}, #{title}, #{videopath});
+    </insert>
 </mapper>

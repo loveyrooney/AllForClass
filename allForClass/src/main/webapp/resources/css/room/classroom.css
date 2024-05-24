@@ -104,13 +104,27 @@ a:hover {
 /* ================================== */
 #video {
     /*border: 1px solid silver;*/
-    justify-self: center;
-    align-content: center
+    margin: 0 0 0 58px;
 }
-
+#video_upload{
+    display: flex;
+    margin: 0 58px 0 0;
+}
 video{
     width: 88%;
-    margin: 0 0 10px 58px;
+}
+
+#video button{
+    color: black;
+    width: 150px;
+    height: 42px;
+    border: 2px solid #78C2AD;
+    border-radius: 20px;
+    background: #78C2AD;
+    font-size: 0.9rem;
+}
+#video button:hover{
+    background-color: #ECFBFB;
 }
 
 /* ================================== */
@@ -123,7 +137,7 @@ video{
     margin: 0 0 20px 0;
 }
 
-#lec_detail input[type="file"] {
+input[type="file"] {
     display: block;
     width: 0;
     height: 0;
@@ -210,9 +224,11 @@ video{
     height: 35px;
     border-radius: 15px;
     border: 1px solid #1CBCBC;
-
+    padding: 0 10px;
 }
-
+#reply input:focus{
+    outline: 1px solid #1CBCBC;
+}
 
 #replyList {
     margin: 20px 0;
@@ -224,7 +240,7 @@ video{
 #replyList li {
     border-bottom: 1px solid silver;
     padding: 5px 0;
-    margin: 7px;
+    margin: 20px;
 }
 
 /* ================================== */

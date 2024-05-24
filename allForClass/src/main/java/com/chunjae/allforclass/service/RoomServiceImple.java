@@ -128,4 +128,9 @@ public class RoomServiceImple implements RoomService {
         return rmapper.replydelete(rid);
     }
 
+    @Override
+    public int insertVid(VideoDTO vdto) {
+        return rmapper.insertVid(vdto);
+    }
+
 }

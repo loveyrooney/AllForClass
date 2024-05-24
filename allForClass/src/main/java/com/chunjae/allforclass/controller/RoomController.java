@@ -9,13 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class RoomController {
@@ -65,6 +70,41 @@ public class RoomController {
         model.addAttribute("body", "room/room.jsp");
         model.addAttribute("title", "온라인 강의 시청하기 - " + ldto.getLname());
         return "main";
+    }
+
+    // 비디오 업로드
+    @PostMapping("/insertvid")
+    public String insertvid(@RequestParam MultipartFile vidfile, VideoDTO vdto, HttpServletRequest request){
+
+//        logger.info("lid .... {}", String.valueOf(vdto.getLid()));
+//        logger.info("title ..... {}", vdto.getTitle());
+
+        String path = "/uploadVideo";
+
+        try {
+            String realpath = "D:\\moduUpload";
+//            String realpath = request.getSession().getServletContext().getRealPath(path);
+
+            if (!vidfile.isEmpty()) {
+
+                String vidname = vidfile.getOriginalFilename();
+                vidname = URLEncoder.encode(vidname, StandardCharsets.UTF_8)
+                        .replace("+", "%20");
+                String filename = vidname;
+
+                File file = new File(realpath, filename);
+                vidfile.transferTo(file);
+
+                vdto.setVideopath(filename);
+                logger.info("videopath .... {}", vdto.getVideopath());
+            }
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+
+        int result = rservice.insertVid(vdto);
+
+        return "redirect:/room/" + vdto.getLid();
     }
 
     //파일 업로드, DB저장
