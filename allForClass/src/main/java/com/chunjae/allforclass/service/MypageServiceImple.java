@@ -70,4 +70,17 @@ public class MypageServiceImple implements MypageService{
         int totalCount = mymapper.lecTotalCount(hm);
         return totalCount;
     }
+
+    /**강의 신청시 해당 시간에 강의 있는지 조회*/
+    @Override
+    public int checkLecTime(int uid, String startdate, String timesession) {
+        HashMap<String, Object> hm = new HashMap<>();
+        hm.put("uid", uid);
+        hm.put("startdate", startdate);
+        hm.put("timesession", timesession);
+
+        int result = mymapper.checkLecTime(hm);
+
+        return result;
+    }
 }

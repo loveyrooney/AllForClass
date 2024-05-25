@@ -12,4 +12,5 @@ public interface MypageService {
     List<CalDTO> findPurList(int uid);
     List<LecDTO> findMyLecList(String lectype, String curr_day, String curr_session, int uid);
     int lecTotalCount(String lectype, String curr_day, String curr_session, int uid);
+    int checkLecTime(int uid, String startdate, String timesession);
 }

@@ -15,4 +15,5 @@ public interface MypageMapper {
     List<CalDTO> findPurList(int uid);
     List<LecDTO> findMyLecList(HashMap<String, Object> hm);
     int lecTotalCount(HashMap<String, Object> hm);
+    int checkLecTime(HashMap<String, Object> hm);
 }

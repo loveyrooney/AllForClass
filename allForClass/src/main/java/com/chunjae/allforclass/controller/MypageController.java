@@ -6,6 +6,8 @@ import com.chunjae.allforclass.dto.UserDTO;
 import com.chunjae.allforclass.service.MypageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -109,6 +111,30 @@ public class MypageController {
         return "main";
     }
 
+    /**강의 시간 중복 체크*/
+    @PostMapping("/checklectime/{uid}")
+    public ResponseEntity<Integer> checklectime(@PathVariable int uid
+            , @RequestBody HashMap<String, String> lectime
+    ){
+        // form에서 시간 값 받아오기
+        String startdate = lectime.get("startdate");
+        String timesession = lectime.get("timesession");
+
+        if (startdate == null || timesession == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        // json으로 값 전달
+        try {
+            int result = myservice.checkLecTime(uid, startdate, timesession);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+    }
+
+
     /**강의 등록*/
     @PostMapping("/insertlec_result")
     public String insertlec_result(@RequestParam MultipartFile imgfile
@@ -149,7 +175,10 @@ public class MypageController {
         //DB에 입력
         int result = myservice.insertLec(dto);
 
-        return "redirect:/mypage";
+        HttpSession session = request.getSession();
+        int tid = (int)session.getAttribute("sessionId");
+
+        return "redirect:/mypage/"+tid;
     }
 
     /**지난 강의 목록 json*/
