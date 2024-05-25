@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>Title</title>
+    <script src="/resources/js/mypage/insertlec.js"></script>
 </head>
 <body>
 
@@ -50,51 +51,38 @@
             </li>
             <li>
                 <label for="startdate">개강일</label>
-                <input type="date" name="startdate" id="startdate" min=${datestr} value=${datestr}>
+                <input type="date" name="startdate" id="startdate" min=${datestr} value=${datestr} required>
             </li>
             <li>
                 <label>강의세션</label>
-                <input type="radio" name="timesession" id="time1" value="time1*09:00-12:00" checked>
+                <input type="radio" name="timesession" id="time1" value="time1*09:00-12:00" required>
                 <label for="time1">09:00-12:00</label>
-                <input type="radio" name="timesession" id="time2" value="time2*12:00-15:00">
+                <input type="radio" name="timesession" id="time2" value="time2*12:00-15:00" required>
                 <label for="time2">12:00-15:00</label>
-                <input type="radio" name="timesession" id="time3" value="time3*15:00-18:00">
+                <input type="radio" name="timesession" id="time3" value="time3*15:00-18:00" required>
                 <label for="time3">15:00-18:00</label>
-                <input type="radio" name="timesession" id="time4" value="time4*18:00-21:00">
+                <input type="radio" name="timesession" id="time4" value="time4*18:00-21:00" required>
                 <label for="time4">18:00-21:00</label>
+            </li>
+            <li>
+                <label id="lec_time_check"></label>
             </li>
         </ul>
     </div>
 
     <div>
         <label for="description">강의 설명</label><br>
-        <textarea name="description" id="description" placeholder="강의 설명입니다." cols=40 rows="6"></textarea>
+        <textarea name="description" id="description" placeholder="강의 설명입니다." cols=40 rows="6" required></textarea>
     </div>
 
     <div>
-        <input type="submit" value="강의 등록 신청하기"/><br>
+        <input id="insertlec_btn" type="submit" value="강의 등록 신청하기"/><br>
     </div>
 
 </form>
-
-
 <script>
-
-    let setPreview = function (event) {
-        let reader = new FileReader();
-        reader.onload = function (event) {
-            let img_container = document.getElementById('image_container');
-            let green_image = document.getElementById('green_image');
-            img_container.removeChild(green_image);
-
-            let image = document.createElement("img");
-            image.src = event.target.result;
-            image.id = 'green_image';
-            img_container.appendChild(image);
-        }
-        reader.readAsDataURL(event.target.files[0]);
-    }
+    // 스크립트로 회원계정 아이디 값 넘겨주기
+    init(${tid});
 </script>
-
 </body>
 </html>

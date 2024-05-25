@@ -116,4 +116,12 @@
             </choose>
         </if>
     </select>
+
+    <select id="checkLecTime" parameterType="hashmap" resultType="int">
+        select count(*)
+        from lecture
+        where teacher_id = #{uid}
+              and startdate = #{startdate}
+              and timesession = #{timesession}
+    </select>
 </mapper>

@@ -56,4 +56,10 @@ public class MypageTest {
         assertEquals(64, result);
     }
 
+    @Test
+    public void lectimeTest(){
+        int result = myservice.checkLecTime(2, "2024-06-04", "time1*09:00-12:00");
+        assertEquals(2, result);
+    }
+
 }
