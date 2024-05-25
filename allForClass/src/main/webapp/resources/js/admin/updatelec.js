@@ -4,35 +4,16 @@ const init = function (data) {
     tid = data;
 }
 
-window.onload = function () {
-    setPreview();
-}
-
-
-/**이미지 파일 미리보기*/
-const setPreview = function (event) {
-    let reader = new FileReader();
-    reader.onload = function (event) {
-        let img_container = document.getElementById('image_container');
-        let green_image = document.getElementById('green_image');
-        img_container.removeChild(green_image);
-
-        let image = document.createElement("img");
-        image.src = event.target.result;
-        image.id = 'green_image';
-        image.className='img-thumbnail';
-        img_container.appendChild(image);
-    }
-    reader.readAsDataURL(event.target.files[0]);
-}
-
-
 document.addEventListener("DOMContentLoaded", function () {
 
     let startDate = document.getElementById('startdate');
     let timeSessions = document.querySelectorAll('input[name="timesession"]');
     let lecTimeCheckLabel = document.getElementById('lec_time_check');
-    let insertlecbtn = document.getElementById('insertlec_btn');
+    let confirmbtn = document.getElementById('confirm_btn');
+
+/*    document.getElementById('deletelec_btn').onclick = function (){
+        location.href='../deletelec/'+document.getElementById('lid').value;
+    }*/
 
 
     // 개강일 필드 이벤트 리스너 설정
@@ -78,22 +59,22 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(data => {
                 if(data == 0){
-                    lecTimeCheckLabel.textContent = `신청 가능한 시간입니다.`;
+                    lecTimeCheckLabel.textContent = `등록 가능한 시간입니다.`;
                     lecTimeCheckLabel.style.color='green';
-                    insertlecbtn.disabled=false;
+                    confirmbtn.disabled=false;
 
                     // 초기화: else에서 설정된 스타일 제거
-                    insertlecbtn.style.removeProperty('background');
-                    insertlecbtn.style.removeProperty('border');
-                    insertlecbtn.style.removeProperty('color');
+                    confirmbtn.style.removeProperty('background');
+                    confirmbtn.style.removeProperty('border');
+                    confirmbtn.style.removeProperty('color');
 
                 } else {
                     lecTimeCheckLabel.textContent = `해당 시간에 신청한 강의가 있습니다.`;
                     lecTimeCheckLabel.style.color='red';
-                    insertlecbtn.disabled=true; // 등록 버튼 비활성화
-                    insertlecbtn.style.background='#F5F5F5';
-                    insertlecbtn.style.border='2px solid #F5F5F5';
-                    insertlecbtn.style.color='gray';
+                    confirmbtn.disabled=true; // 등록 버튼 비활성화
+                    confirmbtn.style.background='#F5F5F5';
+                    confirmbtn.style.border='2px solid #F5F5F5';
+                    confirmbtn.style.color='gray';
                 }
             })
             .catch(error => {
