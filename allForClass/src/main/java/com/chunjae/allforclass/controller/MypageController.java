@@ -113,25 +113,14 @@ public class MypageController {
 
     /**강의 시간 중복 체크*/
     @PostMapping("/checklectime/{uid}")
-    public ResponseEntity<Integer> checklectime(@PathVariable int uid
-            , @RequestBody HashMap<String, String> lectime
-    ){
+    public @ResponseBody Integer checklectime(@PathVariable int uid, @RequestBody HashMap<String, String> lectime){
         // form에서 시간 값 받아오기
         String startdate = lectime.get("startdate");
         String timesession = lectime.get("timesession");
 
-        if (startdate == null || timesession == null) {
-            return ResponseEntity.badRequest().build();
-        }
+        int result = myservice.checkLecTime(uid, startdate, timesession);
 
-        // json으로 값 전달
-        try {
-            int result = myservice.checkLecTime(uid, startdate, timesession);
-            return ResponseEntity.ok(result);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-
+        return result;
     }
 
 

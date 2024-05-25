@@ -20,6 +20,7 @@ const setPreview = function (event) {
         let image = document.createElement("img");
         image.src = event.target.result;
         image.id = 'green_image';
+        image.className='img-thumbnail';
         img_container.appendChild(image);
     }
     reader.readAsDataURL(event.target.files[0]);
@@ -31,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let startDate = document.getElementById('startdate');
     let timeSessions = document.querySelectorAll('input[name="timesession"]');
     let lecTimeCheckLabel = document.getElementById('lec_time_check');
+    let insertlecbtn = document.getElementById('insertlec_btn');
 
 
     // 개강일 필드 이벤트 리스너 설정
@@ -78,11 +80,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 if(data == 0){
                     lecTimeCheckLabel.textContent = `신청 가능한 시간입니다.`;
                     lecTimeCheckLabel.style.color='green';
-                    document.getElementById('insertlec_btn').disabled=false;
+                    insertlecbtn.disabled=false;
+
+                    // 초기화: else에서 설정된 스타일 제거
+                    insertlecbtn.style.removeProperty('background');
+                    insertlecbtn.style.removeProperty('border');
+                    insertlecbtn.style.removeProperty('color');
+
                 } else {
-                    lecTimeCheckLabel.textContent = `해당 시간에 이미 등록 신청한 강의가 있습니다.`;
+                    lecTimeCheckLabel.textContent = `해당 시간에 신청한 강의가 있습니다.`;
                     lecTimeCheckLabel.style.color='red';
-                    document.getElementById('insertlec_btn').disabled=true; // 등록 버튼 비활성화
+                    insertlecbtn.disabled=true; // 등록 버튼 비활성화
+                    insertlecbtn.style.background='#F5F5F5';
+                    insertlecbtn.style.border='2px solid #F5F5F5';
+                    insertlecbtn.style.color='gray';
                 }
             })
             .catch(error => {
