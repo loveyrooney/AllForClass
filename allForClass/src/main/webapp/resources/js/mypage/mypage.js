@@ -5,18 +5,7 @@ const init = function (data) {
 }
 
 
-/*// 페이징 설정
-let currPage = 1;
-let pageSize = 10;
-let blockSize= 5;
-
-const page_container = document.getElementById('page_container');
-const prevButton = document.getElementById('prev_button');
-const nextButton = document.getElementById('next_button');*/
-
-
-
-// 수강생 캘린더
+/**수강생 캘린더*/
 document.addEventListener('DOMContentLoaded', function () {
     fetch("/cal_list/" + uid, {
         method: 'GET'
@@ -32,7 +21,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth'
+            headerToolbar: {
+                left:'today'
+                , center : 'title'
+                , right : 'prev,next'
+            }, dayMaxEvents: true
+            , initialView: 'dayGridMonth'
+            , titleFormat: function (date) {
+                year = date.date.year;
+                month = date.date.month + 1;
+
+                return year + "년 " + month + "월";
+            }
             , events: data
             , eventClick: function (info) {
                 // 이벤트 클릭 시 수강신청 페이지로 이동
@@ -218,5 +218,15 @@ window.onload = function () {
     document.getElementById("waitlec").onclick = function () {
         waitlec();
     }
+
+    // 선택한 메뉴 표시
+    const listItems = document.querySelectorAll('.lec_list');
+
+    listItems.forEach(item => {
+        item.addEventListener('click', () => {
+            listItems.forEach(li => li.classList.remove('active'));
+            item.classList.add('active');
+        });
+    });
 
 }

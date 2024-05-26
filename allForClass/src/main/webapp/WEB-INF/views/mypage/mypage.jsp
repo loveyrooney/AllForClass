@@ -17,71 +17,87 @@
 <body>
 
 <%--환영 문구--%>
-<div>
-    <c:choose>
-        <c:when test="${dto.role == 1}">
-            ${dto.uname}님 환영합니다.
-        </c:when>
-        <c:when test="${dto.role == 2}">
-            ${dto.uname} 강사님 환영합니다.
-        </c:when>
-    </c:choose>
+<div id="mypage_top">
+    <h1>
+        <c:choose>
+            <c:when test="${dto.role == 1}">
+                ${dto.uname}님 환영합니다!
+            </c:when>
+            <c:when test="${dto.role == 2}">
+                ${dto.uname} 강사님 환영합니다!
+            </c:when>
+        </c:choose>
+    </h1>
 </div>
 
 
-<%--회원 아이콘 이미지--%>
-
-
 <%--회원정보 조회--%>
-<div>
+<div id="mypage_myinfo">
+
+    <%--회원 아이콘 이미지--%>
+    <c:choose>
+        <c:when test="${dto.role == 1}">
+            <img src="/resources/images/icon_student.png" alt="icon">
+        </c:when>
+        <c:when test="${dto.role == 2}">
+            <img src="/resources/images/icon_teacher.png" alt="icon">
+        </c:when>
+    </c:choose>
+
+    <%--회원 정보--%>
     <ul>
         <li>${dto.uname}</li>
         <li>${dto.email}</li>
     </ul>
+
+    <%--회원정보 수정 버튼--%>
+    <button class="mypage_btn" type="button">회원정보 수정</button>
+
 </div>
 
-<%--회원정보 수정 버튼--%>
-<button class="mypage_btn" type="button">회원정보 수정</button>
 
 <%--본문--%>
 <c:choose>
-    <c:when test="${dto.role == 1}">
-        <%--수강생이면 캘린더 보여주기--%>
-        <div id='calendar'></div>
-    </c:when>
-    <c:when test="${dto.role == 2}">
-        <%--강사면 강의 리스트 보여주기--%>
-        <ul>
-            <li id="pastlec">지난 강의</li>
-            <li id="confirmlec">예정된 강의</li>
-            <li id="waitlec">승인 대기 중</li>
-            <li><a href="/insertlec">강의 등록 신청</a></li>
-        </ul>
+<c:when test="${dto.role == 1}">
+    <%--수강생이면 캘린더 보여주기--%>
+    <div id='calendar'></div>
+</c:when>
+<c:when test="${dto.role == 2}">
+    <%--강사면 강의 리스트 보여주기--%>
+<section id="mypage_content">
+    <ul>
+        <li id="pastlec" class="lec_list">지난 강의</li>
+        <li id="confirmlec" class="lec_list active">예정된 강의</li>
+        <li id="waitlec" class="lec_list">승인 대기 중</li>
+        <li><a href="/insertlec" id="insert_btn">강의 등록 신청</a></li>
+    </ul>
 
-        <table>
-            <thead>
-            <tr>
-                <th>과목</th>
-                <th>강의명</th>
-                <th>가격</th>
-                <th>개강일</th>
-                <th>강의 세션</th>
-            </tr>
-            </thead>
-            <tbody id="myleclist">
-            </tbody>
-        </table>
+    <div id="mypage_line"></div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>과목</th>
+            <th>강의명</th>
+            <th>가격</th>
+            <th>개강일</th>
+            <th>강의 세션</th>
+        </tr>
+        </thead>
+        <tbody id="myleclist">
+        </tbody>
+    </table>
 
 
         <%--페이징 부분--%>
-        <button id="prev_button">이전</button>
+        <%--<button id="prev_button">이전</button>
         <div id="page_container"></div>
-        <button id="next_button">다음</button>
+        <button id="next_button">다음</button>--%>
 
 
     </c:when>
-</c:choose>
-
+    </c:choose>
+</section>
 
 <script>
     // 스크립트로 회원계정 아이디 값 넘겨주기
