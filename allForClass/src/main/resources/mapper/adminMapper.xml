@@ -31,4 +31,21 @@
         </where>
     </select>
 
+    <update id="updateLecResult" parameterType="com.chunjae.allforclass.dto.LecDTO">
+        update lecture
+        set lname = #{lname}
+          , price = #{price}
+          , description = #{description}
+          , subject = #{subject}
+          , entry = #{entry}
+          , startdate = #{startdate}
+          , timesession = #{timesession}
+        where lid = #{lid}
+    </update>
+
+    <update id="confirm" parameterType="int">
+        update lecture
+        set confirm = 1
+        where lid = #{lid}
+    </update>
 </mapper>

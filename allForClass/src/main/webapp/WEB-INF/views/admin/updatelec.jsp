@@ -20,17 +20,20 @@
 </head>
 <body class="container">
 
-<h1 class="update_lec_h1">강의 등록 승인</h1>
+<h1 class="update_lec_h1">강의 등록 확인</h1>
 
-<form method="post" action="confirm">
+<%--강의 승인 폼--%>
+<form method="post" action="/updatelec_result">
     <div class="row justify-content-center">
 
+        <%--썸네일 이미지--%>
         <div class="col-md-5 update_lec_imgupload">
             <img src="/getImage/${dto.imgpath}" alt="lecture_img" class="img-thumbnail">
         </div>
 
+        <%--강의 정보--%>
         <ul class="col-md-5 update_lec_select">
-            <input type="text" name="lid" id="lid" value="${dto.lid}" hidden>
+            <input type="text" name="lid" value="${dto.lid}" hidden>
             <li>
                 <label for="subject">과목</label>
                 <select name="subject" id="subject">
@@ -49,7 +52,7 @@
             </li>
             <li>
                 <label for="entry">수강인원</label>
-                <input type="number" name="entry" id="entry"  value="${dto.entry}" required> 명
+                <input type="number" name="entry" id="entry" value="${dto.entry}" required> 명
             </li>
             <li>
                 <label for="startdate">개강일</label>
@@ -60,16 +63,20 @@
                 <div class="update_lec_radio">
                     <ul>
                         <li><input type="radio" name="timesession" id="time1"
-                                   value="time1*09:00-12:00" ${dto.timesession == 'time1*09:00-12:00'? 'checked="checked"' : '' } required>
+                                   value="time1*09:00-12:00" ${dto.timesession == 'time1*09:00-12:00'? 'checked="checked"' : '' }
+                                   required>
                             <label for="time1">09:00-12:00</label></li>
                         <li><input type="radio" name="timesession" id="time2"
-                                   value="time2*12:00-15:00" ${dto.timesession == 'time2*12:00-15:00'? 'checked="checked"' : '' } required>
+                                   value="time2*12:00-15:00" ${dto.timesession == 'time2*12:00-15:00'? 'checked="checked"' : '' }
+                                   required>
                             <label for="time2">12:00-15:00</label></li>
                         <li><input type="radio" name="timesession" id="time3"
-                                   value="time3*15:00-18:00"  ${dto.timesession == 'time3*15:00-18:00'? 'checked="checked"' : '' } required>
+                                   value="time3*15:00-18:00"  ${dto.timesession == 'time3*15:00-18:00'? 'checked="checked"' : '' }
+                                   required>
                             <label for="time3">15:00-18:00</label></li>
                         <li><input type="radio" name="timesession" id="time4"
-                                   value="time4*18:00-21:00"  ${dto.timesession == 'time4*18:00-21:00'? 'checked="checked"' : '' } required>
+                                   value="time4*18:00-21:00"  ${dto.timesession == 'time4*18:00-21:00'? 'checked="checked"' : '' }
+                                   required>
                             <label for="time4">18:00-21:00</label></li>
                         <li>
                             <div id="lec_time_check"></div>
@@ -81,24 +88,38 @@
     </div>
     <%--상단 블럭--%>
 
+    <%--강의 설명 텍스트 입력--%>
     <div class="update_desc row">
         <label for="description">강의 설명</label><br>
         <textarea name="description" id="description" class="form-control">${dto.description}</textarea>
     </div>
 
+    <%--버튼--%>
     <div class="update_submit row">
-        <%--<button id="deletelec_btn">강의 삭제</button>--%>
-        <input id="resetlec_btn" type="reset" value="취소">
-        <input id="confirm_btn" type="submit" value="강의 등록 승인">
+        <button type="button" id="deletelec_btn">강의 삭제</button>
+        <input type="reset" id="resetlec_btn" value="취소">
+        <input type="submit" id="updatelec_btn" value="수정">
+    </div>
+    <div class="update_submit row">
+        <button type="button" id="confirm_btn">강의 등록 승인</button>
     </div>
 </form>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 <script>
-    // 스크립트로 회원계정 아이디 값 넘겨주기
-    init(${dto.tid});
+    // 스크립트로 강의정보 값 넘겨주기
+    let inits = {
+        tid          :${dto.tid}
+        , lid        :${dto.lid}
+        , startdate  : ''
+        , timesession: ''
+    }
+    inits['startdate'] = `${dto.startdate}`;
+    inits['timesession'] = `${dto.timesession}`;
+    init(inits);
 </script>
 </body>
 </html>

@@ -25,4 +25,14 @@ public class AdminServiceImple implements AdminService{
     public List<UserDTO> uList() {
         return amapper.uList();
     }
+
+    @Override
+    public int updateLecResult(LecDTO dto) {
+        return amapper.updateLecResult(dto);
+    }
+
+    @Override
+    public int confirm(int lid) {
+        return amapper.confirm(lid);
+    }
 }

@@ -9,4 +9,8 @@ public interface AdminService {
     List<LecDTO> lecList();
 
     List<UserDTO> uList();
+
+    int updateLecResult(LecDTO dto);
+
+    int confirm(int lid);
 }

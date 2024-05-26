@@ -9,8 +9,7 @@ import com.chunjae.allforclass.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -70,8 +69,30 @@ public class AdminController {
 
         model.addAttribute("dto", dto);
         model.addAttribute("body","admin/updatelec.jsp");
-        model.addAttribute("title","모두의 국영수 - 강의등록승인");
+        model.addAttribute("title","모두의 국영수 - 강의등록확인");
 
+        return "main";
+    }
+
+    /**강의 정보 수정*/
+    @PostMapping("/updatelec_result")
+    public String updatelec_result(LecDTO dto, Model model){
+
+        int result = aservice.updateLecResult(dto);
+        model.addAttribute("result", result);
+        model.addAttribute("lid", dto.getLid());
+
+        return "admin/updatealert";
+    }
+
+    /**강의 승인*/
+    @GetMapping("/confirm/{lid}")
+    public String confirm(@PathVariable int lid, Model model){
+
+        int result = aservice.confirm(lid);
+
+        model.addAttribute("body", "admin/admin.jsp");
+        model.addAttribute("title","관리자 페이지");
         return "main";
     }
 }
