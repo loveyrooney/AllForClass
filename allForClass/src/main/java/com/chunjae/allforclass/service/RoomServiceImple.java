@@ -20,12 +20,10 @@ import java.util.UUID;
 public class RoomServiceImple implements RoomService {
 
     private final LectureMapper lmapper;
-    private final PurchaseMapper pmapper;
     private final RoomMapper rmapper;
 
-    public RoomServiceImple(LectureMapper lmapper, PurchaseMapper pmapper, RoomMapper rmapper) {
+    public RoomServiceImple(LectureMapper lmapper, RoomMapper rmapper) {
         this.lmapper = lmapper;
-        this.pmapper = pmapper;
         this.rmapper = rmapper;
     }
 
@@ -73,42 +71,35 @@ public class RoomServiceImple implements RoomService {
     }
 
     private String[] fileUpload(String path, RefDTO refdto) {
-        System.out.println(refdto.getFiles().length + "........length.....");
         File[] saveFile = new File[refdto.getFiles().length];
         String[] filenames = new String[refdto.getFiles().length];
 
         for (int i = 0; i < refdto.getFiles().length; i++) {
             UUID uuid = UUID.randomUUID();
-
             String fname = refdto.getFiles()[i].getOriginalFilename();
-            if(!"".equals(fname)){
-                System.out.println("original filename ,..." + fname);
-                System.out.println("fname...." + fname);
-                fname = URLEncoder.encode(fname, StandardCharsets.UTF_8)
-                        .replace("+", "%20");
+            if (!"".equals(fname)) {
                 String filename = uuid + "_" + fname;
                 saveFile[i] = new File(path, filename);
-                System.out.println("filename....length : " + filename.length());
                 filenames[i] = filename;
-            }else{
-                // 500 에러 null pointer exception
-                System.out.println("file not selected");
-                return null;
+            } else {
+                throw new IllegalArgumentException("File not selected");
             }
-
-        } // file 생성
+        }
 
         try {
             for (int i = 0; i < saveFile.length; i++) {
                 refdto.getFiles()[i].transferTo(saveFile[i]);
             }
         } catch (IOException e) {
-            for (int i = 0; i < saveFile.length; i++)
-                saveFile[i].delete();
-            throw new RuntimeException();
+            // 파일 업로드 중에 예외가 발생하면 파일을 삭제하고 RuntimeException을 throw합니다.
+            for (int i = 0; i < saveFile.length; i++) {
+                if (saveFile[i] != null && saveFile[i].exists()) {
+                    saveFile[i].delete();
+                }
+            }
+            throw new RuntimeException("Error uploading files", e);
         }
         return filenames;
-
     }
 
 
@@ -131,6 +122,11 @@ public class RoomServiceImple implements RoomService {
     @Override
     public int insertVid(VideoDTO vdto) {
         return rmapper.insertVid(vdto);
+    }
+
+    @Override
+    public int deleteVid(int vid) {
+        return rmapper.deleteVid(vid);
     }
 
 }
