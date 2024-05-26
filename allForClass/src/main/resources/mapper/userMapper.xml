@@ -45,4 +45,20 @@
         from user
         where email=#{email}
     </select>
+
+    <update id="updateUser" parameterType="com.chunjae.allforclass.dto.UserDTO">
+        update user
+        set email = #{email}
+          , uname = #{uname}
+        <if test="pwd!=null and pwd!='' and !pwd.equals('')">
+          , pwd = #{pwd}
+        </if>
+        where uid = #{uid}
+    </update>
+
+    <update id="deleteUser" parameterType="int">
+        update user
+        set disable = 1
+        where uid = #{uid}
+    </update>
 </mapper>

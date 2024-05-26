@@ -147,14 +147,20 @@ function addLectureList(json){
         let ele_td4 = document.createElement('td');
         let ele_td5 = document.createElement('td');
 
+        let ele_a = document.createElement('a');
+        ele_a.href="/room/"+item.lid;
+        ele_td2.appendChild(ele_a);
+
         let ele_txt1 = document.createTextNode(item.subject);
         let ele_txt2 = document.createTextNode(item.lname);
         let ele_txt3 = document.createTextNode(item.price);
         let ele_txt4 = document.createTextNode(item.startdate);
         let ele_txt5 = document.createTextNode(item.timesession);
 
+
+
         ele_td1.appendChild(ele_txt1);
-        ele_td2.appendChild(ele_txt2);
+        ele_a.appendChild(ele_txt2);
         ele_td3.appendChild(ele_txt3);
         ele_td4.appendChild(ele_txt4);
         ele_td5.appendChild(ele_txt5);

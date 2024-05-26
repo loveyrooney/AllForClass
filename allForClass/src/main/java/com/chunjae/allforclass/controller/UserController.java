@@ -1,6 +1,7 @@
 package com.chunjae.allforclass.controller;
 
 import com.chunjae.allforclass.dto.UserDTO;
+import com.chunjae.allforclass.service.MypageService;
 import com.chunjae.allforclass.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,9 +18,12 @@ public class UserController {
 
     private final UserService userService;
 
+    private final MypageService myservice;
+
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, MypageService myservice) {
         this.userService = userService;
+        this.myservice = myservice;
     }
 
     @GetMapping("/login")
@@ -84,4 +88,27 @@ public class UserController {
         return cnt;
     }
 
+    @GetMapping("updateuser/{uid}")
+    public String updateuser(@PathVariable int uid, Model model) {
+
+        UserDTO dto = myservice.detailMe(uid);
+        model.addAttribute("dto", dto);
+        model.addAttribute("body", "user/updateuser.jsp");
+        model.addAttribute("title", "모두의 국영수 - 회원정보수정");
+        return "main";
+    }
+
+    @PostMapping("/updateuser_result")
+    public String updateuser_result(UserDTO dto){
+        int result = userService.updateUser(dto);
+
+        return "redirect:/mypage/"+dto.getUid();
+    }
+
+    @GetMapping("/deleteuser/{uid}")
+    public @ResponseBody Integer deleteuser(@PathVariable int uid){
+        int result = userService.deleteUser(uid);
+
+        return result;
+    }
 }

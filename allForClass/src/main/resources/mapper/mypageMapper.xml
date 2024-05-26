@@ -38,11 +38,12 @@
     </select>
 
     <select id="findMyLecList" parameterType="hashmap" resultType="com.chunjae.allforclass.dto.LecDTO">
-        SELECT subject
+        SELECT lid
+             , subject
              , lname
              , price
              , startdate
-             , timesession
+             , SUBSTRING_INDEX(timesession,'*', -1) AS timesession
         FROM lecture
         WHERE teacher_id = #{uid}
         <if test="lectype!=null and lectype !='' and !lectype.equals('')">

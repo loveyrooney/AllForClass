@@ -20,4 +20,8 @@ public interface UserService {
 
 
     int emailCheck(String email);
+
+    int updateUser(UserDTO dto);
+
+    int deleteUser(int uid);
 }
