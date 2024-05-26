@@ -46,7 +46,7 @@ async function requestPayment() {
             console.log(response.message);
         } else {
             console.log(response);
-            notified(response.paymentId);
+            setTimeout(notified(response.paymentId),3000);
         }
     }
 }
