@@ -156,6 +156,9 @@ public class MypageController {
                 // dto imgpath에 경로 입력
                 dto.setImgpath(filename);
 
+            } else {
+                // 기본 이미지 파일로 게시
+                dto.setImgpath("filename");
             }
         } catch (IOException e) {
             System.out.println(e);

@@ -51,7 +51,7 @@
     </ul>
 
     <%--회원정보 수정 버튼--%>
-    <button class="mypage_btn" type="button">회원정보 수정</button>
+    <a href="/updateuser/${dto.uid}" class="mypage_btn">회원정보 수정</a>
 
 </div>
 

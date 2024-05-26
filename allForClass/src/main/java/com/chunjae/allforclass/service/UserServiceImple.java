@@ -78,5 +78,17 @@ public class UserServiceImple implements UserService{
         return cnt;
     }
 
+    @Override
+    public int updateUser(UserDTO dto) {
+        int result = userMapper.updateUser(dto);
+        return result;
+    }
+
+    @Override
+    public int deleteUser(int uid) {
+        int result = userMapper.deleteUser(uid);
+        return result;
+    }
+
 
 }

@@ -20,4 +20,8 @@ public interface UserMapper {
     HashMap<String,Object> findUser(int sessionId);
 
     int emailCheck(String email);
+
+    int updateUser(UserDTO dto);
+
+    int deleteUser(int uid);
 }

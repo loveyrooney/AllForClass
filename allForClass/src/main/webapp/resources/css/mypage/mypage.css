@@ -60,6 +60,7 @@ ul li {
     align-items: center;
     justify-content: center;
     margin : 8px;
+    text-decoration: none;
 }
 
 #mypage_myinfo .mypage_btn:hover {
@@ -124,6 +125,10 @@ ul li {
     border-collapse: collapse;
     text-align: center;
     margin: 0px 0 80px;
+}
+
+#myleclist a{
+    text-decoration: none;
 }
 
 th {
