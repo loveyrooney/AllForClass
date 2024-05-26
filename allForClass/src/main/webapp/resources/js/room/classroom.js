@@ -1,3 +1,70 @@
+// 비디오 업로드
+
+
+// 파일 업로드
+const uploadFiles = function () {
+
+    let role = document.querySelector('#role').value;
+    let tid = document.querySelector('#tid').value;
+    let sessionId = document.querySelector('#sessionId').value;
+    let form = document.getElementById('fileUploadForm'); // 폼 요소 가져오기
+    let div_form = document.getElementById('file_upload');
+
+    // 강사(자신이 올린 강의) / 관리자일 경우에만 파일 추가 버튼 등을 생성
+    if (('teacher' === String(role) && String(sessionId) === String(tid)) || 'admin' === String(role)) {
+        let fileInput = document.createElement('input');
+        fileInput.setAttribute('type', 'file');
+        fileInput.setAttribute('name', 'files');
+        fileInput.setAttribute('id', 'files');
+        fileInput.setAttribute('multiple', 'multiple');
+        div_form.appendChild(fileInput);
+
+        let spanElement = document.createElement('span');
+        spanElement.className = 'span_file';
+        spanElement.textContent = '선택된 파일이 없습니다.';
+        div_form.appendChild(spanElement);
+
+        let labelElement = document.createElement('label');
+        labelElement.className = 'label_file_btn';
+        labelElement.setAttribute('for', 'files');
+        labelElement.textContent = '강의 자료 선택';
+        div_form.appendChild(labelElement);
+
+        let buttonElement = document.createElement('button');
+        buttonElement.setAttribute('type', 'submit');
+        buttonElement.textContent = '강의 자료 추가';
+        div_form.appendChild(buttonElement);
+    }
+
+    form.addEventListener('submit', function (event) {
+        // 기본 동작 방지
+        event.preventDefault();
+        const formData = new FormData(form);
+
+        fetch('/insertref', {
+            method: 'POST',
+            headers: {
+                'Accept': 'multipart/form-data'
+            },
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                window.location.reload();
+                return response.formData;
+            })
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+
+}
+
 // 댓글 리스트
 const replylistjson = function () {
     let lid = document.querySelector('#rlid').value;
@@ -18,10 +85,6 @@ const replylistjson = function () {
         replyList.innerHTML = '';
 
         data.forEach(item => {
-            // console.log(item);
-            // console.log(sessionId);
-            // console.log(item.uid);
-            // console.log(item.urole);
             if (item.urole === 1) {
                 item.urole = 'student';
             } else if (item.urole === 2) {
@@ -32,12 +95,9 @@ const replylistjson = function () {
 
             let ele_li = document.createElement('li');
             let ele_txt1 = document.createTextNode("[" + item.urole + item.uid + "] " + item.content);
-            // let ele_txt1 = document.createTextNode("["+item.uid+"] "+item.content);
             ele_li.appendChild(ele_txt1);
 
             if (String(sessionId) === String(item.uid)) {
-                // console.log(sessionId);
-                // console.log(item.uid);
                 let ele_delbtn = document.createElement('button');
                 ele_delbtn.innerHTML = '삭제';
                 ele_delbtn.id = 'delbtn' + item.rid;
@@ -46,11 +106,6 @@ const replylistjson = function () {
                 };
                 ele_li.appendChild(ele_delbtn);
             }
-            // else{
-            //     console.log("sessionId: "+sessionId);
-            //     console.log("uid: "+item.uid);
-            //     console.log('not match')
-            // }
             replyList.appendChild(ele_li);
         });
     }).catch(error => {
@@ -87,24 +142,8 @@ const replydelete = function (rid) {
 
 window.onload = function () {
 
-    // 파일 업로드 접근 제한
-    const uploaderCheck = function () {
-        let role = document.querySelector('#role').value;
-        let tid = document.querySelector('#tid').value;
-        let sessionId = document.querySelector('#sessionId').value;
-
-        //  강사(자신이 올린 강의) / 관리자
-        if (('teacher' === String(role) && String(sessionId) === String(tid)) || 'admin' === String(role)) {
-            console.log('you can upload');
-            let ele_visible = document.getElementById('file_upload');
-            ele_visible.style.visibility = 'visible';
-        }
-        // else {
-        //     console.log('your id: ' + sessionId);
-        // }
-    }
-    uploaderCheck();
     replylistjson();
+    uploadFiles();
 
     // 댓글 추가
     document.querySelector('#append_btn').onclick = function () {
@@ -148,6 +187,7 @@ window.onload = function () {
             alert('내용을 입력하세요!');
         }
     }
+
     // 댓글 추가 엔터키 동작
     document.querySelector('#content').addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
@@ -156,23 +196,7 @@ window.onload = function () {
         }
     });
 
-    // 파일 버튼 커스텀
-    // document.getElementById('files').addEventListener('change', function () {
-    //     let files = this.files;
-    //     let fileNames = [];
-    //
-    //     for (let i = 0; i < files.length; i++) {
-    //         fileNames.push(files[i].name);
-    //     }
-    //
-    //     let fileListHtml = fileNames.join('<br>');
-    //     let spanFileElement = this.parentElement.querySelector('.span_file');
-    //
-    //     if (spanFileElement) {
-    //         spanFileElement.innerHTML = fileListHtml || '선택된 파일이 없습니다.';
-    //     }
-    // });
-
+    // 파일 인풋 커스텀
     function customFileInput(event) {
         let files = event.target.files;
         let fileNames = [];

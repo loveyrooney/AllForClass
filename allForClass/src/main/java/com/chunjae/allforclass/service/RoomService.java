@@ -23,4 +23,6 @@ public interface RoomService {
     int replydelte(int rid);
 
     int insertVid(VideoDTO vdto);
+
+    int deleteVid(int vid);
 }

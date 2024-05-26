@@ -20,6 +20,7 @@ a {
 
 a:hover {
     color: #1CBCBD;
+    cursor: pointer;
 }
 
 #container {
@@ -35,7 +36,7 @@ a:hover {
 /* ================================== */
 /*                버튼                 */
 /* ================================== */
-#file_upload button {
+#fileUploadForm #file_upload button {
     color: black;
     width: 150px;
     height: 42px;
@@ -45,8 +46,9 @@ a:hover {
     font-size: 0.9rem;
 }
 
-#file_upload button:hover {
+#fileUploadForm #file_upload button:hover {
     background-color: #ECFBFB;
+    cursor: pointer;
 }
 
 .label_file_btn {
@@ -64,6 +66,7 @@ a:hover {
 
 .label_file_btn:hover {
     background-color: #ECFBFB;
+    cursor: pointer;
 }
 
 #replyList button {
@@ -79,23 +82,32 @@ a:hover {
 
 #replyList button:hover {
     background-color: #E3F2EF;
+    cursor: pointer;
 }
 
 #reply #append_btn {
     color: black;
     width: 100px;
-    height: 40px;
+    height: 37px;
     border: 2px solid #78C2AD;
     border-radius: 20px;
     background: #78C2AD;
     margin: 0 0 0 10px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 
 #reply #append_btn:hover {
     background-color: #ECFBFB;
+    cursor: pointer;
 }
 
+#video #delvideo{
+    background-color: #ECFBFB;
+}
+
+#video #delvideo:hover{
+    background-color: #78C2AD;
+}
 /* ================================== */
 
 
@@ -125,8 +137,21 @@ video{
 }
 #video button:hover{
     background-color: #ECFBFB;
+    cursor: pointer;
 }
 
+#video input[type="text"]{
+    width: 87%;
+    height: 35px;
+    border-radius: 15px;
+    border: 1px solid #1CBCBC;
+    padding: 0 10px;
+    margin: 10px 0;
+}
+
+#video input:focus{
+    outline: 1px solid #1CBCBC;
+}
 /* ================================== */
 
 
@@ -163,8 +188,8 @@ input[type="file"] {
 /* ================================== */
 #file_upload {
     display: flex;
-    margin: 20px 50px 0 0;
-    visibility: hidden;
+    margin: 20px 60px 0 0;
+    /*visibility: hidden;*/
 }
 
 /* 선택한 파일 리스트*/

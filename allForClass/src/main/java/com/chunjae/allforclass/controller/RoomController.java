@@ -6,15 +6,22 @@ import com.chunjae.allforclass.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -75,14 +82,11 @@ public class RoomController {
     // 비디오 업로드
     @PostMapping("/insertvid")
     public String insertvid(@RequestParam MultipartFile vidfile, VideoDTO vdto, HttpServletRequest request){
-
-//        logger.info("lid .... {}", String.valueOf(vdto.getLid()));
-//        logger.info("title ..... {}", vdto.getTitle());
-
         String path = "/uploadVideo";
 
         try {
-            String realpath = "D:\\moduUpload";
+            String realpath = "C:\\Chunjae\\moduUpload";
+//            String realpath = "D:\\moduUpload";
 //            String realpath = request.getSession().getServletContext().getRealPath(path);
 
             if (!vidfile.isEmpty()) {
@@ -107,22 +111,68 @@ public class RoomController {
         return "redirect:/room/" + vdto.getLid();
     }
 
-    //파일 업로드, DB저장
-    @PostMapping("/insertref")
-    public String insertref(HttpServletRequest request, RefDTO refdto) {
-
-//        logger.info(".....insert ref method......");
-        logger.info("..... getlid {}", refdto.getLid());
-//        logger.info("..... getfile....  {}", refdto.getFiles()[0].getOriginalFilename());
-
-        String path = "/uploadFile";
-        String realpath = "D:\\moduUpload";
+    // 비디오 불러오기
+    @GetMapping(value = "/getVideo/{filename}", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
+    public ResponseEntity<byte[]> getImage(@PathVariable String filename, HttpServletRequest request) {
+        String path = "/uploadVideo";
+        String realpath = "C:\\Chunjae\\moduUpload";
+//            String realpath = "D:\\moduUpload";
 //        String realpath = request.getSession().getServletContext().getRealPath(path);
-        rservice.insertref(realpath, refdto);
-
-        return "redirect:/room/" + refdto.getLid();
+        String fname = URLEncoder.encode(filename, StandardCharsets.UTF_8)
+                .replace("+", "%20");
+        InputStream in = null;
+        ResponseEntity<byte[]> entity = null;
+        try {
+            in = new FileInputStream(realpath + "/" + fname);
+            System.out.println("in....." + in);
+            HttpHeaders headers = new HttpHeaders();
+            entity = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(in)
+                    , headers, HttpStatus.OK);
+        } catch (IOException e) {
+            System.out.println("path: "+path);
+            System.out.println("realpath: "+realpath);
+            System.out.println(e + ".....file not found!!!!!!!!!");
+            entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return entity;
     }
 
+    // 비디오 삭제
+    @PostMapping("/deletevideo/{vid}")
+    public String deletevideo(@PathVariable int vid, @RequestParam int lid, VideoDTO vdto, HttpServletRequest request) {
+        String realpath = "C:\\Chunjae\\moduUpload";
+
+        File file = new File(realpath, vdto.getVideopath());
+
+        if (file.exists()) {
+            if (file.delete()) {
+                int result = rservice.deleteVid(vid);
+                if (result > 0) {
+                    return "redirect:/room/" + lid; // 성공 시
+                } else {
+                    // 데이터베이스 삭제 실패 처리
+                    return "redirect:/error";
+                }
+            } else {
+                // 파일 삭제 실패 처리
+                return "redirect:/error";
+            }
+        } else {
+            // 파일이 존재하지 않을 경우
+            return "redirect:/error";
+        }
+    }
+
+    @PostMapping("/insertref")
+    public @ResponseBody void insertref(HttpServletRequest request, RefDTO refdto) {
+        String path = "/uploadFile";
+        String realpath = "C:\\Chunjae\\moduUpload";
+//        String realpath = "D:\\moduUpload";
+//        String realpath = request.getSession().getServletContext().getRealPath(path);
+        rservice.insertref(realpath, refdto);
+    }
+
+    // 댓글 리스트
     @GetMapping("/replylist/{lid}")
     public @ResponseBody List<ReplyDTO> replyList(@PathVariable int lid, Model model) {
         List<ReplyDTO> rlist = rservice.replylist(lid);
@@ -130,12 +180,14 @@ public class RoomController {
         return rlist;
     }
 
+    // 댓글 추가
     @PostMapping("/replyinsert")
     public @ResponseBody ReplyDTO replyInsert(@RequestBody ReplyDTO rdto) {
         int result = rservice.replyinsert(rdto);
         return rdto;
     }
 
+    // 댓글 제거
     @PostMapping("/replydelete/{rid}")
     public @ResponseBody int replyDelete(@PathVariable int rid) {
         int result = rservice.replydelte(rid);

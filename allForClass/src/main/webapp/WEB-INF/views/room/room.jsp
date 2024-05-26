@@ -15,24 +15,32 @@
 </head>
 <body>
 role: ${role} / sessionId(uid): ${sessionId} / tid: ${ldto.tid} /
-영상제목: ${vdto.title} / 영상경로: ${vdto.videopath}
+영상제목: ${vdto.title} / 영상경로: ${vdto.videopath} / vid : ${vdto.vid}
 <div id="container">
     <%-- 강의 영상  --%>
     <div id="video">
         <%--         <img src="/resources/images/default.png" alt="default_img"> --%>
         <%--        <iframe src=""></iframe>--%>
+
         <video src="/getVideo/${vdto.videopath}" controls>대체텍스트</video>
 
         <form method="post" action="/insertvid" enctype="multipart/form-data">
             <input type="hidden" name="lid" id="vlid" value="${ldto.lid}">
 
-            <input type="text" name="title" id="title">
+            <input type="text" name="title" id="title" placeholder="영상 제목을 입력하세요.">
             <div id="video_upload">
                 <input type="file" name="vidfile" id="vidfile">
                 <span class="span_file">선택된 파일이 없습니다.</span>
                 <label class="label_file_btn" for="vidfile">영상 선택</label>
                 <button type="submit">영상 추가</button>
             </div>
+        </form>
+
+        <form method="post" action="/deletevideo/${vdto.vid}">
+            <input type="hidden" name="vid" value="${vdto.vid}">
+            <input type="hidden" name="videopath" value="${vdto.videopath}">
+            <input type="hidden" name="lid" value="${ldto.lid}">
+            <button type="submit" id="delvideo">영상 삭제</button>
         </form>
     </div>
 
@@ -56,17 +64,14 @@ role: ${role} / sessionId(uid): ${sessionId} / tid: ${ldto.tid} /
         </ul>
 
         <%-- 자료 등록  --%>
-        <form method="post" action="/insertref" enctype="multipart/form-data">
+        <form id="fileUploadForm" method="post" action="/insertref" enctype="multipart/form-data">
             <input type="hidden" name="lid" id="reflid" value="${ldto.lid}">
             <input type="hidden" name="sessionId" id="sessionId" value="${sessionId}">
             <input type="hidden" name="role" id="role" value="${role}">
             <input type="hidden" name="tid" id="tid" value="${ldto.tid}">
 
             <div id="file_upload">
-                <input type="file" name="files" id="files" multiple>
-                <span class="span_file">선택된 파일이 없습니다.</span>
-                <label class="label_file_btn" for="files">강의 자료 선택</label>
-                <button type="submit">강의 자료 추가</button>
+
             </div>
         </form>
     </div>
@@ -85,7 +90,9 @@ role: ${role} / sessionId(uid): ${sessionId} / tid: ${ldto.tid} /
             <button type="button" id="append_btn">쓰기</button>
         </form>
         <%-- 댓글 리스트 --%>
-        <ul id="replyList"></ul>
+        <ul id="replyList">
+
+        </ul>
     </div>
 </div>
 </body>

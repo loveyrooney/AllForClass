@@ -43,7 +43,7 @@
     </delete>
 
     <select id="detailvideo" resultType="com.chunjae.allforclass.dto.VideoDTO" parameterType="int">
-        select title, videopath
+        select vid, title, videopath
         from video
         where lid = #{lid}
     </select>
@@ -52,4 +52,10 @@
         INSERT INTO video(lid, title, videopath)
         VALUES(#{lid}, #{title}, #{videopath});
     </insert>
+
+    <delete id="deleteVid" parameterType="int">
+        DELETE FROM video
+        WHERE vid = #{vid}
+    </delete>
+
 </mapper>
