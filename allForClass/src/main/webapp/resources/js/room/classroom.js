@@ -1,5 +1,123 @@
 // 비디오 업로드
+const uploadVideo = function () {
+    let lid = document.querySelector('#lid').value;
+    let videopath = document.querySelector('#videopath').value;
+    let role = document.querySelector('#role').value;
+    let tid = document.querySelector('#tid').value;
+    let sessionId = document.querySelector('#sessionId').value;
 
+    let video = document.getElementById("video");
+    let form = document.getElementById('insertVideoForm'); // 폼 요소 가져오기
+    let div_form = document.getElementById('video_upload');
+
+    if ((role === 'teacher' && String(sessionId) === String(tid)) || role === 'admin') {
+        if (videopath !== '') {
+            let ele_vid = document.createElement('video');
+            ele_vid.src = `/getVideo/${videopath}`;
+            ele_vid.setAttribute("controls", "controls");
+            video.appendChild(ele_vid);
+
+            let ele_delbtn = document.createElement('button');
+            ele_delbtn.textContent = '비디오 삭제';
+            ele_delbtn.onclick = function () {
+                deleteVideo(videopath);
+            };
+            div_form.appendChild(ele_delbtn);
+        } else {
+            let ele_title = document.createElement('input');
+            ele_title.type = "text";
+            ele_title.name = "title";
+            ele_title.id = "title";
+            ele_title.placeholder = "영상 제목을 입력하세요.";
+            form.appendChild(ele_title);
+
+            let ele_input = document.createElement("input");
+            ele_input.type = "file";
+            ele_input.name = "vidfile";
+            ele_input.id = "vidfile";
+            div_form.appendChild(ele_input);
+
+            let ele_span = document.createElement("span");
+            ele_span.className = "span_file";
+            ele_span.textContent = "선택된 파일이 없습니다.";
+            div_form.appendChild(ele_span);
+
+            let ele_label = document.createElement("label");
+            ele_label.className = "label_file_btn";
+            ele_label.htmlFor = "vidfile";
+            ele_label.textContent = "영상 선택";
+            div_form.appendChild(ele_label);
+
+            let ele_btn = document.createElement('button');
+            ele_btn.setAttribute('type', 'submit');
+            ele_btn.textContent = '영상 추가';
+            div_form.appendChild(ele_btn);
+        }
+    } else {
+        let ele_vid = document.createElement('video');
+        ele_vid.src = `/getVideo/${videopath}`;
+        ele_vid.setAttribute("controls", "controls");
+        video.appendChild(ele_vid);
+    }
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const formData = new FormData(form);
+
+        fetch('/insertvid', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                window.location.reload();
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+}
+
+// 비디오 삭제
+const deleteVideo = function (videopath) {
+    let vid = document.querySelector('#vid').value;
+    console.log(vid);
+    console.log(typeof vid);
+
+    const confirm_check = confirm("정말로 삭제하시겠습니까?");
+
+    if (confirm_check) {
+        const data = {
+            videopath: videopath
+        };
+
+        fetch(`/deletevideo/${vid}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to delete video');
+            }
+            window.location.reload();
+            return response.json();
+        }).then(data => {
+            console.log(data);
+        }).catch(error => {
+            console.log('Error: ', error);
+        }).finally(() => {
+            console.log("delete video finally");
+        });
+    }
+}
 
 // 파일 업로드
 const uploadFiles = function () {
@@ -12,28 +130,28 @@ const uploadFiles = function () {
 
     // 강사(자신이 올린 강의) / 관리자일 경우에만 파일 추가 버튼 등을 생성
     if (('teacher' === String(role) && String(sessionId) === String(tid)) || 'admin' === String(role)) {
-        let fileInput = document.createElement('input');
-        fileInput.setAttribute('type', 'file');
-        fileInput.setAttribute('name', 'files');
-        fileInput.setAttribute('id', 'files');
-        fileInput.setAttribute('multiple', 'multiple');
-        div_form.appendChild(fileInput);
+        let ele_input = document.createElement('input');
+        ele_input.setAttribute('type', 'file');
+        ele_input.setAttribute('name', 'files');
+        ele_input.setAttribute('id', 'files');
+        ele_input.setAttribute('multiple', 'multiple');
+        div_form.appendChild(ele_input);
 
-        let spanElement = document.createElement('span');
-        spanElement.className = 'span_file';
-        spanElement.textContent = '선택된 파일이 없습니다.';
-        div_form.appendChild(spanElement);
+        let ele_span = document.createElement('span');
+        ele_span.className = 'span_file';
+        ele_span.textContent = '선택된 파일이 없습니다.';
+        div_form.appendChild(ele_span);
 
-        let labelElement = document.createElement('label');
-        labelElement.className = 'label_file_btn';
-        labelElement.setAttribute('for', 'files');
-        labelElement.textContent = '강의 자료 선택';
-        div_form.appendChild(labelElement);
+        let ele_label = document.createElement('label');
+        ele_label.className = 'label_file_btn';
+        ele_label.setAttribute('for', 'files');
+        ele_label.textContent = '강의 자료 선택';
+        div_form.appendChild(ele_label);
 
-        let buttonElement = document.createElement('button');
-        buttonElement.setAttribute('type', 'submit');
-        buttonElement.textContent = '강의 자료 추가';
-        div_form.appendChild(buttonElement);
+        let ele_btn = document.createElement('button');
+        ele_btn.setAttribute('type', 'submit');
+        ele_btn.textContent = '강의 자료 추가';
+        div_form.appendChild(ele_btn);
     }
 
     form.addEventListener('submit', function (event) {
@@ -43,9 +161,9 @@ const uploadFiles = function () {
 
         fetch('/insertref', {
             method: 'POST',
-            headers: {
-                'Accept': 'multipart/form-data'
-            },
+            // headers: {
+            //     'Accept': 'multipart/form-data'
+            // },
             body: formData
         })
             .then(response => {
@@ -81,7 +199,7 @@ const replylistjson = function () {
         }
         return response.json();
     }).then((data) => {
-        const replyList = document.getElementById('replyList');
+        let replyList = document.getElementById('replyList');
         replyList.innerHTML = '';
 
         data.forEach(item => {
@@ -144,6 +262,7 @@ window.onload = function () {
 
     replylistjson();
     uploadFiles();
+    uploadVideo();
 
     // 댓글 추가
     document.querySelector('#append_btn').onclick = function () {
@@ -216,3 +335,4 @@ window.onload = function () {
     document.getElementById('vidfile').addEventListener('change', customFileInput);
     document.getElementById('files').addEventListener('change', customFileInput);
 }
+
