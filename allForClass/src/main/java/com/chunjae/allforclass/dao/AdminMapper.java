@@ -14,4 +14,8 @@ public interface AdminMapper {
     List<LecDTO> lecList();
 
     List<UserDTO> uList();
+
+    int updateLecResult(LecDTO dto);
+
+    int confirm(int lid);
 }

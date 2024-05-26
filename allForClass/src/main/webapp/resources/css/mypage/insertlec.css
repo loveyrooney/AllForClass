@@ -65,6 +65,10 @@ insert_lec_select{
     width: 30%;
 }
 
+.insert_lec_radio label{
+    width: auto;
+}
+
 .insert_lec_radio{
     display: inline-block;
     position: absolute;

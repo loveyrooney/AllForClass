@@ -1,0 +1,166 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Poor Story", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+ul li {
+    list-style: none;
+    margin: 2px;
+}
+
+.update_lec_h1 {
+    margin: 35px 10% 10px;
+    font-size: 18px;
+    font-weight: bolder;
+    color: #3DA9A4;
+}
+
+.update_lec_imgupload, .update_lec_select{
+    display: flex;
+    flex-direction: column;
+}
+
+.update_lec_imgupload {
+    align-items: center;
+}
+
+.update_lec_imgupload img{
+    width: 300px;
+    height: 300px;
+}
+
+.update_lec_select{
+    margin: 10px;
+}
+.update_lec_select label{
+    width: 30%;
+}
+
+.update_lec_radio label {
+    width: auto;
+}
+
+.update_lec_radio{
+    display: inline-block;
+    position: absolute;
+    width: 100%;
+}
+
+.update_lec_select #subject, .update_lec_select #startdate{
+    width: 140px;
+}
+
+.update_lec_radio ul{
+    padding-left: 0;
+}
+
+#lec_time_check{
+    font-size: 0.9rem;
+}
+
+.update_desc{
+    margin: 15px 5% 20px;
+}
+.update_desc label{
+    margin-bottom: 5px;
+}
+
+.update_desc textarea{
+    height: 300px;
+}
+
+.update_submit{
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 5% 40px;
+}
+
+
+#resetlec_btn{
+    width: 100px;
+    height: 35px;
+    border: 2px solid #78C2AD;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 10px;
+    background: #E3F2EF;
+    color: black;
+    font-family: "Poor Story", system-ui;
+    font-weight: 700;
+    font-size: medium;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+#updatelec_btn{
+    width: 100px;
+    height: 35px;
+    border: 2px solid #78C2AD;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 10px;
+    background: #78C2AD;
+    color: black;
+    font-family: "Poor Story", system-ui;
+    font-weight: 700;
+    font-size: medium;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#resetlec_btn:hover, #updatelec_btn:hover {
+    background: #ECFBFB;
+}
+
+#deletelec_btn{
+    width: 100px;
+    height: 35px;
+    border: 2px solid #78C2AD;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 10px;
+    background: #78C2AD;
+    color: black;
+    font-family: "Poor Story", system-ui;
+    font-weight: 700;
+    font-size: medium;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: auto;
+}
+
+#deletelec_btn:hover {
+    background: #ECFBFB;
+}
+
+#confirm_btn{
+    width: 150px;
+    height: 35px;
+    border: 2px solid #1CBCBD;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 10px;
+    background: #1CBCBD;
+    color: white;
+    font-family: "Poor Story", system-ui;
+    font-weight: 700;
+    font-size: medium;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#confirm_btn:hover {
+    background: #ECFBFB;
+    color: black;
+}

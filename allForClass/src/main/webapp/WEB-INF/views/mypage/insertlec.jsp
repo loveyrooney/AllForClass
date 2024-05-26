@@ -36,7 +36,7 @@
 
 
         <ul class="col-md-5 insert_lec_select">
-            <input name="tid" value="${tid}" hidden>
+            <input type="text" name="tid" value="${tid}" hidden>
             <li>
                 <label for="subject">과목</label>
                 <select name="subject" id="subject">

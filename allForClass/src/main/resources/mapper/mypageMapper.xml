@@ -14,7 +14,7 @@
         , timesession
         , imgpath )
         VALUES ( #{lname}, #{tid}, #{price}, #{description}, #{subject}, #{entry}, #{startdate}, #{timesession},
-        #{imgpath});
+        #{imgpath})
     </insert>
 
     <select id="detailMe" parameterType="int" resultType="com.chunjae.allforclass.dto.UserDTO">
