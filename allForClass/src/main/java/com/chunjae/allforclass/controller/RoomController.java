@@ -27,6 +27,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Controller
@@ -81,7 +82,7 @@ public class RoomController {
 
     // 비디오 업로드
     @PostMapping("/insertvid")
-    public String insertvid(@RequestParam MultipartFile vidfile, VideoDTO vdto, HttpServletRequest request){
+    public @ResponseBody void insertvid(@RequestParam("vidfile") MultipartFile vidfile, VideoDTO vdto, HttpServletRequest request) {
         String path = "/uploadVideo";
 
         try {
@@ -92,8 +93,7 @@ public class RoomController {
             if (!vidfile.isEmpty()) {
 
                 String vidname = vidfile.getOriginalFilename();
-                vidname = URLEncoder.encode(vidname, StandardCharsets.UTF_8)
-                        .replace("+", "%20");
+                vidname = URLEncoder.encode(vidname, StandardCharsets.UTF_8).replace("+", "%20");
                 String filename = vidname;
 
                 File file = new File(realpath, filename);
@@ -107,18 +107,16 @@ public class RoomController {
         }
 
         int result = rservice.insertVid(vdto);
-
-        return "redirect:/room/" + vdto.getLid();
     }
 
     // 비디오 불러오기
-    @GetMapping(value = "/getVideo/{filename}", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
-    public ResponseEntity<byte[]> getImage(@PathVariable String filename, HttpServletRequest request) {
+    @GetMapping(value = "/getVideo/{videopath}", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
+    public ResponseEntity<byte[]> getImage(@PathVariable String videopath, HttpServletRequest request) {
         String path = "/uploadVideo";
         String realpath = "C:\\Chunjae\\moduUpload";
 //            String realpath = "D:\\moduUpload";
 //        String realpath = request.getSession().getServletContext().getRealPath(path);
-        String fname = URLEncoder.encode(filename, StandardCharsets.UTF_8)
+        String fname = URLEncoder.encode(videopath, StandardCharsets.UTF_8)
                 .replace("+", "%20");
         InputStream in = null;
         ResponseEntity<byte[]> entity = null;
@@ -129,8 +127,8 @@ public class RoomController {
             entity = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(in)
                     , headers, HttpStatus.OK);
         } catch (IOException e) {
-            System.out.println("path: "+path);
-            System.out.println("realpath: "+realpath);
+            System.out.println("path: " + path);
+            System.out.println("realpath: " + realpath);
             System.out.println(e + ".....file not found!!!!!!!!!");
             entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -139,27 +137,26 @@ public class RoomController {
 
     // 비디오 삭제
     @PostMapping("/deletevideo/{vid}")
-    public String deletevideo(@PathVariable int vid, @RequestParam int lid, VideoDTO vdto, HttpServletRequest request) {
+    public @ResponseBody void deletevideo(@PathVariable int vid, @RequestBody Map<String, String> hm) {
+        String videopath = hm.get("videopath");
         String realpath = "C:\\Chunjae\\moduUpload";
 
-        File file = new File(realpath, vdto.getVideopath());
+        File file = new File(realpath, videopath);
 
         if (file.exists()) {
             if (file.delete()) {
                 int result = rservice.deleteVid(vid);
-                if (result > 0) {
-                    return "redirect:/room/" + lid; // 성공 시
-                } else {
-                    // 데이터베이스 삭제 실패 처리
-                    return "redirect:/error";
+                if (result <= 0) {
+                    // DB 삭제 실패 처리
+                    throw new RuntimeException("Failed to delete video from DB");
                 }
             } else {
                 // 파일 삭제 실패 처리
-                return "redirect:/error";
+                throw new RuntimeException("Failed to delete video file");
             }
         } else {
             // 파일이 존재하지 않을 경우
-            return "redirect:/error";
+            throw new RuntimeException("Video file does not exist");
         }
     }
 
