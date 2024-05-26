@@ -1,4 +1,156 @@
-/*      !*이벤트 글자가 잘리지 않음*!
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Poor Story", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+ul li {
+    list-style: none;
+    margin: 2px;
+}
+
+#mypage_top{
+    display: flex;
+    justify-content: center;
+}
+#mypage_top h1 {
+    margin: 50px auto 40px;
+    font-size: 20px;
+    font-weight: bolder;
+    color: #3DA9A4;
+}
+
+#mypage_myinfo {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    background-color: #E3F2EF;
+    border: 2px solid #3DA9A4;
+    border-radius: 20px;
+    width: 80%;
+    margin: 0 auto;
+}
+#mypage_myinfo img{
+    width: 80px;
+    margin: 10px;
+}
+
+#mypage_myinfo ul{
+    font-size: 1.2rem;
+    width: 40%;
+    margin: auto 10px;
+}
+
+#mypage_myinfo .mypage_btn{
+    width: 120px;
+    height: 35px;
+    border: 2px solid #78C2AD;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 10px;
+    background: #78C2AD;
+    color: black;
+    font-family: "Poor Story", system-ui;
+    font-weight: 700;
+    font-size: medium;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin : 8px;
+}
+
+#mypage_myinfo .mypage_btn:hover {
+    background: #ECFBFB;
+}
+
+
+/*교사 마이페이지*/
+
+#mypage_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#mypage_content ul {
+    display: flex;
+    width: 60%;
+    justify-content: space-between;
+    align-items: center;
+    margin: 50px 0 30px;
+}
+
+#mypage_content ul li:hover{
+    color: #3DA9A4;
+    font-weight: bold;
+}
+
+#mypage_content ul li #insert_btn{
+    width: 120px;
+    height: 35px;
+    border: 2px solid #1CBCBD;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 10px;
+    background: #1CBCBD;
+    color: white;
+    font-family: "Poor Story", system-ui;
+    font-weight: 700;
+    font-size: medium;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+#mypage_content ul li #insert_btn:hover {
+    background: #ECFBFB;
+    color: black;
+}
+#mypage_content #mypage_line {
+    border-top: 2px solid #3DA9A4;
+    width: 80%;
+    margin: 0 0 50px;
+}
+
+#mypage_content table {
+    width: 80%;
+    border-top: 2px solid #1CBCBD;
+    border-bottom: 2px solid #1CBCBD;
+    border-collapse: collapse;
+    text-align: center;
+    margin: 0px 0 80px;
+}
+
+th {
+    border-bottom: 2px solid #1CBCBD;
+    border-left: 1px solid #1CBCBD;
+    padding: 5px
+}
+
+td {
+    border-bottom: 1px solid #1CBCBD;
+    border-left: 1px solid #1CBCBD;
+    padding: 5px
+}
+
+th:first-child, td:first-child {
+    border-left: none;
+}
+
+.active {
+    font-weight: bold;
+    border-bottom: 2px solid #1CBCBD;
+}
+
+
+/*수강생 캘린더*/
+
+/*      !*캘린더 이벤트 글자가 잘리지 않음*!
       .fc-event-title.fc-sticky{
           white-space: normal;
       }*/
@@ -8,4 +160,43 @@
 #calendar{
     color: darkslategrey;
     margin: auto;
+    width: 80%;
+    height: 1110px;
+    margin: 70px auto;
+    font-size: 0.9rem;
+}
+
+/* 일요일 날짜 빨간색 */
+.fc-day-sun a {
+    color: red;
+    text-decoration: none;
+}
+
+/* 토요일 날짜 파란색 */
+.fc-day-sat a {
+    color: blue;
+    text-decoration: none;
+}
+
+/*캘린더 다른 달 이동 버튼 색 변경*/
+.fc .fc-button-primary {
+    background-color: #78c2ad;
+    border-color: #3da9a4;
+}
+
+.fc .fc-button-primary:hover, .fc .fc-button-primary:active{
+    background-color: #1CBCBD;
+}
+
+/*캘린더 투데이 비활성 버튼색 변경*/
+.fc .fc-button-primary:disabled {
+    background-color: #e3f2ef;
+    border-color: #78c2ad;
+    color: #000000;
+}
+
+/*날짜 칸 크기 키움*/
+.fc .fc-daygrid-day-frame {
+    min-height: 170px;
+    max-height: 170px;
 }

@@ -64,8 +64,8 @@ public class MypageController {
             Map<String, Object> event = new HashMap<>();
             event.put("url", "/detail_lec/"+list.get(i).getLid());
             event.put("title", list.get(i).getTimesession()+"\n"
-                               +"["+list.get(i).getSubject()+"] "
-                               +list.get(i).getTname()+"\n"
+                               /*+"["+list.get(i).getSubject()+"] "
+                               +list.get(i).getTname()+"\n"*/
                                +list.get(i).getLname());
             event.put("start", list.get(i).getStartdate());
             event.put("textColor", "black");
