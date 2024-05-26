@@ -24,7 +24,7 @@
 
     <!-- 어노테이션으로 빈 생성을 하기 위한 컴포넌트 스캔 패키지 설정 -->
     <context:component-scan base-package="com.chunjae.allforclass.controller"/>
-    <context:component-scan base-package="com.chunjae.allforclass.exception"/>
+<!--    <context:component-scan base-package="com.chunjae.allforclass.exception"/>-->
     <!-- Login Interceptor 빈 생성 및 제외 경로 지정 세팅 (이거 어노테이션으로도 할수 있을것 같은데 나중에 공부하는 걸로) -->
 
 <!--    <bean id="authInterrupt" class="com.chunjae.allforclass.interceptor.LoginInterceptor"/>-->
