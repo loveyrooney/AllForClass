@@ -7,8 +7,9 @@
     <select id="checkUser" parameterType="hashmap" resultType="string">
         select email
         from user
-        where email=#{email} and pwd=#{pwd}
+        where email=#{email} and pwd=#{pwd} and disable=false
     </select>
+
     <select id="findUid" parameterType="string" resultType="int">
         select uid
         from user

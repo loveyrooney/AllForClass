@@ -41,10 +41,10 @@ public class UserController {
     }
 
     @PostMapping("/login_result")
-    public String login_result(@RequestParam String email, @RequestParam String pwd, HttpSession session) {
+    public String login_result(@RequestParam String email, @RequestParam String pwd, boolean disable, HttpSession session) {
 
         if (email != null && pwd != null) {
-            boolean login = userService.checkUser(email, pwd);
+            boolean login = userService.checkUser(email, pwd, disable);
             if (login == true) {  //로그인 성공
                 int uid = userService.findUid(email);
                 session.setAttribute("sessionId", uid);
