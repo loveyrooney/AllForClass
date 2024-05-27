@@ -4,7 +4,7 @@ const init = function (data) {
     uid = data;
 }
 
-// 강의 수강 페이지 생성되었는지 전달용
+// 강의 수강 페이지 생성 여부
 let roomBoolean = false;
 
 
