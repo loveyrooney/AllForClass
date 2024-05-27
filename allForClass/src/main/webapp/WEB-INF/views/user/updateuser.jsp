@@ -26,7 +26,7 @@
 
             <ul>
                 <li>
-                        <label for="email">이메일</label>
+                    <label for="email">이메일</label>
                 </li>
                 <li>
                     <input type="text" name="email" id="email" value="${dto.email}" class="update_input" required>
@@ -49,7 +49,7 @@
                 </li>
                 <li>
                     <input type="reset" id="updatereset_btn" value="취소">
-                    <input type="submit" class="updateuser_btn" value="수정하기">
+                    <input type="submit" id="updateuser_btn" value="수정하기">
                 </li>
             </ul>
         </form>

@@ -26,7 +26,7 @@
     <div class="row justify-content-center">
         <div class="col-md-5 insert_lec_imgupload">
             <div id="image_container">
-                <img id="green_image" class="img-thumbnail" src="/resources/images/insert_background.png">
+                <img id="green_image" class="img-thumbnail" src="/resources/images/default.png">
             </div>
             <label for="imgfile">
                 <div class="lecimg_upload_btn">강의 썸네일 등록</div>

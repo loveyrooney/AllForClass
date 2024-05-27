@@ -64,8 +64,8 @@ public class MypageController {
             Map<String, Object> event = new HashMap<>();
             event.put("url", "/detail_lec/"+list.get(i).getLid());
             event.put("title", list.get(i).getTimesession()+"\n"
-                               /*+"["+list.get(i).getSubject()+"] "
-                               +list.get(i).getTname()+"\n"*/
+                               +"["+list.get(i).getSubject()+"] "
+                             /*+list.get(i).getTname()+"\n"*/
                                +list.get(i).getLname());
             event.put("start", list.get(i).getStartdate());
             event.put("textColor", "black");
@@ -156,10 +156,10 @@ public class MypageController {
                 // dto imgpath에 경로 입력
                 dto.setImgpath(filename);
 
-            } /*else {
+            } else {
                 // 기본 이미지 파일로 게시
-                dto.setImgpath("filename");
-            }*/
+                dto.setImgpath("file_default");
+            }
         } catch (IOException e) {
             System.out.println(e);
         }
