@@ -1,7 +1,9 @@
 package com.chunjae.allforclass.controller;
 
 import com.chunjae.allforclass.dto.LecDTO;
-import com.chunjae.allforclass.exception.PaymentException;
+import com.chunjae.allforclass.dto.MailDTO;
+import com.chunjae.allforclass.exception.BusinessException;
+import com.chunjae.allforclass.exception.ErrorCode;
 import com.chunjae.allforclass.service.PurchaseService;
 import com.chunjae.allforclass.service.UserService;
 import org.slf4j.Logger;
@@ -25,6 +27,7 @@ import java.nio.file.Paths;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -121,7 +124,7 @@ public class PurchaseController {
     }
 
     @PostMapping("/payment/complete")
-    public @ResponseBody HashMap<String, Object> paycomplete(@RequestBody HashMap<String,Object> hm) throws PaymentException {
+    public @ResponseBody HashMap<String, Object> paycomplete(@RequestBody HashMap<String,Object> hm) throws BusinessException {
         logger.info("payment paymentId : {}",hm.get("paymentId"));
         int lid = (int)hm.get("lid");
         String payid = (String) hm.get("paymentId");
@@ -154,13 +157,13 @@ public class PurchaseController {
             logger.info("payment complete : {}",response);
         }catch (IOException|InterruptedException|NoSuchAlgorithmException|KeyManagementException e){
             logger.error("payment complete exception : {}",e.getMessage());
-            throw new PaymentException();
+            throw new BusinessException(ErrorCode.FAIL_TO_PAYMENT);
         }
         return result;
     }
 
     @GetMapping("/payment/cancel/{pid}")
-    public @ResponseBody HashMap<String, Object> payRefund(@PathVariable int pid) throws PaymentException {
+    public @ResponseBody HashMap<String, Object> payRefund(@PathVariable int pid) throws BusinessException {
         // 우리 DB에 있는 사용자 pid 를 통해 결제 시 발급받은 paymentId 조회 (결제 paymentId 외부 노출 안하기 위해서)
         String payid = pservice.findPayid(pid);
         // 결과 리턴할 해시 맵
@@ -194,10 +197,9 @@ public class PurchaseController {
             }
         }catch (IOException|InterruptedException|NoSuchAlgorithmException|KeyManagementException e){
             logger.error("payment complete exception : {}",e.getMessage());
-            throw new PaymentException();
+            throw new BusinessException(ErrorCode.FAIL_TO_PAYMENT);
         }
         return result;
     }
-
 
 }

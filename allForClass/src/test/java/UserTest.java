@@ -1,9 +1,11 @@
 import com.chunjae.allforclass.dao.UserMapper;
 import com.chunjae.allforclass.dto.UserDTO;
 import com.chunjae.allforclass.service.UserService;
+import com.chunjae.allforclass.service.UserServiceImple;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -55,5 +57,10 @@ public class UserTest {
         int result = userService.updateUser(dto);
 
         Assertions.assertEquals(1, result);
+    }
+
+    @Test
+    public void t7(){
+        Assertions.assertEquals(true,userService.checkUser("hwang@test.com","h123",false));
     }
 }

@@ -26,6 +26,7 @@
        <property name="mapperLocations" value="classpath:mapper/**/*.xml"/>
     </bean>
     <!-- 어노테이션으로 빈 생성 하기 위한 컴포넌트 스캔 패키지 설정 -->
+    <context:component-scan base-package="com.chunjae.allforclass.config"/>
     <context:component-scan base-package="com.chunjae.allforclass.service"/>
     <context:component-scan base-package="com.chunjae.allforclass.dao"/>
     <mybatis:scan base-package="com.chunjae.allforclass.dao"/>
