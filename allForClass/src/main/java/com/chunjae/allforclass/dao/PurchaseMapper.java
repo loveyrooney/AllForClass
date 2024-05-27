@@ -1,10 +1,12 @@
 package com.chunjae.allforclass.dao;
 
+import com.chunjae.allforclass.dto.MailDTO;
 import com.chunjae.allforclass.dto.PurDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Mapper
 @Repository
@@ -21,4 +23,6 @@ public interface PurchaseMapper {
     int countPur(int lid);
 
     int checkSchedule(HashMap<String, Object> hm);
+
+    List<MailDTO> sendMailList();
 }

@@ -11,11 +11,11 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @ControllerAdvice
 public class CustomExceptionHandler {
     private Logger logger = LoggerFactory.getLogger("CustomExceptionHandler.class");
-    @ExceptionHandler(PaymentException.class)
-    public String handleInternalException(PaymentException e, Model model){
-        logger.info("InternalCustomException : {}",e.getMessage());
-        model.addAttribute("status","500");
-        model.addAttribute("msg","결제 과정에서 에러가 발생하였습니다.");
+    @ExceptionHandler(BusinessException.class)
+    public String handleInternalException(BusinessException e, Model model){
+        logger.info("Payment Exception : {}",e.getMessage());
+        model.addAttribute("status",e.getErrorCode().getHttpStatus());
+        model.addAttribute("msg",e.getErrorCode().getMessage());
         model.addAttribute("body","error/exception.jsp");
         model.addAttribute("title","모두의 국영수 - ERROR");
         return "main";

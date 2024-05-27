@@ -43,4 +43,20 @@
           and l.startdate = #{startdate}
           and l.timesession = #{timesession}
     </select>
+    <select id="sendMailList" resultType="com.chunjae.allforclass.dto.MailDTO">
+        SELECT l.lid
+             , l.lname
+             , t.uname
+             , l.startdate
+             , l.timesession
+             , u.uname
+             , u.email
+        FROM user u INNER JOIN purchase p
+        ON u.uid = p.uid
+        INNER JOIN lecture l
+        ON l.lid = p.lid
+        INNER JOIN user t
+        ON l.teacher_id = t.uid
+        where l.startdate = Date(NOW()+INTERVAL 1 DAY)
+    </select>
 </mapper>

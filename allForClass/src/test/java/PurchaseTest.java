@@ -1,5 +1,8 @@
 import com.chunjae.allforclass.dao.PurchaseMapper;
+import com.chunjae.allforclass.dto.MailDTO;
+import com.chunjae.allforclass.exception.BusinessException;
 import com.chunjae.allforclass.service.PurchaseService;
+import com.chunjae.allforclass.service.PurchaseServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,7 +12,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/applicationContext.xml")
@@ -77,4 +82,20 @@ public class PurchaseTest {
     public void date(){
         Assertions.assertEquals(true,LocalDate.now().isAfter(LocalDate.parse("2024-05-23")));
     }
+
+    @Test
+    public void sendHtmlEmail(){
+        try {
+            pservice.sendHtmlEmail();
+        }catch (BusinessException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+//    @Test
+//    public void schedule() throws InterruptedException{
+//        long delay = 2000L;
+//        Thread.sleep(delay + 5000);
+//        pservice.schedule();
+//    }
 }

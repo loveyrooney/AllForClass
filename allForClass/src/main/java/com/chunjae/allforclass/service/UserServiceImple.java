@@ -2,6 +2,7 @@ package com.chunjae.allforclass.service;
 
 import com.chunjae.allforclass.dao.UserMapper;
 import com.chunjae.allforclass.dto.UserDTO;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,19 +16,21 @@ public class UserServiceImple implements UserService{
     public UserServiceImple(UserMapper userMapper){
         this.userMapper=userMapper;
     }
+    public static String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
 
     @Override
     public boolean checkUser(String email, String pwd, boolean disable) {
         HashMap<String, Object> hm = new HashMap<>();
         hm.put("email", email);
-        hm.put("pwd", pwd);
         hm.put("disable", disable);
-
-        String ckemail =userMapper.checkUser(hm);
-
+        String pwdFromDB =userMapper.checkUser(hm);
+        //System.out.println(pwdFromDB);
         boolean result=false;
 
-        if(ckemail!=null && ckemail!="")
+//        if(BCrypt.checkpw(pwd,pwdFromDB))
+        if(pwd.equals(pwdFromDB))
             result=true;
 
         return result;
@@ -59,9 +62,8 @@ public class UserServiceImple implements UserService{
 
     @Override
     public int join(UserDTO dto) {
-
+        //dto.setPwd(hashPassword(dto.getPwd()));
         int result = userMapper.join(dto);
-
         return result;
     }
 

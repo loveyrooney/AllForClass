@@ -41,7 +41,9 @@ bin/
 ##
 db.properties
 pay.properties
+mail.properties
 /gradle/
 /gradlew
 /gradlew.bat
 /settings.gradle
+/src/main/resources/mail.properties
