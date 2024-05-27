@@ -4,23 +4,20 @@ import com.chunjae.allforclass.dao.*;
 import com.chunjae.allforclass.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class RoomServiceImple implements RoomService {
 
     private final LectureMapper lmapper;
     private final RoomMapper rmapper;
+
 
     public RoomServiceImple(LectureMapper lmapper, RoomMapper rmapper) {
         this.lmapper = lmapper;
@@ -35,11 +32,6 @@ public class RoomServiceImple implements RoomService {
     @Override
     public VideoDTO detailvideo(int lid) {
         return rmapper.detailvideo(lid);
-    }
-
-    @Override
-    public PurDTO enterroom(int pid) {
-        return null;
     }
 
     @Override

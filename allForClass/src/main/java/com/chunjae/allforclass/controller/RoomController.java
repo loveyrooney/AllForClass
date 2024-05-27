@@ -6,6 +6,8 @@ import com.chunjae.allforclass.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileInputStream;
@@ -58,9 +61,7 @@ public class RoomController {
         LecDTO ldto = rservice.detailLec(lid);
         VideoDTO vdto = rservice.detailvideo(lid);
         List<RefDTO> reflist = rservice.detailref(lid);
-//        PurDTO pdto = rservice.enterroom(pid);
 
-//        model.addAttribute("pdto", pdto);
         model.addAttribute("ldto", ldto);
         model.addAttribute("vdto", vdto);
 
@@ -86,8 +87,8 @@ public class RoomController {
         String path = "/uploadVideo";
 
         try {
-            String realpath = "C:\\Chunjae\\moduUpload";
-//            String realpath = "D:\\moduUpload";
+//            String realpath = "C:\\Chunjae\\moduUpload";
+            String realpath = "D:\\moduUpload";
 //            String realpath = request.getSession().getServletContext().getRealPath(path);
 
             if (!vidfile.isEmpty()) {
@@ -113,8 +114,8 @@ public class RoomController {
     @GetMapping(value = "/getVideo/{videopath}", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
     public ResponseEntity<byte[]> getImage(@PathVariable String videopath, HttpServletRequest request) {
         String path = "/uploadVideo";
-        String realpath = "C:\\Chunjae\\moduUpload";
-//            String realpath = "D:\\moduUpload";
+//        String realpath = "C:\\Chunjae\\moduUpload";
+            String realpath = "D:\\moduUpload";
 //        String realpath = request.getSession().getServletContext().getRealPath(path);
         String fname = URLEncoder.encode(videopath, StandardCharsets.UTF_8)
                 .replace("+", "%20");
@@ -139,7 +140,9 @@ public class RoomController {
     @PostMapping("/deletevideo/{vid}")
     public @ResponseBody void deletevideo(@PathVariable int vid, @RequestBody Map<String, String> hm) {
         String videopath = hm.get("videopath");
-        String realpath = "C:\\Chunjae\\moduUpload";
+//        String realpath = "C:\\Chunjae\\moduUpload";
+            String realpath = "D:\\moduUpload";
+//            String realpath = request.getSession().getServletContext().getRealPath(path);
 
         File file = new File(realpath, videopath);
 
@@ -160,14 +163,50 @@ public class RoomController {
         }
     }
 
+    // 자료 업로드
     @PostMapping("/insertref")
     public @ResponseBody void insertref(HttpServletRequest request, RefDTO refdto) {
         String path = "/uploadFile";
-        String realpath = "C:\\Chunjae\\moduUpload";
-//        String realpath = "D:\\moduUpload";
+//        String realpath = "C:\\Chunjae\\moduUpload";
+        String realpath = "D:\\moduUpload";
 //        String realpath = request.getSession().getServletContext().getRealPath(path);
         rservice.insertref(realpath, refdto);
     }
+
+    // 자료 다운로드
+    @GetMapping(value = "/download/{filename}")
+    @ResponseBody
+    public ResponseEntity<Resource> downloadref(@PathVariable String filename, HttpServletRequest request, HttpServletResponse response) {
+
+        String path = "/uploadFile";
+        String realpath = "D:\\moduUpload";
+//        String realpath = request.getSession().getServletContext().getRealPath(path);
+
+        String fname = URLEncoder.encode(filename, StandardCharsets.UTF_8).replace("+", "%20");
+
+        File file = new File(realpath + "/" + fname);
+        if (!file.exists()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        HttpHeaders headers = new HttpHeaders();
+
+        Resource resource;
+        try {
+            resource = new InputStreamResource(new FileInputStream(file));
+            response.setHeader("Content-Type", "application/octet-stream");
+            response.setHeader("Content-Disposition", "attachment; filename=" + fname);
+            headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+            headers.add("Pragma", "no-cache");
+            headers.add("Expires", "0");
+            headers.add("contentType", "utf-8");
+            headers.setContentLength(file.length());
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        } catch (IOException e) {
+            System.out.println("error....." + e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+    }
+
 
     // 댓글 리스트
     @GetMapping("/replylist/{lid}")
