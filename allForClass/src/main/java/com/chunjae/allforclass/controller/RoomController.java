@@ -181,6 +181,7 @@ public class RoomController {
         String path = "/uploadFile";
         String realpath = "D:\\moduUpload";
 //        String realpath = request.getSession().getServletContext().getRealPath(path);
+        logger.info("realpath.....{}" + realpath);
 
         String fname = URLEncoder.encode(filename, StandardCharsets.UTF_8).replace("+", "%20");
 

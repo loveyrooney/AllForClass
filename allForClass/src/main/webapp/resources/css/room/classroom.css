@@ -119,24 +119,28 @@ a:hover {
     margin: 0 0 0 58px;
 }
 #video_upload{
-    display: flex;
     margin: 0 58px 0 0;
+    display: flex;
 }
+
 video{
-    width: 88%;
+    width: 500px;
 }
 
 #video button{
+    position: relative;
+    left: 37%;
     color: black;
-    width: 150px;
-    height: 42px;
+    width: 102px;
+    height: 23px;
+    margin: 5px;
     border: 2px solid #78C2AD;
     border-radius: 20px;
-    background: #78C2AD;
+    background: #ECFBFB;
     font-size: 0.9rem;
 }
 #video button:hover{
-    background-color: #ECFBFB;
+    background-color: #78C2AD;
     cursor: pointer;
 }
 

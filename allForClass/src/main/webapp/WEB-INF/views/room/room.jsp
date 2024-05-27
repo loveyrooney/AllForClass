@@ -14,29 +14,31 @@
     <script src="/resources/js/room/classroom.js"></script>
 </head>
 <body>
-startdate: ${ldto.startdate} / timesession: ${ldto.timesession}
 <div id="container">
     <%-- 강의 영상  --%>
-    <div id="video">
+        <div id="video">
 
-        <form id="insertVideoForm" method="post" action="/insertvid" enctype="multipart/form-data">
-            <input type="hidden" name="lid" id="lid" value="${ldto.lid}">
-            <input type="hidden" name="videopath" id="videopath" value="${vdto.videopath}">
-            <input type="hidden" name="sessionId" id="sessionIdvid" value="${sessionId}">
-            <input type="hidden" name="role" id="rolevid" value="${role}">
-            <input type="hidden" name="tid" id="tidvid" value="${ldto.tid}">
+            <div id="vidPlayer"></div>
 
-            <div id="video_upload">
+            <form id="insertVideoForm" method="post" action="/insertvid" enctype="multipart/form-data">
+                <input type="hidden" name="lid" id="lid" value="${ldto.lid}">
+                <input type="hidden" name="videopath" id="videopath" value="${vdto.videopath}">
+                <input type="hidden" name="sessionId" id="sessionIdvid" value="${sessionId}">
+                <input type="hidden" name="role" id="rolevid" value="${role}">
+                <input type="hidden" name="tid" id="tidvid" value="${ldto.tid}">
 
-            </div>
-        </form>
+                <div id="video_title"></div>
+                <div id="video_upload">
 
-        <form method="post" action="/deletevideo/${vdto.vid}">
-            <input type="hidden" name="lid" value="${ldto.lid}">
-            <input type="hidden" name="vid" id="vid" value="${vdto.vid}">
-            <input type="hidden" name="videopath" value="${vdto.videopath}">
-        </form>
-    </div>
+                </div>
+            </form>
+
+            <form method="post" action="/deletevideo/${vdto.vid}">
+                <input type="hidden" name="lid" value="${ldto.lid}">
+                <input type="hidden" name="vid" id="vid" value="${vdto.vid}">
+                <input type="hidden" name="videopath" value="${vdto.videopath}">
+            </form>
+        </div>
 
 
     <%-- 강의 자료 설명 --%>
@@ -90,13 +92,10 @@ startdate: ${ldto.startdate} / timesession: ${ldto.timesession}
         </ul>
     </div>
 </div>
-
 <script>
     let inits = {
         startdate: '${ldto.startdate}'
-        ,tsession: '${ldto.timesession}'
-        ,path: '${path}'
-        ,decodedRef: '${decodedRef}'
+        , tsession: '${ldto.timesession}'
     }
     init(inits);
 </script>
