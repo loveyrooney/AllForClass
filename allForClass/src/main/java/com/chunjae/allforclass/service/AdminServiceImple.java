@@ -5,6 +5,7 @@ import com.chunjae.allforclass.dto.LecDTO;
 import com.chunjae.allforclass.dto.UserDTO;
 import org.springframework.stereotype.Service;
 
+import java.lang.invoke.LambdaMetafactory;
 import java.util.List;
 
 @Service
@@ -34,5 +35,10 @@ public class AdminServiceImple implements AdminService{
     @Override
     public int confirm(int lid) {
         return amapper.confirm(lid);
+    }
+
+    @Override
+    public int deleteLec(int lid) {
+        return amapper.deleteLec(lid);
     }
 }

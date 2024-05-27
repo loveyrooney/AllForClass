@@ -67,8 +67,6 @@ deleteUserBtn.addEventListener('click', function() {
     // 사용자가 확인 버튼을 눌렀을 때
     if (userConfirmed) {
 
-        console.log('회원 탈퇴 확인');
-
         fetch('/deleteuser/'+uid, {
             method: 'GET',
             headers: {
@@ -79,7 +77,6 @@ deleteUserBtn.addEventListener('click', function() {
             .then(data => {
                 if (data ===1) {
                     alert('회원 탈퇴가 완료되었습니다.');
-                    // 필요에 따라 페이지를 리다이렉트할 수 있습니다.
                     location.href = '/logout';
                 } else {
                     alert('회원 탈퇴에 실패했습니다. 다시 시도해 주세요.');

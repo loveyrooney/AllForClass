@@ -6,21 +6,10 @@ const init = function (data) {
 
 document.addEventListener("DOMContentLoaded", function () {
 
-
     let startDate = document.getElementById('startdate');
     let timeSessions = document.querySelectorAll('input[name="timesession"]');
     let lecTimeCheckLabel = document.getElementById('lec_time_check');
     let updatelecbtn = document.getElementById('updatelec_btn');
-
-    //삭제 버튼
-    document.getElementById("deletelec_btn").onclick = function() {
-        location.href='/deletelec/'+params.lid;
-
-    };
-    //승인 버튼
-    document.getElementById('confirm_btn').onclick = function() {
-        location.href='/confirm/'+params.lid;
-    };
 
 
     // 개강일 필드 이벤트 리스너 설정
@@ -48,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 신청 가능 시간인지 체크
     function sendFormData(selectedDate, selectedSession) {
-        fetch('/checklectime/'+params.tid, {
+        fetch('/checklectime/' + params.tid, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -56,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             body: JSON.stringify({
                 startdate: selectedDate
-                ,timesession: selectedSession
+                , timesession: selectedSession
             })
         })
             .then(response => {
@@ -66,10 +55,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
             })
             .then(data => {
-                if(data == 0 || (selectedDate == params.startdate && selectedSession == params.timesession)){
+                if (data == 0 || (selectedDate == params.startdate && selectedSession == params.timesession)) {
                     lecTimeCheckLabel.textContent = `등록 가능한 시간입니다.`;
-                    lecTimeCheckLabel.style.color='green';
-                    updatelecbtn.disabled=false;
+                    lecTimeCheckLabel.style.color = 'green';
+                    updatelecbtn.disabled = false;
 
                     // 초기화: else에서 설정된 스타일 제거
                     updatelecbtn.style.removeProperty('background');
@@ -78,12 +67,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 } else {
                     lecTimeCheckLabel.textContent = `해당 시간에 신청한 강의가 있습니다.`;
-                    lecTimeCheckLabel.style.color='red';
+                    lecTimeCheckLabel.style.color = 'red';
 
-                    updatelecbtn.disabled=true; // 수정 버튼 비활성화
-                    updatelecbtn.style.background='#F5F5F5';
-                    updatelecbtn.style.border='2px solid #F5F5F5';
-                    updatelecbtn.style.color='gray';
+                    updatelecbtn.disabled = true; // 수정 버튼 비활성화
+                    updatelecbtn.style.background = '#F5F5F5';
+                    updatelecbtn.style.border = '2px solid #F5F5F5';
+                    updatelecbtn.style.color = 'gray';
 
                 }
             })
@@ -93,4 +82,80 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("sendFormData finally");
         });
     }
+
+
+    // 승인 버튼 클릭 이벤트
+    let confirmbtn = document.getElementById('confirm_btn');
+
+    confirmbtn.addEventListener('click', function () {
+
+        const userConfirmed = confirm('강의를 승인하시겠습니까?');
+
+        // 사용자가 확인 버튼을 눌렀을 때
+        if (userConfirmed) {
+
+            console.log('강의 승인 확인');
+
+            fetch('/confirm/' + params.lid, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data === 1) {
+                        alert('강의 승인이 완료되었습니다.');
+                        location.href = '/admin';
+                    } else {
+                        alert('강의 승인에 실패했습니다. 다시 시도해 주세요.');
+                    }
+                })
+                .catch(error => {
+                    console.error('강의 승인 중 오류 발생:', error);
+                });
+        } else {
+            // 사용자가 취소 버튼을 눌렀을 때
+            console.log('강의 승인을 취소했습니다.');
+        }
+    });
+
+
+// 삭제 버튼 클릭 이벤트
+    let deletelecbtn = document.getElementById('deletelec_btn');
+
+    deletelecbtn.addEventListener('click', function () {
+
+        const userConfirmed = confirm('강의를 삭제하시겠습니까?');
+
+        // 사용자가 확인 버튼을 눌렀을 때
+        if (userConfirmed) {
+
+            console.log('강의 삭제 확인');
+
+            fetch('/deletelec/' + params.lid, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data === 1) {
+                        alert('강의 삭제가 완료되었습니다.');
+                        location.href = '/admin';
+                    } else {
+                        alert('강의 삭제에 실패했습니다. 다시 시도해 주세요.');
+                    }
+                })
+                .catch(error => {
+                    console.error('강의 삭제 중 오류 발생:', error);
+                });
+        } else {
+            // 사용자가 취소 버튼을 눌렀을 때
+            console.log('강의 삭제를 취소했습니다.');
+        }
+    });
+
+
 });

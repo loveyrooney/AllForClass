@@ -35,4 +35,10 @@ public class AdminTest {
 
         assertEquals(1, aservice.updateLecResult(dto));
     }
+
+    @Test
+    public void deletelecTest(){
+        int result =  aservice.deleteLec(80);
+        assertEquals(1, result);
+    }
 }
