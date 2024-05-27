@@ -1,9 +1,9 @@
 .login_wrap {
     text-align: center;
 }
-
-.login_wrap ul li{
+.login_wrap ul{
     list-style: none;
+    padding: 0px;
 }
 
 .login_wrap h1 {
@@ -11,13 +11,14 @@
     color: #1CBCBD;
     font-weight: 800;
     font-size: 2rem;
-    border-bottom: 2px solid #1CBCBD;
+    border-bottom: 3px solid #1CBCBD;
+    margin: 40px 0px 10px 0px;
 }
 
 .login_box{
     display: flex;
     flex-direction: column;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
 }
 
 .login_txt{
@@ -31,30 +32,62 @@
 .login_input{
     background-color: #E3F2EF;
     border: none;
-    border-radius: 30px;
+    border-radius: 10px;
     height: 40px;
-    width: 300px;
+    width: 298px;
     align-self: center;
-}
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;}
 
 .login_btn{
     color: white;
     background-color: #1CBCBD;
     border: none;
-    border-radius: 30px;
+    border-radius: 10px;
     height: 40px;
     width: 300px;
     align-self: center;
+    margin: 25px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.login_btn:hover,
+.login_btn:focus {
+    transform: translateY(-0.2em);
+}
+
+.login_btn:active{
+    border: 2px solid #1CBCBD;
+    color: #1CBCBD;
+    background-color: #ffffff;
 }
 
 .login_join{
-    border: none;
-    color: #1CBCBD;
-    background-color: #ffffff;
-    font-size: 1rem;
-    font-weight: 600;
-
+    max-width: fit-content;
+    align-self: center;
 }
 
+.login_join_btn{
+    border: 2px solid #1CBCBD;
+    border-radius: 10px;
+    height: 40px;
+    width: 300px;
+    color: #1CBCBD;
+    background-color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-bottom: 70px;
+}
 
+.login_join_btn:active{
+    color: white;
+    background-color: #1CBCBD;
+    border: none;
+}
 
+.login_join_btn:hover,
+.login_join_btn:focus {
+    transform: translateY(-0.2em);
+}

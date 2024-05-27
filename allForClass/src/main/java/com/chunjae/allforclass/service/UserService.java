@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public interface UserService {
 
-    boolean checkUser(String email, String pwd);
+    boolean checkUser(String email, String pwd, boolean disable);
 
     int findUid(String email);
 

@@ -21,12 +21,12 @@
             <input type="text" name="email" id="email" class="login_input" required>
         </li>
         <li class="login_box">
-            <label for="pwd" class="login_txt">비밀번호</label>
+            <label for="pwd" class="login_txt">비 밀 번 호</label>
             <input type="password" name="pwd" id="pwd"  class="login_input" required>
         </li>
-        <li class="login_btn">
-            <button type="submit" class="login_btn">로그인</button>
-            <a href="/join"><button type="button" class="login_join">회원가입>></button></a>
+        <li class="login_box">
+            <button type="submit" class="login_btn">로 그 인</button>
+            <a href="/join" class="login_join"><button type="button" class="login_join_btn">회 원 가 입</button></a>
         </li>
     </ul>
 </form>

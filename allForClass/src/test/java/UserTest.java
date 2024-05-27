@@ -7,7 +7,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.util.Assert;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/applicationContext.xml")
@@ -20,7 +19,7 @@ public class UserTest {
 
     @Test
     public void t2(){
-        Assertions.assertNull(userService.checkUser("a","123"));
+        Assertions.assertNotNull(userService.checkUser("d","d", true));
     }
     @Test
     public void t1(){
