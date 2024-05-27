@@ -13,6 +13,7 @@
              , entry
              , startdate
              , SUBSTRING_INDEX(timesession, '*', -1) as timesession
+             , confirm
         from lecture
     </select>
 

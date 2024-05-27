@@ -15,7 +15,7 @@
     border-bottom: 2px solid #1CBCBD;
     width: 80%;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
 #upper_tab li {
@@ -33,12 +33,12 @@
     padding: 3px 5px;
     cursor: pointer;
     margin: 0 0 20px;
-    font-weight: bold;
     font-family: "Noto Sans KR", sans-serif;
     font-size: 0.9rem;
 }
 
 .tablink:hover {
+    color: #3DA9A4;
     font-weight: bold;
 }
 
@@ -61,7 +61,8 @@ th {
 td {
     border-bottom: 0.3px solid #1CBCBD;
     border-left: 0.3px solid #1CBCBD;
-    padding: 5px
+    padding: 5px;
+    font-weight: normal;
 }
 
 th:first-child, td:first-child {

@@ -89,12 +89,6 @@
     </table>
 
 
-        <%--페이징 부분--%>
-        <%--<button id="prev_button">이전</button>
-        <div id="page_container"></div>
-        <button id="next_button">다음</button>--%>
-
-
     </c:when>
     </c:choose>
 </section>

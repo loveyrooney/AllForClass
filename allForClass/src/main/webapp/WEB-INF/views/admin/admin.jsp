@@ -61,17 +61,35 @@
             <th>개강일</th>
             <th>강의세션</th>
             <th>정원</th>
+            <th>승인여부</th>
         </tr>
         </thead>
         <tbody>
         <c:forEach var="i" items="${leclist}">
             <tr>
                 <td>${i.subject}</td>
-                <td>${i.lname}</td>
+                    <%--승인된 강의는 강의 수강페이지로 연결--%>
+                <c:choose>
+                    <c:when test="${i.confirm == false}">
+                        <td>${i.lname}</td>
+                    </c:when>
+                    <c:when test="${i.confirm == true}">
+                        <td><a href="/room/${i.lid}">${i.lname}</a></td>
+                    </c:when>
+                </c:choose>
                 <td>${i.price}</td>
                 <td>${i.startdate}</td>
                 <td>${i.timesession}</td>
                 <td>${i.entry}</td>
+                    <%--미승인 클릭시 승인 페이지로 연결--%>
+                <c:choose>
+                    <c:when test="${i.confirm == false}">
+                        <td><a href="/updatelec/${i.lid}">미승인</a></td>
+                    </c:when>
+                    <c:when test="${i.confirm == true}">
+                        <td>승인</td>
+                    </c:when>
+                </c:choose>
             </tr>
         </c:forEach>
 
