@@ -39,10 +39,15 @@ public class MypageController {
         //회원 정보 가져오기
         UserDTO dto = myservice.detailMe(uid);
 
-        model.addAttribute("dto", dto);
-        model.addAttribute("body","mypage/mypage.jsp");
-        model.addAttribute("title","모두의 국영수 - 마이페이지");
-        return "main";
+        // 관리자 계정이면 관리자페이지로 이동
+        if(dto.getRole() == 3){
+            return "redirect:/admin";
+        } else {
+            model.addAttribute("dto", dto);
+            model.addAttribute("body","mypage/mypage.jsp");
+            model.addAttribute("title","모두의 국영수 - 마이페이지");
+            return "main";
+        }
     }
 
     /**수강생 신청 강의 목록 json*/

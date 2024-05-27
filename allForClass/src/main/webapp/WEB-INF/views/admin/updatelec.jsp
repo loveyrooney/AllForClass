@@ -35,7 +35,7 @@
         <ul class="col-md-5 update_lec_select">
             <input type="text" name="lid" id="lid" value="${dto.lid}" hidden>
             <li>
-                <label for="subject">과목</label>
+                <label for="subject" class="update_lec_label">과목</label>
                 <select name="subject" id="subject">
                     <option value="국어" ${dto.subject == '국어'? 'selected="selected"' : '' }>국어</option>
                     <option value="영어" ${dto.subject == '영어'? 'selected="selected"' : '' }>영어</option>
@@ -43,23 +43,23 @@
                 </select>
             </li>
             <li>
-                <label for="lname">강의명</label>
-                <input type="text" name="lname" id="lname" value="${dto.lname}" required>
+                <label for="lname" class="update_lec_label">강의명</label>
+                <input type="text" name="lname" id="lname" value="${dto.lname}" class="update_lec_input" required>
             </li>
             <li>
-                <label for="price">가격</label>
-                <input type="number" name="price" id="price" value="${dto.price}" required> 원
+                <label for="price" class="update_lec_label">가격</label>
+                <input type="number" name="price" id="price" value="${dto.price}" class="update_lec_input" required> 원
             </li>
             <li>
-                <label for="entry">수강인원</label>
-                <input type="number" name="entry" id="entry" value="${dto.entry}" required> 명
+                <label for="entry" class="update_lec_label">수강인원</label>
+                <input type="number" name="entry" id="entry" value="${dto.entry}" class="update_lec_input" required> 명
             </li>
             <li>
-                <label for="startdate">개강일</label>
+                <label for="startdate" class="update_lec_label">개강일</label>
                 <input type="date" name="startdate" id="startdate" value="${dto.startdate}" required>
             </li>
             <li>
-                <label>강의세션</label>
+                <label class="update_lec_label">강의세션</label>
                 <div class="update_lec_radio">
                     <ul>
                         <li><input type="radio" name="timesession" id="time1"
@@ -90,7 +90,7 @@
 
     <%--강의 설명 텍스트 입력--%>
     <div class="update_desc row">
-        <label for="description">강의 설명</label><br>
+        <label for="description" class="update_lec_label">강의 설명</label><br>
         <textarea name="description" id="description" class="form-control">${dto.description}</textarea>
     </div>
 

@@ -1,7 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: "Poor Story", system-ui;
+    font-family: "Noto Sans KR", sans-serif;
     font-weight: 400;
     font-style: normal;
 }
@@ -80,7 +80,7 @@ ul li {
     border-radius: 10px;
     background: #78C2AD;
     color: black;
-    font-family: "Poor Story", system-ui;
+    font-family: "Noto Sans KR", sans-serif;
     font-weight: 700;
     cursor: pointer;
     display: flex;
@@ -108,7 +108,7 @@ input #email {
     border-radius: 10px;
     background: #E3F2EF;
     color: black;
-    font-family: "Poor Story", system-ui;
+    font-family: "Noto Sans KR", sans-serif;
     font-weight: 700;
     font-size: medium;
     cursor: pointer;
@@ -127,7 +127,7 @@ input #email {
     border-radius: 10px;
     background: #1CBCBD;
     color: white;
-    font-family: "Poor Story", system-ui;
+    font-family: "Noto Sans KR", sans-serif;
     font-weight: 700;
     font-size: medium;
     cursor: pointer;

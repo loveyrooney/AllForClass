@@ -1,7 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: "Poor Story", system-ui;
+    font-family: "Noto Sans KR", sans-serif;
     font-weight: 400;
     font-style: normal;
 }
@@ -28,8 +28,8 @@ ul li {
 }
 
 .update_lec_imgupload img{
-    width: 300px;
-    height: 300px;
+    width: 422px;
+    height: 247px;
 }
 
 .update_lec_select{
@@ -37,6 +37,14 @@ ul li {
 }
 .update_lec_select label{
     width: 30%;
+}
+
+.update_lec_label{
+    font-weight: bolder;
+}
+
+.update_lec_input{
+    width: 170px;
 }
 
 .update_lec_radio label {
@@ -65,7 +73,7 @@ ul li {
     margin: 15px 5% 20px;
 }
 .update_desc label{
-    margin-bottom: 5px;
+    margin: 40px 0 20px;
 }
 
 .update_desc textarea{
@@ -88,7 +96,7 @@ ul li {
     border-radius: 10px;
     background: #E3F2EF;
     color: black;
-    font-family: "Poor Story", system-ui;
+    font-family: "Noto Sans KR", sans-serif;
     font-weight: 700;
     font-size: medium;
     cursor: pointer;
@@ -107,7 +115,7 @@ ul li {
     border-radius: 10px;
     background: #78C2AD;
     color: black;
-    font-family: "Poor Story", system-ui;
+    font-family: "Noto Sans KR", sans-serif;
     font-weight: 700;
     font-size: medium;
     cursor: pointer;
@@ -129,7 +137,7 @@ ul li {
     border-radius: 10px;
     background: #78C2AD;
     color: black;
-    font-family: "Poor Story", system-ui;
+    font-family: "Noto Sans KR", sans-serif;
     font-weight: 700;
     font-size: medium;
     cursor: pointer;
@@ -152,7 +160,7 @@ ul li {
     border-radius: 10px;
     background: #1CBCBD;
     color: white;
-    font-family: "Poor Story", system-ui;
+    font-family: "Noto Sans KR", sans-serif;
     font-weight: 700;
     font-size: medium;
     cursor: pointer;

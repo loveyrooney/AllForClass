@@ -41,4 +41,9 @@ public class AdminServiceImple implements AdminService{
     public int deleteLec(int lid) {
         return amapper.deleteLec(lid);
     }
+
+    @Override
+    public List<LecDTO> cList() {
+        return amapper.cList();
+    }
 }

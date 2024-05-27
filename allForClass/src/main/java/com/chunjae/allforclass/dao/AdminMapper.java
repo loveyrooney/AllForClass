@@ -20,4 +20,6 @@ public interface AdminMapper {
     int confirm(int lid);
 
     int deleteLec(int lid);
+
+    List<LecDTO> cList();
 }

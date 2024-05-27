@@ -1,8 +1,4 @@
-/*console.log("User Email:", userEmail);*/
-
-
 /** 이메일 중복체크 */
-
 let updatebtn = document.getElementById('updateuser_btn');
 
 let emailinput = document.getElementById('email');
@@ -106,7 +102,12 @@ deleteUserBtn.addEventListener('click', function() {
             .then(data => {
                 if (data ===1) {
                     alert('회원 탈퇴가 완료되었습니다.');
-                    location.href = '/logout';
+                    if(role == 'admin'){
+                        location.href = '/admin';
+                    } else {
+                        location.href = '/logout';
+                    }
+
                 } else {
                     alert('회원 탈퇴에 실패했습니다. 다시 시도해 주세요.');
                 }

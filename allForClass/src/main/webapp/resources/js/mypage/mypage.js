@@ -4,6 +4,9 @@ const init = function (data) {
     uid = data;
 }
 
+// 강의 수강 페이지 생성되었는지 전달용
+let roomBoolean = false;
+
 
 /**수강생 캘린더*/
 document.addEventListener('DOMContentLoaded', function () {
@@ -66,7 +69,8 @@ const confirmlec = function () {
         return response.json();
     }).then((data) => {
 
-        addLectureList(data);
+        roomBoolean = true;
+        addLectureList(data, roomBoolean);
 
     }).catch(error => {
         console.log('Error: ', error);
@@ -90,7 +94,8 @@ const pastlec = function () {
         return response.json();
     }).then((data) => {
 
-        addLectureList(data);
+        roomBoolean = true;
+        addLectureList(data, roomBoolean);
 
     }).catch(error => {
         console.log('Error: ', error);
@@ -114,7 +119,8 @@ const waitlec = function () {
         return response.json();
     }).then((data) => {
 
-        addLectureList(data);
+        roomBoolean = false;
+        addLectureList(data, roomBoolean);
 
     }).catch(error => {
         console.log('Error: ', error);
@@ -125,7 +131,7 @@ const waitlec = function () {
 }
 
 /**json 데이터를 jsp 리스트에 추가하는 메서드*/
-function addLectureList(json){
+function addLectureList(json, roomBoolean){
 
     /*// 리스트를 해당 페이지 블럭 영역만큼 자르기
     let startRow = (currPage - 1) * pageSize;
@@ -147,9 +153,6 @@ function addLectureList(json){
         let ele_td4 = document.createElement('td');
         let ele_td5 = document.createElement('td');
 
-        let ele_a = document.createElement('a');
-        ele_a.href="/room/"+item.lid;
-        ele_td2.appendChild(ele_a);
 
         let ele_txt1 = document.createTextNode(item.subject);
         let ele_txt2 = document.createTextNode(item.lname);
@@ -158,9 +161,16 @@ function addLectureList(json){
         let ele_txt5 = document.createTextNode(item.timesession);
 
 
+        if(roomBoolean){
+            let ele_a = document.createElement('a');
+            ele_a.href="/room/"+item.lid;
+            ele_td2.appendChild(ele_a);
+            ele_a.appendChild(ele_txt2);
+        } else {
+            ele_td2.appendChild(ele_txt2);
+        }
 
         ele_td1.appendChild(ele_txt1);
-        ele_a.appendChild(ele_txt2);
         ele_td3.appendChild(ele_txt3);
         ele_td4.appendChild(ele_txt4);
         ele_td5.appendChild(ele_txt5);
@@ -176,31 +186,6 @@ function addLectureList(json){
     });
 
 }
-
-/*
-/!**지난강의 페이징처리*!/
-const makepage = function (data) {
-    let totalCount = data.length;
-    let totalPage = Math.ceil(totalCount / pageSize);
-    let startBlock = ((currPage - 1) / blockSize) * blockSize + 1;
-
-    let endBlock = startBlock + blockSize - 1;
-    if (endBlock > totalPage){
-        endBlock = totalPage;
-    }
-
-    let next = startBlock + 1;
-    let prev = endBlock - 1;
-
-    // 페이지 숫자
-    for(let i = startBlock; i < endBlock; i++){
-        console.log("i------------"+i);
-        let pageBtn = document.createElement('button');
-        pageBtn.textContent = i;
-        page_container.appendChild(pageBtn);
-    }
-}*/
-
 
 
 window.onload = function () {

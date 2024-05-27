@@ -38,7 +38,7 @@
         <ul class="col-md-5 insert_lec_select">
             <input type="text" name="tid" value="${tid}" hidden>
             <li>
-                <label for="subject">과목</label>
+                <label for="subject" class="insert_lec_label">과목</label>
                 <select name="subject" id="subject">
                     <option value="국어">국어</option>
                     <option value="영어">영어</option>
@@ -46,23 +46,23 @@
                 </select>
             </li>
             <li>
-                <label for="lname">강의명</label>
-                <input type="text" name="lname" id="lname" required>
+                <label for="lname" class="insert_lec_label">강의명</label>
+                <input type="text" name="lname" id="lname" class="insert_lec_input" required>
             </li>
             <li>
-                <label for="price">가격</label>
-                <input type="number" name="price" id="price" required> 원
+                <label for="price" class="insert_lec_label">가격</label>
+                <input type="number" name="price" id="price" class="insert_lec_input" required> 원
             </li>
             <li>
-                <label for="entry">수강인원</label>
-                <input type="number" name="entry" id="entry" required> 명
+                <label for="entry" class="insert_lec_label">수강인원</label>
+                <input type="number" name="entry" id="entry" class="insert_lec_input" required> 명
             </li>
             <li>
-                <label for="startdate">개강일</label>
+                <label for="startdate" class="insert_lec_label">개강일</label>
                 <input type="date" name="startdate" id="startdate" min=${datestr} value=${datestr} required>
             </li>
             <li>
-                <label>강의세션</label>
+                <label class="insert_lec_label">강의세션</label>
                 <div class="insert_lec_radio">
                     <ul>
                         <li><input type="radio" name="timesession" id="time1" value="time1*09:00-12:00" required>
@@ -85,7 +85,7 @@
 
 
     <div class="insertlec_desc row">
-        <label for="description">강의 설명</label><br>
+        <label for="description" class="insert_lec_label">강의 설명</label><br>
         <textarea name="description" id="description" class="form-control" placeholder="강의 설명을 입력해 주세요."></textarea>
     </div>
 
