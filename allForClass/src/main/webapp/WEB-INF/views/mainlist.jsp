@@ -15,14 +15,15 @@
     <link rel="stylesheet" href="/resources/css/mainlist.css">
 </head>
 <body>
+<div class="mainlist_wrap">
 <%--배너--%>
 <article>
-    <img src="/resources/images/banner.gif" alt="banner">
+    <img src="/resources/images/banner.gif" alt="banner" class="mainlist_banner">
 </article>
 
 <%--강의 리스트--%>
 <article>
-    <h4>강의 선택하기></h4>
+    <h3 class="list_line">강의 목록</h3>
     <div class="mainlist_lec">
         <c:forEach var="item" items="${list}" >
             <ul>
@@ -34,7 +35,6 @@
     </div>
 
 </article>
-
-
+</div>
 </body>
 </html>

@@ -1,6 +1,43 @@
+.mainlist_banner{
+    text-align: center;
+}
+
+.mainlist_banner{
+    padding-top: 10px;
+    width: 100%;
+    height: 230px;
+}
+
+.list_line{
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    margin: 25px 0;
+}
+
+.list_line::before,
+.list_line::after {
+    content: ' ';
+    flex-grow: 1;
+    height: 1px;
+    background-color: #1CBCBD;
+    opacity: 1;
+}
+
+
 .mainlist_lec{
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.mainlist_wrap h3{
+    text-align: center;
+}
+
+
+.mainlist_lec ul{
+    padding: 0px;
 }
 
 .mainlist_lec ul li{
@@ -8,12 +45,14 @@
 }
 
 .mainlist_lec img{
-    width: 200px;
-    height: 230px;
+    width: 270px;
+    height: 160px;
 }
 
-.mainlist_lecname{
+.mainlist_lecname a{
     font-size: 1.2rem;
+    text-decoration: none;
+    color: black;
 }
 
 

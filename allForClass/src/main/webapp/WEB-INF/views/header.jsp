@@ -20,7 +20,7 @@
     <div class="users">
         <c:choose>
             <c:when test="${empty sessionScope or sessionScope.sessionId==null}">
-                <a class="login" href="/login"><span>로그인</span></a>
+                <a class="login" href="/login"><span>로그인/회원가입</span></a>
             </c:when>
             <c:otherwise>
                 <a class="login" href="/logout"><span>로그아웃</span></a>

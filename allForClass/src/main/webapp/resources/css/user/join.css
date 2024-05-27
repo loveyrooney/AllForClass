@@ -1,13 +1,13 @@
-.login_wrap {
+.join_wrap {
     text-align: center;
     margin-bottom: 120px;
 }
-.login_wrap ul{
+.join_wrap ul{
     list-style: none;
     padding: 0px;
 }
 
-.login_wrap h1 {
+.join_wrap h1 {
     display: inline-block;
     color: #1CBCBD;
     font-weight: 800;
@@ -16,28 +16,36 @@
     margin: 50px 0px 10px 0px;
 }
 
-.login_box{
+.join_box{
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
 }
 
-.login_txt{
+.join_txt{
     display: inline-block;
     color: #1CBCBD;
     font-weight: 600;
     font-size: 1.2rem;
     margin: 20px 0px;
-}.login_input{
-     background-color: #E3F2EF;
-     border: none;
-     border-radius: 10px;
-     height: 40px;
-     width: 298px;
-     align-self: center;
-     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;}
+}
 
-.login_btn{
+.join_input{
+    background-color: #E3F2EF;
+    border: none;
+    border-radius: 10px;
+    height: 40px;
+    width: 298px;
+    align-self: center;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.join_input:focus {
+    outline: 1px solid #1CBCBD;
+}
+
+
+.join_btn{
     color: white;
     background-color: #1CBCBD;
     border: none;
@@ -51,32 +59,44 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.login_btn:active{
+.emailCk_box{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.emailCk_box .join_input{
+    width: 223px;
+    margin-right: 10px;
+    margin-bottom: 3px;
+}
+
+.emailCk_btn{
+    border: 2px solid #1CBCBD;
+    border-radius: 10px;
+    height: 40px;
+    width: 75px;
+    color: #1CBCBD;
+    font-weight: 500;
+    background-color: #ffffff;
+}
+
+.emailCk_btn:active{
+    border: 2px solid #1CBCBD;
+    color: #ffffff;
+    background-color: #1CBCBD;
+}
+
+.join_btn:active{
     border: 2px solid #1CBCBD;
     color: #1CBCBD;
     background-color: #ffffff;
 }
 
-.login_join{
-    max-width: fit-content;
-    align-self: center;
-    margin-bottom: 70px;
-}
-
-.login_join_btn{
+.join_select{
     border: 2px solid #1CBCBD;
     border-radius: 10px;
     height: 40px;
     width: 300px;
-    color: #1CBCBD;
-    background-color: #ffffff;
-    font-size: 1.1rem;
-    font-weight: 600;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
-
-.login_join_btn:active{
-    color: white;
-    background-color: #1CBCBD;
-    border: none;
+    align-self: center;
 }
