@@ -33,7 +33,7 @@
 
         <%--강의 정보--%>
         <ul class="col-md-5 update_lec_select">
-            <input type="text" name="lid" value="${dto.lid}" hidden>
+            <input type="text" name="lid" id="lid" value="${dto.lid}" hidden>
             <li>
                 <label for="subject">과목</label>
                 <select name="subject" id="subject">
@@ -97,7 +97,7 @@
     <%--버튼--%>
     <div class="update_submit row">
         <button type="button" id="deletelec_btn">강의 삭제</button>
-        <input type="reset" id="resetlec_btn" value="취소">
+        <input type="reset" id="resetlec_btn" value="초기화">
         <input type="submit" id="updatelec_btn" value="수정">
     </div>
     <div class="update_submit row">

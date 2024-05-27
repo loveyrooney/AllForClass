@@ -48,4 +48,9 @@
         set confirm = 1
         where lid = #{lid}
     </update>
+
+    <delete id="deleteLec" parameterType="int">
+        DELETE FROM lecture
+        WHERE lid = #{lid};
+    </delete>
 </mapper>

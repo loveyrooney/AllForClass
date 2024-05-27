@@ -18,4 +18,6 @@ public interface AdminMapper {
     int updateLecResult(LecDTO dto);
 
     int confirm(int lid);
+
+    int deleteLec(int lid);
 }

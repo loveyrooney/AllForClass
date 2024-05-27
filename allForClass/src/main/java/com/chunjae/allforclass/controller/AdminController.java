@@ -87,12 +87,18 @@ public class AdminController {
 
     /**강의 승인*/
     @GetMapping("/confirm/{lid}")
-    public String confirm(@PathVariable int lid, Model model){
+    public @ResponseBody Integer confirm(@PathVariable int lid, Model model){
 
         int result = aservice.confirm(lid);
 
-        model.addAttribute("body", "admin/admin.jsp");
-        model.addAttribute("title","관리자 페이지");
-        return "main";
+        return result;
+    }
+
+    /**강의 삭제*/
+    @GetMapping("/deletelec/{lid}")
+    public @ResponseBody Integer deletelec(@PathVariable int lid){
+        int result = aservice.deleteLec(lid);
+
+        return result;
     }
 }
