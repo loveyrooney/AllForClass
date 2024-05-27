@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,8 @@ public class PurchaseTest {
     @Autowired
     private PurchaseMapper pmapper;
 
+    @Autowired
+    private JavaMailSender javaMailSender;
     @Test
     public void detailLec(){
         Assertions.assertEquals("박지성", pservice.detailLec(1).getTname());
@@ -85,10 +89,32 @@ public class PurchaseTest {
 
     @Test
     public void sendHtmlEmail(){
+        //Assertions.assertNotNull(javaMailSender);
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setTo("받을 사람 실제 메일");
+//        message.setSubject("Test Subject 2");
+//        message.setText("Test Body");
+//        message.setFrom("보내는 smtp 계정 메일");
+//        try {
+//            javaMailSender.send(message);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
         try {
             pservice.sendHtmlEmail();
         }catch (BusinessException e){
             System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void sendmaillist(){
+        Assertions.assertEquals(2,pservice.sendMailList().size());
+        List<MailDTO> list = pservice.sendMailList();
+        for(MailDTO dto: list){
+            System.out.println(dto.getUemail());
+            System.out.println(dto.getUname());
+            System.out.println(dto.getTimesession());
         }
     }
 

@@ -44,13 +44,13 @@
           and l.timesession = #{timesession}
     </select>
     <select id="sendMailList" resultType="com.chunjae.allforclass.dto.MailDTO">
-        SELECT l.lid
-             , l.lname
-             , t.uname
-             , l.startdate
-             , l.timesession
-             , u.uname
-             , u.email
+        SELECT l.lid as lid
+             , l.lname as lname
+             , t.uname as tname
+             , l.startdate as startdate
+             , l.timesession as timesession
+             , u.uname as uname
+             , u.email as uemail
         FROM user u INNER JOIN purchase p
         ON u.uid = p.uid
         INNER JOIN lecture l
