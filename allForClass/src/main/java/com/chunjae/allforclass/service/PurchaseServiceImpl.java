@@ -4,20 +4,20 @@ import com.chunjae.allforclass.dao.LectureMapper;
 import com.chunjae.allforclass.dao.PurchaseMapper;
 import com.chunjae.allforclass.dto.LecDTO;
 import com.chunjae.allforclass.dto.MailDTO;
-import com.chunjae.allforclass.exception.BusinessException;
-import com.chunjae.allforclass.exception.ErrorCode;
-import org.apache.commons.io.IOUtils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,10 +27,26 @@ public class PurchaseServiceImpl implements PurchaseService{
     private final LectureMapper lmapper;
     private final JavaMailSender javaMailSender;
     public PurchaseServiceImpl(PurchaseMapper pmapper, LectureMapper lmapper, JavaMailSender javaMailSender){
-
         this.pmapper=pmapper;
         this.lmapper=lmapper;
         this.javaMailSender=javaMailSender;
+        initProps();
+    }
+    private static final Logger logger = LoggerFactory.getLogger("PurchaseServiceImpl.class");
+    private static final HashMap<String,String> props = new HashMap<>();
+    private static void initProps() {
+        ClassPathResource resource = new ClassPathResource("mail.properties");
+        try{
+            Path path = Paths.get(resource.getURI());
+            List<String> content = Files.readAllLines(path);
+            for(String s:content){
+                if(s.equals("AdminMail.id") || s.equals("domain")){
+                    props.put(s.split("=")[0],s.split("=")[1]);
+                }
+            }
+        } catch (IOException e){
+            logger.error("props : {}",e.getMessage());
+        }
     }
 
 
@@ -101,35 +117,40 @@ public class PurchaseServiceImpl implements PurchaseService{
 //        System.out.println(System.currentTimeMillis());
 //    }
 
-    //@Scheduled(cron = "0 0 10 * * ?")
+    @Scheduled(cron = "0 0 10 * * ?")
     @Override
-    public void sendHtmlEmail() throws BusinessException {
+    public void sendHtmlEmail() {
         List<MailDTO> sendlist = sendMailList();
-        SimpleMailMessage message = new SimpleMailMessage();
-        //MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        try{
-            //MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-            for(MailDTO dto: sendlist){
-                String timesession = dto.getTimesession().substring(7,12);
-                message.setTo(dto.getUemail());
-                message.setText(dto.getUname()+"님 안녕하세요😍\n");
-                message.setText(dto.getLname()+"("+dto.getTname()+" 선생님) 강의가 내일 "+timesession+" 시에 개강합니다.\n");
-                message.setText("수업 영상과 강의자료는 개강일 당일 자정까지만 공개되오니 참고하시기 바랍니다.\n");
-                message.setText("감사합니다.");
+        if(sendlist.size()>0){
+            try{
+                MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+                for(MailDTO dto: sendlist){
+                    String timesession = dto.getTimesession().substring(7,11);
+                    helper.setTo(dto.getUemail());
+                    helper.setSubject("모두의 국영수 - 개강 안내 메일입니다.");
+                    helper.setText(mailText(dto,timesession),true);
+                    helper.setFrom(props.get("AdminMail.id"));
+                    javaMailSender.send(mimeMessage);
+                }
+            } catch (Exception e){
+                logger.info("fail sendMail : {}",e.getMessage());
             }
-            message.setSubject("모두의 국영수 - 개강 안내 메일입니다.");
-            javaMailSender.send(message);
-            // HTML 파일을 읽어와서 본문으로 설정
-            //String htmlBody = readHtmlFile();
-            //helper.setText(htmlBody, true); // true를 사용하여 HTML 형식으로 메시지를 설정
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-            throw new BusinessException(ErrorCode.FAIL_TO_MAILSEND);
         }
     }
 
-//    private String readHtmlFile() throws IOException {
-//        ClassPathResource resource = new ClassPathResource("classinfo.html");
-//        return IOUtils.toString(resource.getInputStream(), StandardCharsets.UTF_8);
-//    }
+    private String mailText(MailDTO dto, String timesession) {
+        StringBuilder text = new StringBuilder();
+        text.append("<html><head>");
+        text.append("<meta charset=\"UTF-8\">");
+        text.append("</head><body>");
+        text.append("<h2>"+dto.getUname()+" 님 안녕하세요😍</h2>");
+        text.append("<h2>"+dto.getLname()+"("+dto.getTname()+" 선생님) 강의가\n");
+        text.append(dto.getStartdate()+" "+timesession+" 시에 개강합니다.</h2>");
+        text.append("<p>수업 영상은 개강일 당일 자정까지만 공개되오니 참고하시기 바랍니다.</p>");
+        text.append("👉<a href=\""+props.get("domain")+"/login\">수업 들으러 가기</a>");
+        text.append("<p>감사합니다.</p>");
+        text.append("<p>Copyright @2024 AllForClass Team. All rights reserved.</p>");
+        return text.toString();
+    }
 }

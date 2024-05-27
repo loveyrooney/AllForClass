@@ -12,7 +12,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 public class CustomExceptionHandler {
     private Logger logger = LoggerFactory.getLogger("CustomExceptionHandler.class");
     @ExceptionHandler(BusinessException.class)
-    public String handleInternalException(BusinessException e, Model model){
+    public String handleBusinessException(BusinessException e, Model model){
         logger.info("Payment Exception : {}",e.getMessage());
         model.addAttribute("status",e.getErrorCode().getHttpStatus());
         model.addAttribute("msg",e.getErrorCode().getMessage());
