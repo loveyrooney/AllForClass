@@ -89,7 +89,14 @@ public class UserController {
     }
 
     @GetMapping("updateuser/{uid}")
-    public String updateuser(@PathVariable int uid, Model model) {
+    public String updateuser(@PathVariable int uid, HttpServletRequest request, Model model) {
+
+        HttpSession session = request.getSession(false);
+        if(session!=null && session.getAttribute("sessionId")!=null) { // 세션이 있는경우 사용자의 role check
+            int sessionId = (int) session.getAttribute("sessionId");
+            String role = userService.checkRole(sessionId);
+            model.addAttribute("role", role);
+        }
 
         UserDTO dto = myservice.detailMe(uid);
         model.addAttribute("dto", dto);
@@ -99,10 +106,22 @@ public class UserController {
     }
 
     @PostMapping("/updateuser_result")
-    public String updateuser_result(UserDTO dto){
+    public String updateuser_result(UserDTO dto, HttpServletRequest request){
+
         int result = userService.updateUser(dto);
 
-        return "redirect:/mypage/"+dto.getUid();
+        HttpSession session = request.getSession(false);
+        if(session!=null && session.getAttribute("sessionId")!=null) { // 세션이 있는경우 사용자의 role check
+            int sessionId = (int) session.getAttribute("sessionId");
+            String role = userService.checkRole(sessionId);
+
+            if(role.equals("admin")){
+                return "redirect:/admin";
+            } else {
+                return "redirect:/mypage/"+dto.getUid();
+            }
+        }
+        return "redirect:/main";
     }
 
     @GetMapping("/deleteuser/{uid}")

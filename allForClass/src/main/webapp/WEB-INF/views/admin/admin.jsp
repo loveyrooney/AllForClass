@@ -30,13 +30,25 @@
     <table id="tab1" class="content">
         <thead>
         <tr>
-            <th></th>
+            <th>과목</th>
+            <th>강의명</th>
+            <th>가격</th>
+            <th>개강일</th>
+            <th>강의세션</th>
+            <th>정원</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td></td>
-        </tr>
+        <c:forEach var="i" items="${cList}">
+            <tr>
+                <td>${i.subject}</td>
+                <td><a href="/updatelec/${i.lid}">${i.lname}</a></td>
+                <td>${i.price}</td>
+                <td>${i.startdate}</td>
+                <td>${i.timesession}</td>
+                <td>${i.entry}</td>
+            </tr>
+        </c:forEach>
         </tbody>
     </table>
 
@@ -79,8 +91,8 @@
         <c:forEach var="i" items="${uList}">
             <tr>
                 <td>${i.uid}</td>
-                <td>${i.email}</td>
-                <td>${i.uname}</td>
+                <td><a href="/updateuser/${i.uid}">${i.email}</a></td>
+                <td><a href="/updateuser/${i.uid}">${i.uname}</a></td>
                 <td>${i.disable}</td>
             </tr>
         </c:forEach>

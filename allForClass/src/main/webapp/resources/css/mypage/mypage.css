@@ -1,7 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: "Poor Story", system-ui;
+    font-family: "Noto Sans KR", sans-serif;
     font-weight: 400;
     font-style: normal;
 }
@@ -52,7 +52,7 @@ ul li {
     border-radius: 10px;
     background: #78C2AD;
     color: black;
-    font-family: "Poor Story", system-ui;
+    font-family: "Noto Sans KR", sans-serif;
     font-weight: 700;
     font-size: medium;
     cursor: pointer;
@@ -98,7 +98,7 @@ ul li {
     border-radius: 10px;
     background: #1CBCBD;
     color: white;
-    font-family: "Poor Story", system-ui;
+    font-family: "Noto Sans KR", sans-serif;
     font-weight: 700;
     font-size: medium;
     cursor: pointer;
@@ -134,7 +134,8 @@ ul li {
 th {
     border-bottom: 2.2px solid #1CBCBD;
     border-left: 0.3px solid #1CBCBD;
-    padding: 5px
+    padding: 5px;
+    font-weight: bolder;
 }
 
 td {
@@ -168,7 +169,7 @@ th:first-child, td:first-child {
     width: 80%;
     height: 1110px;
     margin: 70px auto;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
 }
 
 /* 일요일 날짜 빨간색 */
@@ -200,8 +201,8 @@ th:first-child, td:first-child {
     color: #000000;
 }
 
-/*날짜 칸 크기 키움*/
+/*날짜 칸*/
 .fc .fc-daygrid-day-frame {
-    min-height: 170px;
-    max-height: 170px;
+    /*min-height: 170px;
+    max-height: 170px;*/
 }

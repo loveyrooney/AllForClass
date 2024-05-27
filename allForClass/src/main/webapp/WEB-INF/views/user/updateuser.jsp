@@ -48,7 +48,7 @@
                     <input type="text" name="uname" id="uname" value="${dto.uname}" class="update_input" required>
                 </li>
                 <li>
-                    <input type="reset" id="updatereset_btn" value="취소">
+                    <input type="reset" id="updatereset_btn" value="되돌리기">
                     <input type="submit" id="updateuser_btn" value="수정하기">
                 </li>
             </ul>
@@ -63,6 +63,7 @@
 
 
 <script>
+    var role = "${role}"
     var userEmail = "${dto.email}";
 </script>
 <script src="/resources/js/user/updateuser.js"></script>

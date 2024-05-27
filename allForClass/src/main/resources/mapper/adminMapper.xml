@@ -5,7 +5,14 @@
 <mapper namespace="com.chunjae.allforclass.dao.AdminMapper">
 
     <select id="lecList" resultType="com.chunjae.allforclass.dto.LecDTO">
-        select lid, lname, teacher_id, price, subject, entry, startdate, timesession
+        select lid
+             , lname
+             , teacher_id as tid
+             , price
+             , subject
+             , entry
+             , startdate
+             , SUBSTRING_INDEX(timesession, '*', -1) as timesession
         from lecture
     </select>
 
@@ -53,4 +60,18 @@
         DELETE FROM lecture
         WHERE lid = #{lid};
     </delete>
+
+    <select id="cList" resultType="com.chunjae.allforclass.dto.LecDTO">
+        select lid
+          , lname
+          , teacher_id as tid
+          , price
+          , subject
+          , entry
+          , startdate
+          , SUBSTRING_INDEX(timesession, '*', -1) as timesession
+        from lecture
+        where confirm = 0
+        ORDER BY startdate, timesession
+    </select>
 </mapper>
