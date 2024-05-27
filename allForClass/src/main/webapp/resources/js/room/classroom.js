@@ -1,3 +1,20 @@
+let params;
+let init = function (inits) {
+    params = inits;
+}
+
+const today = new Date();
+let year = today.getFullYear();
+let month = ('0' + (today.getMonth() + 1)).slice(-2);
+let day = ('0' + today.getDate()).slice(-2);
+let hours = ('0' + today.getHours()).slice(-2);
+let minutes = ('0' + today.getMinutes()).slice(-2);
+// let seconds = ('0' + today.getSeconds()).slice(-2);
+
+let dateString = year + '-' + month + '-' + day;
+let timeString = hours + ':' + minutes;
+
+
 // 비디오 업로드
 const uploadVideo = function () {
     let lid = document.querySelector('#lid').value;
@@ -18,7 +35,7 @@ const uploadVideo = function () {
             video.appendChild(ele_vid);
 
             let ele_delbtn = document.createElement('button');
-            ele_delbtn.textContent = '비디오 삭제';
+            ele_delbtn.textContent = '영상 삭제';
             ele_delbtn.onclick = function () {
                 deleteVideo(videopath);
             };
@@ -32,9 +49,9 @@ const uploadVideo = function () {
             form.appendChild(ele_title);
 
             let ele_input = document.createElement("input");
-            ele_input.type = "file";
-            ele_input.name = "vidfile";
-            ele_input.id = "vidfile";
+            ele_input.setAttribute('type', 'file');
+            ele_input.setAttribute('name', 'vidfile');
+            ele_input.setAttribute('id', 'vidfile');
             div_form.appendChild(ele_input);
 
             let ele_span = document.createElement("span");
@@ -54,10 +71,21 @@ const uploadVideo = function () {
             div_form.appendChild(ele_btn);
         }
     } else {
-        let ele_vid = document.createElement('video');
-        ele_vid.src = `/getVideo/${videopath}`;
-        ele_vid.setAttribute("controls", "controls");
-        video.appendChild(ele_vid);
+        let startDate = params.startdate;
+        let startTime = params.tsession.substring(6, 11); // ex 00 : 00
+        let endTime = params.tsession.substring(12, 17);
+
+        console.log(endTime - 1);
+        if (dateString === params.startdate && startTime <= timeString && timeString <= endTime) {
+            let ele_vid = document.createElement('video');
+            ele_vid.src = `/getVideo/${videopath}`;
+            ele_vid.setAttribute("controls", "controls");
+            video.appendChild(ele_vid);
+        } else {
+            let ele_span = document.createElement('span');
+            ele_span.textContent = "오픈 날짜 " + startDate + " " + params.tsession.substring(6);
+            div_form.appendChild(ele_span);
+        }
     }
 
     form.addEventListener('submit', function (event) {
@@ -87,8 +115,6 @@ const uploadVideo = function () {
 // 비디오 삭제
 const deleteVideo = function (videopath) {
     let vid = document.querySelector('#vid').value;
-    console.log(vid);
-    console.log(typeof vid);
 
     const confirm_check = confirm("정말로 삭제하시겠습니까?");
 
@@ -161,9 +187,6 @@ const uploadFiles = function () {
 
         fetch('/insertref', {
             method: 'POST',
-            // headers: {
-            //     'Accept': 'multipart/form-data'
-            // },
             body: formData
         })
             .then(response => {
@@ -332,7 +355,14 @@ window.onload = function () {
         }
     }
 
-    document.getElementById('vidfile').addEventListener('change', customFileInput);
-    document.getElementById('files').addEventListener('change', customFileInput);
-}
+    let filesInput = document.getElementById('files');
+    let vidfileInput = document.getElementById('vidfile');
 
+    if (filesInput) {
+        filesInput.addEventListener('change', customFileInput);
+    }
+
+    if (vidfileInput) {
+        vidfileInput.addEventListener('change', customFileInput);
+    }
+}

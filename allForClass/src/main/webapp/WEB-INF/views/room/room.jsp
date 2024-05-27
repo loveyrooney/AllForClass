@@ -14,8 +14,7 @@
     <script src="/resources/js/room/classroom.js"></script>
 </head>
 <body>
-role: ${role} / sessionId(uid): ${sessionId} / tid: ${ldto.tid} /
-영상제목: ${vdto.title} / 영상경로: ${vdto.videopath} / vid : ${vdto.vid}
+startdate: ${ldto.startdate} / timesession: ${ldto.timesession}
 <div id="container">
     <%-- 강의 영상  --%>
     <div id="video">
@@ -38,6 +37,7 @@ role: ${role} / sessionId(uid): ${sessionId} / tid: ${ldto.tid} /
             <input type="hidden" name="videopath" value="${vdto.videopath}">
         </form>
     </div>
+
 
     <%-- 강의 자료 설명 --%>
     <div id="lec_detail">
@@ -90,5 +90,15 @@ role: ${role} / sessionId(uid): ${sessionId} / tid: ${ldto.tid} /
         </ul>
     </div>
 </div>
+
+<script>
+    let inits = {
+        startdate: '${ldto.startdate}'
+        ,tsession: '${ldto.timesession}'
+        ,path: '${path}'
+        ,decodedRef: '${decodedRef}'
+    }
+    init(inits);
+</script>
 </body>
 </html>
