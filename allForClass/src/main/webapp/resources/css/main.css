@@ -1,57 +1,74 @@
-.poor-story-regular {
-    font-family: "Poor Story", system-ui;
-    font-weight: 400;
+#header, #jsp_body, #footer {
+    font-family: "Noto Sans KR", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
     font-style: normal;
 }
 
-#header a {
-    font-size: larger;
-    text-decoration: none;
-}
+/*#header a {*/
+/*    font-size: larger;*/
+/*    text-decoration: none;*/
+/*}*/
 
 .header {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     flex-wrap: nowrap;
-    margin: 0 10vw;
+/*    margin: 0 15vw;*/
+    padding-bottom: 5px;
+    border-bottom: 2px solid #1CBCBD;
 }
 
 .home img {
-    width: 200px;
-    left: 100px;
+    width: 170px;
+    left: 80px;
+}
+
+.search{
+    max-width: fit-content;
+
 }
 
 .search input {
     height: 35px;
-    width: 250px;
+    width: 30vw;
     background: #ECFBFB;
-    border: 1px solid silver;
-    border-radius: 100px;
+    border: 1px solid #1CBCBD;
+    border-radius: 15px;
     padding: 0 20px;
 }
+
+.search input:focus {
+    outline: 1px solid #1CBCBD;
+}
+
 
 .search button {
     background: transparent;
     position: relative;
     left: -50px;
-    top: 10px;
+    top: 7px;
     border: transparent;
 }
 
 .search button img {
-    height: 30px;
+    height: 25px;
 }
 
 .login {
-    font-size: larger;
     text-decoration: none;
     display: inline-block;
-    width: 100px;
+    max-width: fit-content;
     height: 30px;
+    padding: 3px 7px 6px 7px;
     text-align: center;
     line-height: 30px;
     color: #1CBCBD;
+}
+.login span{
+    font-size: 1rem;
+
 }
 
 .login:hover {
@@ -66,12 +83,24 @@
 }
 
 #jsp_body {
-    border: 1px solid #1CBCBC;
     margin: 0 10vw;
-    border-radius: 15px;
+    max-width: 100%;
 }
 
 #footer {
-    border: 1px solid silver;
-    margin: 0 10vw;
+    background-color: #087B7B;
+    max-width: 100%;
+    margin: 0 auto;
+    color: white;
+}
+.footer_wrap{
+    text-align: center;
+    padding: 20px 0px;
+}
+.footer_wrap span{
+    font-weight: bold;
+}
+.footer_wrap p{
+    margin: 0 auto;
+    font-size: 0.8rem;
 }
