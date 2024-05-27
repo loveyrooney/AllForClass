@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Service
@@ -70,6 +72,8 @@ public class RoomServiceImple implements RoomService {
             UUID uuid = UUID.randomUUID();
             String fname = refdto.getFiles()[i].getOriginalFilename();
             if (!"".equals(fname)) {
+                fname = URLEncoder.encode(fname, StandardCharsets.UTF_8)
+                        .replace("+", "%20");
                 String filename = uuid + "_" + fname;
                 saveFile[i] = new File(path, filename);
                 filenames[i] = filename;

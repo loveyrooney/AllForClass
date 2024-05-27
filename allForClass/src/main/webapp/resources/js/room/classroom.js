@@ -23,7 +23,7 @@ const uploadVideo = function () {
     let tid = document.querySelector('#tid').value;
     let sessionId = document.querySelector('#sessionId').value;
 
-    let video = document.getElementById("video");
+    let video = document.getElementById("vidPlayer");
     let form = document.getElementById('insertVideoForm'); // 폼 요소 가져오기
     let div_form = document.getElementById('video_upload');
 
@@ -41,12 +41,13 @@ const uploadVideo = function () {
             };
             div_form.appendChild(ele_delbtn);
         } else {
+            let div_title = document.getElementById('video_title');
             let ele_title = document.createElement('input');
             ele_title.type = "text";
             ele_title.name = "title";
             ele_title.id = "title";
             ele_title.placeholder = "영상 제목을 입력하세요.";
-            form.appendChild(ele_title);
+            div_title.appendChild(ele_title);
 
             let ele_input = document.createElement("input");
             ele_input.setAttribute('type', 'file');
@@ -75,7 +76,6 @@ const uploadVideo = function () {
         let startTime = params.tsession.substring(6, 11); // ex 00 : 00
         let endTime = params.tsession.substring(12, 17);
 
-        console.log(endTime - 1);
         if (dateString === params.startdate && startTime <= timeString && timeString <= endTime) {
             let ele_vid = document.createElement('video');
             ele_vid.src = `/getVideo/${videopath}`;
