@@ -15,10 +15,11 @@ ul li {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    border: 1px solid #E3F2EF;
+    border: 1px solid #1CBCBD;
     border-radius: 20px;
-    width: 70%;
-    margin: 50px auto 10px;
+    width: 60%;
+    height: 680px;
+    margin: 90px auto 10px;
 }
 
 #update_top{
@@ -26,7 +27,7 @@ ul li {
     justify-content: center;
 }
 #update_top h1{
-    margin: 50px auto 40px;
+    margin: 10px auto 40px;
     font-size: 20px;
     font-weight: bolder;
     color: #3DA9A4;
@@ -47,12 +48,13 @@ ul li {
     justify-content: center;
 }
 #update_section label {
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin-top: 30px;
+    font-weight: bold;
 }
 
 #update_section .update_input, #emailCk{
-    width: 30%;
+    width: 46%;
     height: 35px;
     background-color: #E3F2EF;
     border-radius: 10px;
@@ -61,11 +63,16 @@ ul li {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    font-size: 1.1rem;
+}
+#update_section #email {
+    width: 30%;
 }
 
 #emailCk{
     font-size: 0.8rem;
-    width: 75px;
+    width: 13%;
     height: 35px;
     border: 2px solid #78C2AD;
     text-align: center;
@@ -92,8 +99,8 @@ input #email {
     width: 25%;
 }
 
-#updatereset_btn{
-    width: 80px;
+#updatereset_btn {
+    width: 15%;
     height: 35px;
     border: 2px solid #78C2AD;
     text-align: center;
@@ -108,15 +115,11 @@ input #email {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 30px 10px 70px;
+    margin: 70px 10px 20px;
 }
 
-#updatereset_btn:hover {
-    background: #ECFBFB;
-}
-
-.updateuser_btn{
-    width: 150px;
+#updateuser_btn{
+    width: 30%;
     height: 35px;
     border: 2px solid #1CBCBD;
     text-align: center;
@@ -131,17 +134,18 @@ input #email {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 30px 10px 70px;
+    margin: 70px 10px 20px;
 }
-.updateuser_btn:hover {
+#updateuser_btn:hover, #updatereset_btn:hover{
     background: #ECFBFB;
     color: black;
 }
 
 #deleteuser_btn {
-    margin: 0 0 50px 15%;
+    margin: 0 0 50px 20%;
     border: none;
     background: none;
-    font-size: 0.9rem;
+    font-size: 1rem;
+    font-weight: bolder;
 }
 
