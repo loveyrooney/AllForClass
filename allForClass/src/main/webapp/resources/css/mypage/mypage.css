@@ -24,13 +24,14 @@ a:hover, a:focus {
 
 #mypage_myinfo {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: flex-end;
     background-color: #E3F2EF;
     border: 2px solid #3DA9A4;
     border-radius: 20px;
-    width: 80%;
+    width: 70%;
     margin: 0 auto;
+    padding: 5px 0;
 }
 #mypage_myinfo img{
     width: 80px;

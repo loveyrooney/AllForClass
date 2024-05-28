@@ -11,6 +11,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: left;
+    margin: 0 0 50px;
 }
 
 .lec_thumbnail {

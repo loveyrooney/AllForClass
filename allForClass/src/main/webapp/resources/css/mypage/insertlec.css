@@ -1,10 +1,10 @@
-*{
-    padding: 0;
-    margin: 0;
-}
 ul li {
     list-style: none;
     margin: 2px;
+}
+
+.form_container{
+    margin: 0 10%;
 }
 
 .insert_lec_h1 {
@@ -14,10 +14,13 @@ ul li {
     color: #3DA9A4;
 }
 
+.form_top{
+    display: flex;
+}
+
 .insert_lec_imgupload, .insert_lec_select{
     display: flex;
     flex-direction: column;
-    margin: 0 0 0 3%;
 }
 
 .insert_lec_imgupload {
@@ -27,6 +30,8 @@ ul li {
 #image_container img{
     width: 422px;
     height: 247px;
+    padding: 5px;
+    border: 1px solid lightgray;
 }
 
 .lecimg_upload_btn {
@@ -56,10 +61,13 @@ ul li {
     display: none;
 }
 
-insert_lec_select{
-    margin: 10px;
+.insert_lec_select{
+    margin: 5px;
+    padding: 0 0 0 60px;
+    width: 310px;
 }
 .insert_lec_select label{
+    display: inline-block;
     width: 30%;
 }
 
@@ -78,7 +86,7 @@ insert_lec_select{
 }
 
 .insert_lec_select #subject, .insert_lec_select #startdate{
-    width: 140px;
+    width: 172px;
 }
 
 .insert_lec_radio ul{
@@ -90,22 +98,24 @@ insert_lec_select{
 }
 
 .insertlec_desc{
-    margin: 15px 5% 20px;
+    margin: 40px 0 0;
 }
 .insertlec_desc label{
-    margin-bottom: 5px;
+    margin: 40px 0 20px;
 }
 .insert_lec_input{
     width: 170px;
 }
 .insertlec_desc textarea{
     height: 300px;
+    width: 100%;
+    margin: 10px 0;
 }
 
 .insertlec_submit{
     display: flex;
     justify-content: flex-end;
-    margin: 0 5% 40px;
+    margin: 0 0 40px;
 }
 
 #insertlec_btn{
@@ -129,11 +139,6 @@ insert_lec_select{
 #insertlec_btn:hover {
     background: #ECFBFB;
     color: black;
-}
-
-/*부트스트랩 - 상단 돋보기 이동 방지*/
-img, svg {
-    vertical-align: unset;
 }
 
 

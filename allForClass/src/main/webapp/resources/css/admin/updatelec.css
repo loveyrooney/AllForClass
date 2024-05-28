@@ -15,7 +15,6 @@ ul li {
 
 .form_top{
     display: flex;
-    justify-content: space-evenly;
 }
 
 .update_lec_imgupload, .update_lec_select{
@@ -30,10 +29,14 @@ ul li {
 .update_lec_imgupload img{
     width: 422px;
     height: 247px;
+    padding: 5px;
+    border: 1px solid lightgray;
 }
 
 .update_lec_select{
-    margin: 10px;
+    margin: 5px;
+    padding: 0 0 0 60px;
+    width: 310px;
 }
 .update_lec_select label{
     display: inline-block;
@@ -42,7 +45,6 @@ ul li {
 
 .update_lec_label{
     font-weight: bolder;
-
 }
 
 .update_lec_input{
@@ -60,7 +62,7 @@ ul li {
 }
 
 .update_lec_select #subject, .update_lec_select #startdate{
-    width: 140px;
+    width: 172px;
 }
 
 .update_lec_radio ul{
@@ -72,7 +74,7 @@ ul li {
 }
 
 .update_desc{
-    margin: 15px 5% 20px;
+    margin: 40px 0 0;
 }
 .update_desc label{
     margin: 40px 0 20px;
@@ -80,12 +82,14 @@ ul li {
 
 .update_desc textarea{
     height: 300px;
+    width: 100%;
+    margin: 10px 0;
 }
 
 .update_submit{
     display: flex;
     justify-content: flex-end;
-    margin: 0 5% 40px;
+    margin: 0 0 40px;
 }
 
 
