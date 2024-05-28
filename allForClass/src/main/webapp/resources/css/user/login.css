@@ -28,7 +28,9 @@
     font-weight: 600;
     font-size: 1.2rem;
     margin: 20px 0px;
-}.login_input{
+}
+
+.login_input{
      background-color: #E3F2EF;
      border: none;
      border-radius: 10px;
@@ -36,6 +38,11 @@
      width: 298px;
      align-self: center;
      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;}
+
+.login_input:focus {
+    outline: 2px solid #1CBCBD;
+}
+
 
 .login_btn{
     color: white;
