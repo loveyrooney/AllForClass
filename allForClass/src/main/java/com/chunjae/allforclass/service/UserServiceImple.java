@@ -29,7 +29,7 @@ public class UserServiceImple implements UserService{
         //System.out.println(pwdFromDB);
         boolean result=false;
 
-//        if(BCrypt.checkpw(pwd,pwdFromDB))
+        //if(BCrypt.checkpw(pwd,pwdFromDB))
         if(pwd.equals(pwdFromDB))
             result=true;
 
@@ -82,6 +82,8 @@ public class UserServiceImple implements UserService{
 
     @Override
     public int updateUser(UserDTO dto) {
+        //if(dto.getPwd()!=null && !dto.getPwd().equals(""))
+            //dto.setPwd(hashPassword(dto.getPwd()));
         int result = userMapper.updateUser(dto);
         return result;
     }
