@@ -87,9 +87,8 @@ public class RoomController {
         String path = "/uploadVideo";
 
         try {
-//            String realpath = "C:\\Chunjae\\moduUpload";
-            String realpath = "D:\\moduUpload";
-//            String realpath = request.getSession().getServletContext().getRealPath(path);
+//            String realpath = "D:\\moduUpload";
+            String realpath = request.getSession().getServletContext().getRealPath(path);
 
             if (!vidfile.isEmpty()) {
 
@@ -114,11 +113,9 @@ public class RoomController {
     @GetMapping(value = "/getVideo/{videopath}", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
     public ResponseEntity<byte[]> getImage(@PathVariable String videopath, HttpServletRequest request) {
         String path = "/uploadVideo";
-//        String realpath = "C:\\Chunjae\\moduUpload";
-            String realpath = "D:\\moduUpload";
-//        String realpath = request.getSession().getServletContext().getRealPath(path);
-        String fname = URLEncoder.encode(videopath, StandardCharsets.UTF_8)
-                .replace("+", "%20");
+//        String realpath = "D:\\moduUpload";
+        String realpath = request.getSession().getServletContext().getRealPath(path);
+        String fname = URLEncoder.encode(videopath, StandardCharsets.UTF_8).replace("+", "%20");
         InputStream in = null;
         ResponseEntity<byte[]> entity = null;
         try {
@@ -138,11 +135,11 @@ public class RoomController {
 
     // 비디오 삭제
     @PostMapping("/deletevideo/{vid}")
-    public @ResponseBody void deletevideo(@PathVariable int vid, @RequestBody Map<String, String> hm) {
+    public @ResponseBody void deletevideo(@PathVariable int vid, @RequestBody Map<String, String> hm, HttpServletRequest request) {
+        String path = "/uploadVideo";
         String videopath = hm.get("videopath");
-//        String realpath = "C:\\Chunjae\\moduUpload";
-            String realpath = "D:\\moduUpload";
-//            String realpath = request.getSession().getServletContext().getRealPath(path);
+//        String realpath = "D:\\moduUpload";
+        String realpath = request.getSession().getServletContext().getRealPath(path);
 
         File file = new File(realpath, videopath);
 
@@ -167,9 +164,8 @@ public class RoomController {
     @PostMapping("/insertref")
     public @ResponseBody void insertref(HttpServletRequest request, RefDTO refdto) {
         String path = "/uploadFile";
-//        String realpath = "C:\\Chunjae\\moduUpload";
-        String realpath = "D:\\moduUpload";
-//        String realpath = request.getSession().getServletContext().getRealPath(path);
+//        String realpath = "D:\\moduUpload";
+        String realpath = request.getSession().getServletContext().getRealPath(path);
         rservice.insertref(realpath, refdto);
     }
 
@@ -179,8 +175,8 @@ public class RoomController {
     public ResponseEntity<Resource> downloadref(@PathVariable String filename, HttpServletRequest request, HttpServletResponse response) {
 
         String path = "/uploadFile";
-        String realpath = "D:\\moduUpload";
-//        String realpath = request.getSession().getServletContext().getRealPath(path);
+//        String realpath = "D:\\moduUpload";
+        String realpath = request.getSession().getServletContext().getRealPath(path);
         logger.info("realpath.....{}" + realpath);
 
         String fname = URLEncoder.encode(filename, StandardCharsets.UTF_8).replace("+", "%20");

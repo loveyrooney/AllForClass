@@ -230,6 +230,8 @@ const replylistjson = function () {
         replyList.innerHTML = '';
 
         data.forEach(item => {
+            console.log(item.urole);
+
             if (item.urole === 1) {
                 item.urole = 'student';
             } else if (item.urole === 2) {
@@ -242,7 +244,9 @@ const replylistjson = function () {
             let ele_txt1 = document.createTextNode("[" + item.urole + item.uid + "] " + item.content);
             ele_li.appendChild(ele_txt1);
 
-            if ((item.urole !== 1 || item.urole !== 2 ) || String(sessionId) === String(item.uid) ) {
+            console.log(item.urole);
+
+            if (String(sessionId) === String(item.uid) || params.role === 'admin') {
                 let ele_delbtn = document.createElement('button');
                 ele_delbtn.innerHTML = '삭제';
                 ele_delbtn.id = 'delbtn' + item.rid;
