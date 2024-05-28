@@ -1,13 +1,21 @@
 ul li {
     list-style: none;
     margin: 2px;
+    width: 100%;
 }
-
+.form_container{
+    margin: 0 10%;
+}
 .update_lec_h1 {
-    margin: 35px 10% 10px;
+    margin: 35px 10% 40px;
     font-size: 18px;
     font-weight: bolder;
     color: #3DA9A4;
+}
+
+.form_top{
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .update_lec_imgupload, .update_lec_select{
@@ -28,11 +36,13 @@ ul li {
     margin: 10px;
 }
 .update_lec_select label{
+    display: inline-block;
     width: 30%;
 }
 
 .update_lec_label{
     font-weight: bolder;
+
 }
 
 .update_lec_input{
@@ -163,9 +173,4 @@ ul li {
 #confirm_btn:hover {
     background: #ECFBFB;
     color: black;
-}
-
-/*부트스트랩 - 상단 돋보기 이동 방지*/
-img, svg {
-    vertical-align: unset;
 }

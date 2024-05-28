@@ -29,6 +29,6 @@
         </c:choose>
     </div>
 </div>
-<hr class="line">
+<div class="line"></div>
 </body>
 </html>

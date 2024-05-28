@@ -2,12 +2,15 @@
     padding: 50px;
     border: 1px solid silver;
     width: 74%;
+    border-radius: 20px;
+    margin: 5% auto 0;
+}
+
+.detail_top {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: left;
-    border-radius: 20px;
-    margin-top: 5%;
 }
 
 .lec_thumbnail {
@@ -88,8 +91,6 @@
 }
 
 .lec_block_btn {
-    position: relative;
-    left: 50px;
     text-decoration: none;
     display: inline-block;
     width: 120px;

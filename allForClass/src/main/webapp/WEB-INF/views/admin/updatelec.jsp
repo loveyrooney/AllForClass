@@ -13,26 +13,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Title</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<%--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">--%>
     <link rel="stylesheet" href="/resources/css/admin/updatelec.css">
     <script src="/resources/js/admin/updatelec.js"></script>
 </head>
 <body>
-<div class="container">
+
 <h1 class="update_lec_h1">강의 등록 확인</h1>
 
 <%--강의 승인 폼--%>
+<div class="form_container">
 <form method="post" action="/updatelec_result">
-    <div class="row justify-content-center">
+    <div class="form_top">
 
         <%--썸네일 이미지--%>
-        <div class="col-md-5 update_lec_imgupload">
+        <div class="update_lec_imgupload">
             <img src="/getImage/${dto.imgpath}" alt="lecture_img" class="img-thumbnail">
         </div>
 
         <%--강의 정보--%>
-        <ul class="col-md-5 update_lec_select">
+        <ul class="update_lec_select">
             <input type="text" name="lid" id="lid" value="${dto.lid}" hidden>
             <li>
                 <label for="subject" class="update_lec_label">과목</label>
@@ -107,9 +108,9 @@
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+<%--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>--%>
 <script>
     // 스크립트로 강의정보 값 넘겨주기
     let inits = {
