@@ -3,7 +3,13 @@
 }
 
 .lec_thumbnail img {
-    width: 300px;
+    width: 350px;
+    height: 250px;
+}
+
+.lec_thumbnail p {
+    position: relative;
+    top: 50px;
 }
 
 .lec_thumbnail p span, .lec_info ul li:nth-child(2), .lec_info ul li:nth-child(4) {
@@ -14,9 +20,10 @@
 
 .lec_info {
     position: relative;
-    top: -240px;
-    left: 350px;
+    top: -250px;
+    left: 450px;
     width: 300px;
+    margin: 0;
 }
 
 .lec_info ul {
@@ -33,7 +40,7 @@
     text-decoration: none;
     display: inline-block;
     width: 120px;
-    height: 35px;
+    height: 37px;
     border: 2px solid #78C2AD;
     text-align: center;
     line-height: 35px;
@@ -53,16 +60,17 @@
     text-decoration: none;
     display: inline-block;
     width: 120px;
-    height: 35px;
+    height: 40px;
     border: 2px solid #78C2AD;
     text-align: center;
     line-height: 30px;
     border-radius: 20px;
     background: #78C2AD;
     color: black;
-    font-family: "Poor Story", system-ui;
     font-weight: 700;
     font-size: medium;
+    margin: 10px 10px 0 15px;
+    font-family: "Noto Sans KR", sans-serif;
 }
 
 .lec_block_btn {
@@ -71,25 +79,35 @@
     text-decoration: none;
     display: inline-block;
     width: 120px;
-    height: 35px;
+    height: 40px;
     border: 2px solid grey;
     text-align: center;
     line-height: 30px;
     border-radius: 20px;
     background: silver;
     color: dimgray;
-    font-family: "Poor Story", system-ui;
+    font-family: "Noto Sans KR", sans-serif;
     font-weight: 700;
     font-size: medium;
+    margin: 10px 10px 0 15px;
 }
 
 .lec_enter_btn:hover, .lec_regi_btn:hover {
     background: #ECFBFB;
 }
 
+hr {
+    position: relative;
+    top: -150px;
+}
 .lec_description {
     position: relative;
-    top: -200px;
+    top: -100px;
+}
+
+.lec_description p {
+    margin: 10px;
+    padding: 10px;
 }
 
 #reserve {

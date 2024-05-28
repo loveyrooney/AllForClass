@@ -59,4 +59,15 @@
         ON l.teacher_id = t.uid
         where l.startdate = Date(NOW()+INTERVAL 1 DAY)
     </select>
+    <select id="sendConfirmInfo" parameterType="int" resultType="com.chunjae.allforclass.dto.MailDTO">
+        SELECT l.lid as lid
+        , l.lname as lname
+        , u.uname as tname
+        , l.startdate as startdate
+        , l.timesession as timesession
+        , u.email as uemail
+        FROM user u INNER JOIN lecture l
+        ON u.uid = l.teacher_id
+        where l.lid = #{lid}
+    </select>
 </mapper>

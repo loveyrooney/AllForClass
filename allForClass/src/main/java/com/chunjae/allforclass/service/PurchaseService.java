@@ -30,6 +30,8 @@ public interface PurchaseService {
 
     void sendHtmlEmail() throws BusinessException;
 
+    void sendConfirmEmail(int lid);
+
     HashMap<String, Object> ApplyClass(HashMap<String,Object> hm, String responseBody) throws SQLException;
 
     //void schedule();

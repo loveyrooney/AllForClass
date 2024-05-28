@@ -1,5 +1,6 @@
 import com.chunjae.allforclass.dto.LecDTO;
 import com.chunjae.allforclass.service.AdminService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

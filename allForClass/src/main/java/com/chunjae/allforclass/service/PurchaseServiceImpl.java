@@ -7,6 +7,8 @@ import com.chunjae.allforclass.dto.MailDTO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -24,33 +26,21 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
+@PropertySource("classpath:mail.properties")
 public class PurchaseServiceImpl implements PurchaseService{
     private final PurchaseMapper pmapper;
     private final LectureMapper lmapper;
     private final JavaMailSender javaMailSender;
+    @Value("${AdminMail.id}")
+    private String adminMail;
+    @Value("${domain}")
+    private String domain;
     public PurchaseServiceImpl(PurchaseMapper pmapper, LectureMapper lmapper, JavaMailSender javaMailSender){
         this.pmapper=pmapper;
         this.lmapper=lmapper;
         this.javaMailSender=javaMailSender;
-        initProps();
     }
-    private static final Logger logger = LoggerFactory.getLogger("PurchaseServiceImpl.class");
-    private static final HashMap<String,String> props = new HashMap<>();
-    private static void initProps() {
-        ClassPathResource resource = new ClassPathResource("mail.properties");
-        try{
-            Path path = Paths.get(resource.getURI());
-            List<String> content = Files.readAllLines(path);
-            for(String s:content){
-                if(s.equals("AdminMail.id") || s.equals("domain")){
-                    props.put(s.split("=")[0],s.split("=")[1]);
-                }
-            }
-        } catch (IOException e){
-            logger.error("props : {}",e.getMessage());
-        }
-    }
-
+    private final Logger logger = LoggerFactory.getLogger("PurchaseServiceImpl.class");
 
     @Override
     public LecDTO detailLec(int lid) {
@@ -149,9 +139,29 @@ public class PurchaseServiceImpl implements PurchaseService{
                     helper.setTo(dto.getUemail());
                     helper.setSubject("모두의 국영수 - 개강 안내 메일입니다.");
                     helper.setText(mailText(dto,timesession),true);
-                    helper.setFrom(props.get("AdminMail.id"));
+                    helper.setFrom(adminMail);
                     javaMailSender.send(mimeMessage);
                 }
+            } catch (Exception e){
+                logger.info("fail sendMail : {}",e.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public void sendConfirmEmail(int lid) {
+        MailDTO sendinfo = pmapper.sendConfirmInfo(lid);
+        System.out.println(adminMail);
+        if(sendinfo != null){
+            try{
+                MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+                    String timesession = sendinfo.getTimesession().substring(7,11);
+                    helper.setTo(sendinfo.getUemail());
+                    helper.setSubject("모두의 국영수 - 강의 승인 안내 메일입니다.");
+                    helper.setText(conFirmMailText(sendinfo,timesession),true);
+                    helper.setFrom(adminMail);
+                    javaMailSender.send(mimeMessage);
             } catch (Exception e){
                 logger.info("fail sendMail : {}",e.getMessage());
             }
@@ -167,9 +177,25 @@ public class PurchaseServiceImpl implements PurchaseService{
         text.append("<h2>"+dto.getLname()+"("+dto.getTname()+" 선생님) 강의가\n");
         text.append(dto.getStartdate()+" "+timesession+" 시에 개강합니다.</h2>");
         text.append("<p>수업 영상은 개강일 당일 자정까지만 공개되오니 참고하시기 바랍니다.</p>");
-        text.append("👉<a href=\""+props.get("domain")+"/login\">수업 들으러 가기</a>");
+        text.append("👉<a href=\""+domain+"/login\">수업 들으러 가기</a>");
         text.append("<p>감사합니다.</p>");
         text.append("<p>Copyright @2024 AllForClass Team. All rights reserved.</p>");
         return text.toString();
     }
+
+    private String conFirmMailText(MailDTO dto, String timesession) {
+        StringBuilder text = new StringBuilder();
+        text.append("<html><head>");
+        text.append("<meta charset=\"UTF-8\">");
+        text.append("</head><body>");
+        text.append("<h2>"+dto.getTname()+" 선생님 안녕하세요😍</h2>");
+        text.append("<h2>신청하신 "+dto.getLname()+" 강의가 최종 승인되었습니다.</h2>");
+        text.append("<p>"+dto.getStartdate()+" "+timesession+" 시에 개강 예정이며, 수업 영상과 자료는 지금부터 등록 및 수정이 가능합니다.\n");
+        text.append("강의 영상의 경우 수강생에게는 개강일 당일 자정까지만 공개되오니 참고하시기 바랍니다.</p>");
+        text.append("👉<a href=\""+domain+"/login\">강의실 가기</a>");
+        text.append("<p>감사합니다.</p>");
+        text.append("<p>Copyright @2024 AllForClass Team. All rights reserved.</p>");
+        return text.toString();
+    }
+
 }
