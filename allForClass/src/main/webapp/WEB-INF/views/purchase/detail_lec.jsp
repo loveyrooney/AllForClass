@@ -50,7 +50,7 @@
             </li>
         </ul>
     </section>
-    <hr>
+    <hr class="lec_line">
     <section class="lec_description">
         <h3>강의 설명</h3>
         <p>${dto.description}</p>

@@ -113,6 +113,12 @@
 hr {
     /*width: -webkit-fill-available;*/
 }
+
+/* .lec_line{
+    position: relative;
+    top: -150px;
+} */
+
 .lec_description {
     width: max-content;
     margin: 5%;
