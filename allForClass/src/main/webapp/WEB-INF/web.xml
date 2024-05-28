@@ -46,4 +46,9 @@
         <filter-name>encoding</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    <!-- 404 에러일 때 보여줄 페이지 설정 -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/views/error/notfound.jsp</location>
+    </error-page>
 </web-app>
