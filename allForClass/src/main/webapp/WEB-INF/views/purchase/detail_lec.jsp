@@ -24,7 +24,7 @@
             <li>과목> ${dto.subject}</li>
             <li id="lname">${dto.lname}</li>
             <li>강사 : ${dto.tname} (${dto.temail})</li>
-            <li><span id="price">${dto.price}</span>원 | <span id="entry">${dto.entry}</span>명 중 ${reserve}명 남음</li>
+            <li><span id="price">${dto.price}</span>원 | <span id="entry">${dto.entry}</span>명 중 <span id="reserve">${reserve}</span>명 남음</li>
             <li class="btns">
                 <c:choose>
                     <c:when test="${!empty available and available==1}">
