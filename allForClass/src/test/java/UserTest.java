@@ -60,7 +60,17 @@ public class UserTest {
     }
 
     @Test
-    public void t7(){
-        Assertions.assertEquals(true,userService.checkUser("hwang@test.com","h123",false));
+    public void updateUser(){
+        UserDTO dto = new UserDTO();
+        dto.setEmail("hwang@test.com");
+        dto.setUname("황희찬");
+        dto.setPwd("h123");
+        dto.setUid(7);
+        Assertions.assertEquals(1,userService.updateUser(dto));
+    }
+
+    @Test
+    public void chcekUser(){
+        Assertions.assertEquals(true,userService.checkUser("hwang@test.com","h123", false));
     }
 }
