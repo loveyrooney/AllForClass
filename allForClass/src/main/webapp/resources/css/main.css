@@ -24,10 +24,14 @@
     justify-content: space-evenly;
     flex-wrap: nowrap;
 /*    margin: 0 15vw;*/
-    padding-top: 10px;
-    padding-bottom: 5px;
+/*    width: 70%;*/
+    padding: 10px 15% 5px 15%;
+}
+
+.line{
     border-bottom: 2px solid #1CBCBD;
 }
+
 
 .home img {
     width: 170px;
