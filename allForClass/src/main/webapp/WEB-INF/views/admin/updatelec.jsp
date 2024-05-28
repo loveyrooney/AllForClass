@@ -97,7 +97,7 @@
     <%--버튼--%>
     <div class="update_submit row">
         <button type="button" id="deletelec_btn">강의 삭제</button>
-        <input type="reset" id="resetlec_btn" value="초기화">
+        <input type="reset" id="resetlec_btn" value="되돌리기">
         <input type="submit" id="updatelec_btn" value="수정">
     </div>
     <div class="update_submit row">

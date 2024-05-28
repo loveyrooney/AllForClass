@@ -12,6 +12,13 @@ ul li {
     font-size: 1rem;
 }
 
+a {
+    color: inherit;
+}
+a:hover, a:focus {
+    color: #3DA9A4;
+}
+
 #mypage_top{
     display: flex;
     justify-content: center;
@@ -126,10 +133,6 @@ ul li {
     border-collapse: collapse;
     text-align: center;
     margin: 0px 0 80px;
-}
-
-#myleclist a{
-    text-decoration: none;
 }
 
 th {
