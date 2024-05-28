@@ -1,5 +1,6 @@
 .detail_wrap {
     padding: 50px;
+    width: 80%;
 }
 
 .lec_thumbnail img {
@@ -96,7 +97,7 @@
     background: #ECFBFB;
 }
 
-hr {
+.lec_line{
     position: relative;
     top: -150px;
 }
