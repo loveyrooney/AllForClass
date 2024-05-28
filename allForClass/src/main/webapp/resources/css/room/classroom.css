@@ -108,6 +108,36 @@ a:hover {
 #video #delvideo:hover{
     background-color: #78C2AD;
 }
+
+#video button{
+    color: black;
+    width: 150px;
+    height: 41px;
+    border: 2px solid #78C2AD;
+    border-radius: 20px;
+    background: #78C2AD;
+    font-size: 0.9rem;
+}
+
+#video button:hover{
+    background-color: #ECFBFB;
+    cursor: pointer;
+}
+
+#video #video_delbtn{
+    position: relative;
+    left: 37%;
+    width: 102px;
+    height: 23px;
+    border: 2px solid #78C2AD;
+    background: #ECFBFB;
+}
+
+#video #video_delbtn:hover{
+    background-color: #78C2AD;
+    cursor: pointer;
+}
+
 /* ================================== */
 
 
@@ -123,25 +153,15 @@ a:hover {
     display: flex;
 }
 
-video{
-    width: 500px;
+#video_upload #span_info{
+    position: relative;
+    left: 20%;
+    top: 112px;
 }
 
-#video button{
-    position: relative;
-    left: 37%;
-    color: black;
-    width: 102px;
-    height: 23px;
-    margin: 5px;
-    border: 2px solid #78C2AD;
-    border-radius: 20px;
-    background: #ECFBFB;
-    font-size: 0.9rem;
-}
-#video button:hover{
-    background-color: #78C2AD;
-    cursor: pointer;
+
+video{
+    width: 88%;
 }
 
 #video input[type="text"]{
@@ -201,7 +221,7 @@ input[type="file"] {
     margin: 0 5px 0 0;
     padding: 0 5px 0 10px;
     display: block;
-    width: 100%;
+    width: 85%;
     min-height: 30px;
     border: 1px solid #78C2AD;
     border-radius: 8px;
@@ -269,7 +289,7 @@ input[type="file"] {
 #replyList li {
     border-bottom: 1px solid silver;
     padding: 5px 0;
-    margin: 20px;
+    margin: 15px;
 }
 
 /* ================================== */
