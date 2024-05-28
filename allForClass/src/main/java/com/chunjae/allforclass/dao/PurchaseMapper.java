@@ -25,4 +25,6 @@ public interface PurchaseMapper {
     int checkSchedule(HashMap<String, Object> hm);
 
     List<MailDTO> sendMailList();
+
+    MailDTO sendConfirmInfo(int lid);
 }

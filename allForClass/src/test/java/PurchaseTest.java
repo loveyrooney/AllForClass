@@ -119,6 +119,12 @@ public class PurchaseTest {
         }
     }
 
+    @Test
+    public void sendConfirmMail(){
+        //Assertions.assertEquals("박지성",pmapper.sendConfirmInfo(3).getTname());
+        pservice.sendConfirmEmail(3);
+    }
+
 //    @Test
 //    public void schedule() throws InterruptedException{
 //        long delay = 2000L;
