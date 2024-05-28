@@ -29,6 +29,7 @@ a:hover {
     grid-template-columns: 1fr 1fr;
     justify-content: center;
     align-items: center;
+    margin: 0 auto;
 }
 
 /* ================================== */

@@ -4,9 +4,9 @@
     font-weight: 500;
     font-style: normal;
 }
-*{
+/**{
     margin: 0 auto;
-}
+}*/
 
 /*푸터 하단 고정하기*/
 .content_wrap{

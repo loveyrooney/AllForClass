@@ -15,42 +15,49 @@
 </head>
 <body>
 <div class="detail_wrap">
-    <section class="lec_thumbnail">
-        <img src="/getImage/${dto.imgpath}" alt="lecture_img">
-        <p><span id="startdate">${dto.startdate}</span> | <span id="timesession">${dto.timesession}</span></p>
-    </section>
-    <section class="lec_info">
-        <ul>
-            <li>과목> ${dto.subject}</li>
-            <li id="lname">${dto.lname}</li>
-            <li>강사 : ${dto.tname} (${dto.temail})</li>
-            <li><span id="price">${dto.price}</span>원 | <span id="entry">${dto.entry}</span>명 중 <span id="reserve">${reserve}</span>명 남음</li>
-            <li class="btns">
-                <c:choose>
-                    <c:when test="${!empty available and available==1}">
-                        <c:if test="${empty role}">
-                            <a class="lec_enter_btn" href="/login">수강하기</a>
-                        </c:if>
-                        <c:if test="${!empty role and role.equals('student')}">
-                            <c:if test="${empty pid}">
-                                <button class="lec_regi_btn" id="pay" type="button">수강하기</button>
+
+    <div class="detail_top">
+        <section class="lec_thumbnail">
+            <img src="/getImage/${dto.imgpath}" alt="lecture_img">
+            <p><span id="startdate">${dto.startdate}</span> | <span id="timesession">${dto.timesession}</span></p>
+        </section>
+        <section class="lec_info">
+            <ul>
+                <li>과목> ${dto.subject}</li>
+                <li id="lname">${dto.lname}</li>
+                <li>강사 : ${dto.tname} (${dto.temail})</li>
+                <li><span id="price">${dto.price}</span>원 | <span id="entry">${dto.entry}</span>명 중 <span
+                        id="reserve">${reserve}</span>명 남음
+                </li>
+                <li class="btns">
+                    <c:choose>
+                        <c:when test="${!empty available and available==1}">
+                            <c:if test="${empty role}">
+                                <a class="lec_enter_btn" href="/login">수강하기</a>
                             </c:if>
-                            <c:if test="${!empty pid}">
-                                <button class="lec_regi_btn" id="refund" type="button">수강취소</button>
+                            <c:if test="${!empty role and role.equals('student')}">
+                                <c:if test="${empty pid}">
+                                    <button class="lec_regi_btn" id="pay" type="button">수강하기</button>
+                                </c:if>
+                                <c:if test="${!empty pid}">
+                                    <button class="lec_regi_btn" id="refund" type="button">수강취소</button>
+                                </c:if>
                             </c:if>
-                        </c:if>
-                    </c:when>
-                    <c:otherwise>
-                        <button class="lec_block_btn" type="button">수강마감</button>
-                    </c:otherwise>
-                </c:choose>
-                <c:if test="${!empty enterroom and enterroom==1}">
-                    <a class="lec_enter_btn" href="/room/${dto.lid}">강의실 입장</a>
-                </c:if>
-            </li>
-        </ul>
-    </section>
+                        </c:when>
+                        <c:otherwise>
+                            <button class="lec_block_btn" type="button">수강마감</button>
+                        </c:otherwise>
+                    </c:choose>
+                    <c:if test="${!empty enterroom and enterroom==1}">
+                        <a class="lec_enter_btn" href="/room/${dto.lid}">강의실 입장</a>
+                    </c:if>
+                </li>
+            </ul>
+        </section>
+    </div>
+
     <hr class="lec_line">
+
     <section class="lec_description">
         <h3>강의 설명</h3>
         <p>${dto.description}</p>
@@ -59,20 +66,20 @@
 <script>
     let inits = {
         p_lid: ${dto.lid}
-        ,p_uid:0
-        ,storeId:''
-        ,channelKey:''
-        ,fullName:''
-        ,email:''
-        ,p_pid:0
+        , p_uid: 0
+        , storeId: ''
+        , channelKey: ''
+        , fullName: ''
+        , email: ''
+        , p_pid: 0
     }
     inits['p_uid'] = ${sessionScope.sessionId}
-    inits['storeId'] = `${storeId}`;
+        inits['storeId'] = `${storeId}`;
     inits['channelKey'] = `${channelKey}`;
     inits['fullName'] = `${user.uname}`;
     inits['email'] = `${user.email}`;
     inits['p_pid'] = ${pid}
-    init(inits);
+        init(inits);
 </script>
 </body>
 </html>
