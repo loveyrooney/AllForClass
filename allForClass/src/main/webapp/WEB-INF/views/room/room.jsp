@@ -94,7 +94,8 @@
 </div>
 <script>
     let inits = {
-        startdate: '${ldto.startdate}'
+        role: '${role}'
+        , startdate: '${ldto.startdate}'
         , tsession: '${ldto.timesession}'
     }
     init(inits);

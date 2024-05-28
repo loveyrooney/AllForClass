@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (userConfirmed) {
 
             console.log('강의 승인 확인');
-
+            // 쿼리 문자열 생성
             const queryString = new URLSearchParams({ tid: params.tid }).toString();
 
             fetch(`/confirm/${params.lid}?${queryString}`, {
