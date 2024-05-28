@@ -9,7 +9,7 @@
 ul li {
     list-style: none;
     margin: 2px;
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 
 #mypage_top{
@@ -203,7 +203,7 @@ th:first-child, td:first-child {
 }
 
 /*날짜 칸*/
-.fc .fc-daygrid-day-frame {
-    /*min-height: 170px;
-    max-height: 170px;*/
+.fc .fc-day {
+    min-height: 170px;
+    max-height: 170px;
 }

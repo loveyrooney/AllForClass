@@ -135,5 +135,11 @@ insert_lec_select{
     color: black;
 }
 
+/*부트스트랩 - 상단 돋보기 이동 방지*/
+img, svg {
+    vertical-align: unset;
+}
+
+
 
 
