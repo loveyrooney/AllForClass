@@ -5,18 +5,18 @@
 <mapper namespace="com.chunjae.allforclass.dao.RoomMapper">
 
     <insert id="insertref" parameterType="hashmap">
-        insert into ref(refpath, lid)
-        values
+        INSERT INTO ref(refpath, lid)
+        VALUES
         <foreach collection="filenames" item="item" separator=",">
             (#{item}, #{refdto.lid})
         </foreach>
     </insert>
 
     <select id="detailref" resultType="com.chunjae.allforclass.dto.RefDTO" parameterType="int">
-        select refpath
-        from ref r INNER JOIN lecture l
-        on r.lid = l.lid
-        where l.lid = #{lid}
+        SELECT refpath
+        FROM ref r INNER JOIN lecture l
+        ON r.lid = l.lid
+        WHERE l.lid = #{lid}
     </select>
 
     <select id="replylist" resultType="com.chunjae.allforclass.dto.ReplyDTO" parameterType="int">
@@ -30,22 +30,23 @@
         ON u.uid = p.uid INNER JOIN reply r
         ON p.uid = r.uid
         WHERE r.lid = #{lid}
+        ORDER BY r.writedate
     </select>
 
     <insert id="replyinsert" parameterType="com.chunjae.allforclass.dto.ReplyDTO">
-        insert into reply(uid, lid, content, writedate)
-        values(#{uid}, #{lid}, #{content}, DATE(NOW()))
+        INSERT INTO reply(uid, lid, content, writedate)
+        VALUES(#{uid}, #{lid}, #{content}, DATE(NOW()))
     </insert>
 
     <delete id="replydelete" parameterType="int">
-        delete from reply
-        where rid = #{rid};
+        DELETE FROM reply
+        WHERE rid = #{rid};
     </delete>
 
     <select id="detailvideo" resultType="com.chunjae.allforclass.dto.VideoDTO" parameterType="int">
-        select vid, title, videopath
-        from video
-        where lid = #{lid}
+        SELECT vid, title, videopath
+        FROM video
+        WHERE lid = #{lid}
     </select>
 
     <insert id="insertVid" parameterType="com.chunjae.allforclass.dto.VideoDTO">

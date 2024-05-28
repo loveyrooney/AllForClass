@@ -83,7 +83,7 @@
         <form>
             <input type="hidden" name="rlid" id="rlid" value="${ldto.lid}">
 
-            <input type="text" name="content" id="content">
+            <input type="text" name="content" id="content" placeholder="궁굼한 점이 있으신가요?">
             <button type="button" id="append_btn">쓰기</button>
         </form>
         <%-- 댓글 리스트 --%>

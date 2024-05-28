@@ -78,6 +78,7 @@ const uploadVideo = function () {
         let startTime = params.tsession.substring(6, 11); // ex 00 : 00
         let endTime = params.tsession.substring(12, 17);
 
+        // 형식이 같으면 연산 가능
         if (dateString === params.startdate && startTime <= timeString && timeString <= endTime) {
             let ele_vid = document.createElement('video');
             ele_vid.src = `/getVideo/${videopath}`;
@@ -273,7 +274,7 @@ const replydelete = function (rid) {
         }
         return response.json();
     }).then(data => {
-        console.log(data);
+        // console.log(data);
         replylistjson();
     }).catch(error => {
         console.log('Error: ', error);
@@ -321,7 +322,7 @@ window.onload = function () {
                 }
                 return response.json();
             }).then(data => {
-                console.log(data);
+                // console.log(data);
                 replylistjson();
             }).catch(error => {
                 console.log('Error: ', error);
