@@ -38,16 +38,25 @@ document.getElementById('emailCk').onclick = function () {
         let checkspan = document.createElement('span');
         checkspan.id = 'email-check-span';
 
-        if (data == 0) { //사용 가능한 이메일
-            let oktext = document.createTextNode('사용 가능한 이메일입니다.');
-            checkspan.appendChild(oktext);
-            checkspan.style.color= "green";
-            document.querySelectorAll('.join_btn')[0].disabled=false; //가입하기 버튼 활성화
 
-        } else { // 이미 존재하는 이메일
-            let alreadytext = document.createTextNode('이미 존재하는 이메일입니다.');
-            checkspan.appendChild(alreadytext);
-            checkspan.style.color= "red";
+        if(emailvalue == '' || emailvalue == null) { //공백일때
+            let spacetext = document.createTextNode('이메일을 입력해주세요.');
+            checkspan.appendChild(spacetext);
+            checkspan.style.color = "red";
+        }else { //입력 했을 때
+            if (data == 0) { //사용 가능한 이메일
+                let oktext = document.createTextNode('사용 가능한 이메일입니다.');
+                checkspan.appendChild(oktext);
+                checkspan.style.color= "green";
+
+                document.querySelectorAll('.join_btn')[0].disabled=false; //가입하기 버튼 활성화
+            } else { // 이미 존재하는 이메일
+                let alreadytext = document.createTextNode('이미 존재하는 이메일입니다.');
+                checkspan.appendChild(alreadytext);
+                checkspan.style.color= "red";
+
+                document.querySelectorAll('.join_btn')[0].disabled=true; //가입하기 버튼 비활성화
+            }
         }
         document.getElementById("check").appendChild(checkspan);
     }).catch(error => {
