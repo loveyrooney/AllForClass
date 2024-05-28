@@ -3,6 +3,7 @@ let init = function (inits) {
     params = inits;
 }
 
+// 현재 시간 (강의 오픈 시간 계산)
 const today = new Date();
 let year = today.getFullYear();
 let month = ('0' + (today.getMonth() + 1)).slice(-2);
@@ -36,6 +37,7 @@ const uploadVideo = function () {
 
             let ele_delbtn = document.createElement('button');
             ele_delbtn.textContent = '영상 삭제';
+            ele_delbtn.id = 'video_delbtn';
             ele_delbtn.onclick = function () {
                 deleteVideo(videopath);
             };
@@ -83,6 +85,7 @@ const uploadVideo = function () {
             video.appendChild(ele_vid);
         } else {
             let ele_span = document.createElement('span');
+            ele_span.id = "span_info";
             ele_span.textContent = "오픈 날짜 " + startDate + " " + params.tsession.substring(6);
             div_form.appendChild(ele_span);
         }
@@ -238,7 +241,7 @@ const replylistjson = function () {
             let ele_txt1 = document.createTextNode("[" + item.urole + item.uid + "] " + item.content);
             ele_li.appendChild(ele_txt1);
 
-            if (String(sessionId) === String(item.uid)) {
+            if ((item.urole !== 1 || item.urole !== 2 ) || String(sessionId) === String(item.uid) ) {
                 let ele_delbtn = document.createElement('button');
                 ele_delbtn.innerHTML = '삭제';
                 ele_delbtn.id = 'delbtn' + item.rid;

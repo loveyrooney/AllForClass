@@ -96,7 +96,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             console.log('강의 승인 확인');
 
-            fetch('/confirm/' + params.lid, {
+            const queryString = new URLSearchParams({ tid: params.tid }).toString();
+
+            fetch(`/confirm/${params.lid}?${queryString}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
