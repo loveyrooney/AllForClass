@@ -12,12 +12,14 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -67,6 +69,23 @@ public class PurchaseServiceImpl implements PurchaseService{
         return isReserved;
     }
 
+    @Transactional
+    @Override
+    public HashMap<String, Object> ApplyClass(HashMap<String,Object> hm, String responseBody) throws SQLException {
+        HashMap<String,Object> result = new HashMap<>();
+        int priceFromDB = checkPrice((int)hm.get("lid"));
+        if(responseBody.contains("\"paid\":"+priceFromDB)
+                && responseBody.contains("\"id\":\""+hm.get("paymentId")+"\"")){
+            boolean correct = insertPur(hm);
+            result.put("correct",correct);
+            result.put("msg","[정상결제] 수강 신청에 성공하였습니다.");
+        } else {
+            result.put("correct", false);
+            result.put("msg","[결제정보불일치] 수강 신청에 실패하였습니다. 관리자에게 문의 바랍니다.");
+        }
+        return result;
+    }
+
     @Override
     public int checkPrice(int lid) {
         int price = 0;
@@ -89,7 +108,7 @@ public class PurchaseServiceImpl implements PurchaseService{
     }
 
     @Override
-    public boolean deletePur(int pid) {
+    public boolean deletePur(int pid) throws SQLException {
         boolean correct = false;
         int result = pmapper.deletePur(pid);
         if(result!=0)

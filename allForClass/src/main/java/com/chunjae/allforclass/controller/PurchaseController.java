@@ -26,6 +26,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -100,8 +101,8 @@ public class PurchaseController {
         return "main";
     }
 
-    @PostMapping("/checkschedule/{lid}")
-    public @ResponseBody HashMap<String,Object> checkschedule(@PathVariable int lid, @RequestBody HashMap<String,Object> hm){
+    @PostMapping("/check_available/{lid}")
+    public @ResponseBody HashMap<String,Object> checkAvailable(@PathVariable int lid, @RequestBody HashMap<String,Object> hm){
         // 해당 스케줄에 사용자가 이미 결제한 강의가 있는지 체크, 없으면 0, 있으면 1
         int checkSchedule = pservice.checkSchedule(hm);
         // 해당 강의의 결제 건이 몇 개 있는지 체크
@@ -122,13 +123,11 @@ public class PurchaseController {
         return data;
     }
 
-    @PostMapping("/payment/complete")
-    public @ResponseBody HashMap<String, Object> paycomplete(@RequestBody HashMap<String,Object> hm) throws BusinessException {
+    @PostMapping("/apply_class")
+    public @ResponseBody HashMap<String, Object> payComplete(@RequestBody HashMap<String,Object> hm) throws BusinessException {
         logger.info("payment paymentId : {}",hm.get("paymentId"));
-        int lid = (int)hm.get("lid");
-        String payid = (String) hm.get("paymentId");
         // 결과 리턴할 해시 맵
-        HashMap<String,Object> result = new HashMap<>();
+        HashMap<String,Object> result;
         try{
             // 결제 단건 조회 api 비동기 방식 요청
             SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
@@ -137,31 +136,25 @@ public class PurchaseController {
                     .sslContext(sslContext)
                     .build();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://api.portone.io/payments/"+payid))
+                    .uri(URI.create("https://api.portone.io/payments/"+hm.get("paymentId")))
                     .header("Authorization", "PortOne "+payprops.get("V2_SECRET"))
                     .method("GET", HttpRequest.BodyPublishers.ofString("{}"))
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             // 결제 정보의 paymentId 와 price 가 우리 DB 정보와 일치하는지 체크
-            int priceFromDB = pservice.checkPrice(lid);
-            if(response.body().contains("\"paid\":"+priceFromDB)
-                    && response.body().contains("\"id\":\""+payid+"\"")){
-                boolean correct = pservice.insertPur(hm);
-                result.put("correct",correct);
-                result.put("msg","정상 결제되었습니다.");
-            } else {
-                result.put("correct", false);
-                result.put("msg","결제가 실패하였습니다.");
-            }
+            result = pservice.ApplyClass(hm, response.body());
             logger.info("payment complete : {}",response);
-        }catch (IOException|InterruptedException|NoSuchAlgorithmException|KeyManagementException e){
+        } catch (IOException|InterruptedException|NoSuchAlgorithmException|KeyManagementException e){
             logger.error("payment complete exception : {}",e.getMessage());
             throw new BusinessException(ErrorCode.FAIL_TO_PAYMENT);
+        } catch (SQLException e2){
+            logger.error("payment complete exception : {}",e2.getMessage());
+            throw new BusinessException(ErrorCode.FAIL_TO_PAYCHECK);
         }
         return result;
     }
 
-    @GetMapping("/payment/cancel/{pid}")
+    @GetMapping("/cancel_class/{pid}")
     public @ResponseBody HashMap<String, Object> payRefund(@PathVariable int pid) throws BusinessException {
         // 우리 DB에 있는 사용자 pid 를 통해 결제 시 발급받은 paymentId 조회 (결제 paymentId 외부 노출 안하기 위해서)
         String payid = pservice.findPayid(pid);
@@ -189,14 +182,17 @@ public class PurchaseController {
             if(response.statusCode()==200){
                 boolean correct = pservice.deletePur(pid);
                 result.put("correct",correct);
-                result.put("msg","정상 환불되었습니다.");
+                result.put("msg","[정상환불] 수강을 취소하였습니다.");
             } else {
                 result.put("correct",false);
-                result.put("msg","환불이 실패하였습니다.");
+                result.put("msg","[환불실패] 수강 취소에 실패하였습니다. 관리자에게 문의 바랍니다.");
             }
-        }catch (IOException|InterruptedException|NoSuchAlgorithmException|KeyManagementException e){
+        } catch (IOException|InterruptedException|NoSuchAlgorithmException|KeyManagementException e){
             logger.error("payment complete exception : {}",e.getMessage());
-            throw new BusinessException(ErrorCode.FAIL_TO_PAYMENT);
+            throw new BusinessException(ErrorCode.FAIL_TO_REFUND);
+        } catch (SQLException e2){
+            logger.error("payment complete exception : {}",e2.getMessage());
+            throw new BusinessException(ErrorCode.FAIL_TO_CANCELCLASS);
         }
         return result;
     }

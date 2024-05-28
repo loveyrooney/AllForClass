@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,7 +66,7 @@ public class PurchaseTest {
 
     @Transactional
     @Test
-    public void deletePur(){
+    public void deletePur() throws SQLException {
         Assertions.assertEquals(true,pservice.deletePur(2));
     }
 
