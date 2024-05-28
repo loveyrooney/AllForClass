@@ -1,7 +1,7 @@
 .join_wrap {
     text-align: center;
-    margin-bottom: 120px;
 }
+
 .join_wrap ul{
     list-style: none;
     padding: 0px;
@@ -59,10 +59,16 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+#check{
+    height: 20px;
+}
+
 .emailCk_box{
     display: flex;
     flex-direction: row;
     justify-content: center;
+    position: relative;
+    left: 5px;
 }
 
 .emailCk_box .join_input{
