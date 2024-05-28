@@ -2,9 +2,6 @@
 /*                공통                 */
 /* ================================== */
 * {
-    margin: 0;
-    padding: 0;
-
     /* 폰트 미적용 방지 */
     font-family: "Noto Sans KR", sans-serif;
     font-optical-sizing: auto;
@@ -74,7 +71,7 @@ a:hover {
 
 #replyList button {
     width: 60px;
-    height: 20px;
+    height: 25px;
     position: relative;
     float: right;
     border: 2px solid #78C2AD;
@@ -129,9 +126,8 @@ a:hover {
 
 #video #video_delbtn{
     position: relative;
-    left: 37%;
     width: 102px;
-    height: 23px;
+    height: 28px;
     border: 2px solid #78C2AD;
     background: #ECFBFB;
 }
@@ -148,7 +144,6 @@ a:hover {
 /*              강의영상                */
 /* ================================== */
 #video {
-    /*border: 1px solid silver;*/
     margin: 0 0 0 58px;
 }
 #video_upload{
@@ -187,6 +182,7 @@ video{
 /* ================================== */
 #lec_info {
     margin: 0 0 20px 0;
+    padding: 0;
 }
 
 input[type="file"] {
@@ -198,7 +194,8 @@ input[type="file"] {
 
 #reflist {
     margin: 5px 20px 0 0;
-    width: 90%;
+    padding: 5px;
+    width: 85%;
     border: 1px solid #78C2AD;
     border-radius: 8px;
 }
@@ -216,7 +213,7 @@ input[type="file"] {
 #file_upload {
     display: flex;
     margin: 20px 60px 0 0;
-    width: 90%;
+    width: 88%;
 }
 
 /* 선택한 파일 리스트*/
@@ -244,8 +241,10 @@ input[type="file"] {
 /* ================================== */
 #lec_description {
     border-top: 1px solid silver;
+    border-bottom: 1px solid silver;
     width: 90%;
     height: 80px;
+    margin: 10px 0 10px 0;
     grid-column: 1 / 3;
     grid-row: 2 / 3;
     justify-self: center;
@@ -259,7 +258,7 @@ input[type="file"] {
 /*               댓글                  */
 /* ================================== */
 #reply {
-    /*border: 1px solid silver;*/
+    margin: 10px 0 10px 0;
     grid-column: 1 / 3;
     grid-row: 3 / 4;
     justify-self: center;
@@ -292,7 +291,7 @@ input[type="file"] {
 #replyList li {
     border-bottom: 1px solid silver;
     padding: 5px 0;
-    margin: 15px;
+    margin: 15px 15px 15px 0;
 }
 
 /* ================================== */
