@@ -4,11 +4,19 @@
     font-weight: 500;
     font-style: normal;
 }
+*{
+    margin: 0 auto;
+}
 
-/*#header a {*/
-/*    font-size: larger;*/
-/*    text-decoration: none;*/
-/*}*/
+/*푸터 하단 고정하기*/
+.content_wrap{
+    min-height: calc(100vh - 135px);  /* footer 높이빼기 */
+}
+#footer{
+    height: 135px; /* footer 높이 */
+    margin-top: 30px; /*본문이랑 띄우기*/
+}
+
 
 .header {
     display: flex;
@@ -16,6 +24,7 @@
     justify-content: space-evenly;
     flex-wrap: nowrap;
 /*    margin: 0 15vw;*/
+    padding-top: 10px;
     padding-bottom: 5px;
     border-bottom: 2px solid #1CBCBD;
 }
@@ -88,9 +97,9 @@
 }
 
 #footer {
-    background-color: #087B7B;
+    background-color: #3da9a4;
     max-width: 100%;
-    margin: 0 auto;
+/*    margin: 0 auto;*/
     color: white;
 }
 .footer_wrap{

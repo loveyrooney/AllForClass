@@ -23,12 +23,14 @@
 </head>
 <body>
 <div id="wrap" class="poor-story-regular">
-  <header id="header">
-    <jsp:include page="header.jsp"/>
-  </header>
-  <section id="jsp_body">
-    <jsp:include page="${body}"/>
-  </section>
+  <div class="content_wrap">
+    <header id="header">
+      <jsp:include page="header.jsp"/>
+    </header>
+    <section id="jsp_body">
+      <jsp:include page="${body}"/>
+    </section>
+  </div>
   <footer id="footer">
     <jsp:include page="footer.jsp"/>
   </footer>

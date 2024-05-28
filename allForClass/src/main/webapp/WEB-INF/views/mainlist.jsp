@@ -18,7 +18,7 @@
 <div class="mainlist_wrap">
 <%--배너--%>
 <article>
-    <img src="/resources/images/banner.gif" alt="banner" class="mainlist_banner">
+    <img src="/resources/images/banner.png" alt="banner" class="mainlist_banner">
 </article>
 
 <%--강의 리스트--%>
