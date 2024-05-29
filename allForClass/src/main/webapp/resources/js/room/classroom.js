@@ -85,10 +85,16 @@ const uploadVideo = function () {
             ele_vid.setAttribute("controls", "controls");
             video.appendChild(ele_vid);
         } else {
+            let ele_img = document.createElement('img');
+            ele_img.src = '/resources/images/default.png';
+            ele_img.alt = '기본 이미지';
+            video.appendChild(ele_img);
+
             let ele_span = document.createElement('span');
             ele_span.id = "span_info";
             ele_span.textContent = "오픈 날짜 " + startDate + " " + params.tsession.substring(6);
             div_form.appendChild(ele_span);
+
         }
     }
 
