@@ -15,6 +15,7 @@
                ,l.entry as entry
                ,l.startdate as startdate
                ,l.timesession as timesession
+               ,l.confirm as confirm
                ,l.imgpath as imgpath
         from lecture l inner join user u
         on l.teacher_id = u.uid

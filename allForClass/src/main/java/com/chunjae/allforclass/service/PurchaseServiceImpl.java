@@ -5,6 +5,8 @@ import com.chunjae.allforclass.dao.PurchaseMapper;
 import com.chunjae.allforclass.dto.LecDTO;
 import com.chunjae.allforclass.dto.MailDTO;
 
+import com.chunjae.allforclass.exception.BusinessException;
+import com.chunjae.allforclass.exception.ErrorCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,8 +45,11 @@ public class PurchaseServiceImpl implements PurchaseService{
     private final Logger logger = LoggerFactory.getLogger("PurchaseServiceImpl.class");
 
     @Override
-    public LecDTO detailLec(int lid) {
-        return lmapper.detailLec(lid);
+    public LecDTO detailLec(int lid){
+        LecDTO dto = lmapper.detailLec(lid);
+        if(!dto.isConfirm())
+            throw new NullPointerException();
+        return dto;
     }
 
     @Override
