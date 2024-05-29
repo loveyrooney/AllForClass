@@ -163,7 +163,7 @@ public class MypageController {
 
             } else {
                 // 기본 이미지 파일로 게시
-                dto.setImgpath("file_default");
+                dto.setImgpath("default.png");
             }
         } catch (IOException e) {
             System.out.println(e);
