@@ -99,7 +99,7 @@ public class AdminController {
         hm.put("lid", lid);
         hm.put("paymentId", payid);
         pservice.insertPur(hm);
-        pservice.sendConfirmEmail(lid);
+        //pservice.sendConfirmEmail(lid);
 
         return result;
     }

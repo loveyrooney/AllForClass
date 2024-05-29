@@ -21,14 +21,15 @@
 
     <select id="replylist" resultType="com.chunjae.allforclass.dto.ReplyDTO" parameterType="int">
         SELECT r.rid as rid
-            , r.uid as uid
-            , r.lid as lid
-            , r.content as content
-            , r.writedate
-            , u.role as urole
-        FROM user u INNER JOIN purchase p
-        ON u.uid = p.uid INNER JOIN reply r
-        ON p.uid = r.uid
+                , r.uid as uid
+                , r.lid as lid
+                , r.content as content
+                , r.writedate
+                , u.role as urole
+        FROM reply r INNER JOIN  purchase p
+          ON p.uid = r.uid AND p.lid = r.lid
+          INNER JOIN user u
+          ON u.uid = r.uid
         WHERE r.lid = #{lid}
         ORDER BY r.writedate
     </select>
