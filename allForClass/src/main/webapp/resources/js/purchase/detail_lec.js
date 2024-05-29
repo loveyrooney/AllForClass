@@ -50,6 +50,8 @@ async function requestPayment() {
             alert("결제가 성공하였습니다.")
             setTimeout(applyClass(response.paymentId),3000);
         }
+    } else {
+        alert("연락 가능한 유효한 연락처를 000-0000-0000 형태로 적어주세요.");
     }
 }
 

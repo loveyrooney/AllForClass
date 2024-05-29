@@ -33,7 +33,7 @@
     <select id="countPur" parameterType="int" resultType="int">
         select count(*)
         from purchase
-        where lid = #{lid}
+        where lid = #{lid} and payid NOT IN ('teacher')
     </select>
     <select id="checkSchedule" parameterType="hashmap" resultType="int">
         select count(*)

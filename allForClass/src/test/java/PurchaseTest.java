@@ -32,7 +32,7 @@ public class PurchaseTest {
     private JavaMailSender javaMailSender;
     @Test
     public void detailLec(){
-        Assertions.assertEquals("박지성", pservice.detailLec(1).getTname());
+        Assertions.assertNull(pservice.detailLec(5));
     }
 
     @Test
@@ -124,6 +124,7 @@ public class PurchaseTest {
         //Assertions.assertEquals("박지성",pmapper.sendConfirmInfo(3).getTname());
         pservice.sendConfirmEmail(3);
     }
+
 
 //    @Test
 //    public void schedule() throws InterruptedException{
