@@ -16,32 +16,32 @@
 <body>
 <div id="container">
     <%-- 강의 영상  --%>
-        <div id="video">
+    <div id="video">
 
-            <div id="vidPlayer"></div>
+        <div id="vidPlayer"></div>
 
-            <form id="insertVideoForm" method="post" action="/insertvid" enctype="multipart/form-data">
-                <input type="hidden" name="lid" id="lid" value="${ldto.lid}">
-                <input type="hidden" name="videopath" id="videopath" value="${vdto.videopath}">
-                <input type="hidden" name="sessionId" id="sessionIdvid" value="${sessionId}">
-                <input type="hidden" name="role" id="rolevid" value="${role}">
-                <input type="hidden" name="tid" id="tidvid" value="${ldto.tid}">
+        <form id="insertVideoForm" method="post" action="/insertvid" enctype="multipart/form-data">
+            <input type="hidden" name="lid" id="lid" value="${ldto.lid}">
+            <input type="hidden" name="videopath" id="videopath" value="${vdto.videopath}">
+            <input type="hidden" name="sessionId" id="sessionIdvid" value="${sessionId}">
+            <input type="hidden" name="role" id="rolevid" value="${role}">
+            <input type="hidden" name="tid" id="tidvid" value="${ldto.tid}">
 
-                <div id="video_title"></div>
-                <div id="video_upload">
+            <div id="video_title"></div>
+            <div id="video_upload">
 
-                </div>
-            </form>
+            </div>
+        </form>
 
-            <form method="post" action="/deletevideo/${vdto.vid}">
-                <input type="hidden" name="lid" value="${ldto.lid}">
-                <input type="hidden" name="vid" id="vid" value="${vdto.vid}">
-                <input type="hidden" name="videopath" value="${vdto.videopath}">
-            </form>
-        </div>
+        <form method="post" action="/deletevideo/${vdto.vid}">
+            <input type="hidden" name="lid" value="${ldto.lid}">
+            <input type="hidden" name="vid" id="vid" value="${vdto.vid}">
+            <input type="hidden" name="videopath" value="${vdto.videopath}">
+        </form>
+    </div>
 
 
-    <%-- 강의 자료 설명 --%>
+    <%-- 강의 정보 --%>
     <div id="lec_detail">
         <ul id=lec_info>
             <li><h3>과목 > ${ldto.subject}</h3></li>

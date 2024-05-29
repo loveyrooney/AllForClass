@@ -87,7 +87,6 @@ public class RoomController {
         String path = "/uploadVideo";
 
         try {
-//            String realpath = "D:\\moduUpload";
             String realpath = request.getSession().getServletContext().getRealPath(path);
 
             if (!vidfile.isEmpty()) {
@@ -106,14 +105,13 @@ public class RoomController {
             System.out.println(e);
         }
 
-        int result = rservice.insertVid(vdto);
+        rservice.insertVid(vdto);
     }
 
     // 비디오 불러오기
     @GetMapping(value = "/getVideo/{videopath}", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
     public ResponseEntity<byte[]> getImage(@PathVariable String videopath, HttpServletRequest request) {
         String path = "/uploadVideo";
-//        String realpath = "D:\\moduUpload";
         String realpath = request.getSession().getServletContext().getRealPath(path);
         String fname = URLEncoder.encode(videopath, StandardCharsets.UTF_8).replace("+", "%20");
         InputStream in = null;
@@ -138,7 +136,6 @@ public class RoomController {
     public @ResponseBody void deletevideo(@PathVariable int vid, @RequestBody Map<String, String> hm, HttpServletRequest request) {
         String path = "/uploadVideo";
         String videopath = hm.get("videopath");
-//        String realpath = "D:\\moduUpload";
         String realpath = request.getSession().getServletContext().getRealPath(path);
 
         File file = new File(realpath, videopath);
@@ -164,7 +161,6 @@ public class RoomController {
     @PostMapping("/insertref")
     public @ResponseBody void insertref(HttpServletRequest request, RefDTO refdto) {
         String path = "/uploadFile";
-//        String realpath = "D:\\moduUpload";
         String realpath = request.getSession().getServletContext().getRealPath(path);
         rservice.insertref(realpath, refdto);
     }
@@ -175,7 +171,6 @@ public class RoomController {
     public ResponseEntity<Resource> downloadref(@PathVariable String filename, HttpServletRequest request, HttpServletResponse response) {
 
         String path = "/uploadFile";
-//        String realpath = "D:\\moduUpload";
         String realpath = request.getSession().getServletContext().getRealPath(path);
         logger.info("realpath.....{}" + realpath);
 
@@ -216,7 +211,7 @@ public class RoomController {
     // 댓글 추가
     @PostMapping("/replyinsert")
     public @ResponseBody ReplyDTO replyInsert(@RequestBody ReplyDTO rdto) {
-        int result = rservice.replyinsert(rdto);
+        rservice.replyinsert(rdto);
         return rdto;
     }
 

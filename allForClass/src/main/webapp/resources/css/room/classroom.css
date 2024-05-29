@@ -103,15 +103,15 @@ a:hover {
     cursor: pointer;
 }
 
-#video #delvideo{
+#video #delvideo {
     background-color: #ECFBFB;
 }
 
-#video #delvideo:hover{
+#video #delvideo:hover {
     background-color: #78C2AD;
 }
 
-#video button{
+#video button {
     color: black;
     width: 150px;
     height: 41px;
@@ -121,21 +121,22 @@ a:hover {
     font-size: 0.9rem;
 }
 
-#video button:hover{
+#video button:hover {
     background-color: #ECFBFB;
     cursor: pointer;
 }
 
-#video #video_delbtn{
+#video #video_delbtn {
     position: relative;
     width: 102px;
     height: 28px;
     top: 10px;
+    left: 40%;
     border: 2px solid #78C2AD;
     background: #ECFBFB;
 }
 
-#video #video_delbtn:hover{
+#video #video_delbtn:hover {
     background-color: #78C2AD;
     cursor: pointer;
 }
@@ -147,24 +148,26 @@ a:hover {
 /*              강의영상                */
 /* ================================== */
 #video {
-    padding: 0 0 0 30px;
+    padding: 0 60px;
 }
-#video_upload{
+
+#video_upload {
     width: 100%;
     display: flex;
 }
 
-#video_upload #span_info{
+#video_upload #span_info {
     position: relative;
     left: 20%;
     top: 112px;
 }
 
-video{
+video {
     width: 100%;
+    min-width: 400px;
 }
 
-#video input[type="text"]{
+#video input[type="text"] {
     width: 100%;
     height: 35px;
     border-radius: 15px;
@@ -172,9 +175,10 @@ video{
     margin: 10px 0;
 }
 
-#video input:focus{
+#video input:focus {
     outline: 1px solid #1CBCBC;
 }
+
 /* ================================== */
 
 
@@ -182,7 +186,6 @@ video{
 /*            강의 자료 설명            */
 /* ================================== */
 #lec_detail {
-    margin: 50px 0 0 0;
 }
 
 #lec_info {
@@ -201,6 +204,7 @@ input[type="file"] {
     margin: 5px 20px 0 0;
     padding: 5px;
     width: 85%;
+    min-height: 50px;
     border: 1px solid #78C2AD;
     border-radius: 8px;
 }
@@ -283,7 +287,8 @@ input[type="file"] {
     border: 1px solid #1CBCBC;
     padding: 0 10px;
 }
-#reply input:focus{
+
+#reply input:focus {
     outline: 1px solid #1CBCBC;
 }
 

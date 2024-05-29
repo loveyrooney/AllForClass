@@ -75,7 +75,7 @@ const uploadVideo = function () {
         }
     } else {
         let startDate = params.startdate;
-        let startTime = params.tsession.substring(6, 11); // ex 00 : 00
+        let startTime = params.tsession.substring(6, 11); // ex 00:00
         let endTime = params.tsession.substring(12, 17);
 
         // 형식이 같으면 연산 가능
@@ -93,6 +93,7 @@ const uploadVideo = function () {
     }
 
     form.addEventListener('submit', function (event) {
+        // 기본 동작 방지
         event.preventDefault();
         const formData = new FormData(form);
 
@@ -155,10 +156,10 @@ const uploadFiles = function () {
     let role = document.querySelector('#role').value;
     let tid = document.querySelector('#tid').value;
     let sessionId = document.querySelector('#sessionId').value;
-    let form = document.getElementById('fileUploadForm'); // 폼 요소 가져오기
+    let form = document.getElementById('fileUploadForm');
     let div_form = document.getElementById('file_upload');
 
-    // 강사(자신이 올린 강의) / 관리자일 경우에만 파일 추가 버튼 등을 생성
+    // 강사(자신이 올린 강의) / 관리자일 경우에만 파일 추가 버튼 생성
     if (('teacher' === String(role) && String(sessionId) === String(tid)) || 'admin' === String(role)) {
         let ele_input = document.createElement('input');
         ele_input.setAttribute('type', 'file');
@@ -185,7 +186,6 @@ const uploadFiles = function () {
     }
 
     form.addEventListener('submit', function (event) {
-        // 기본 동작 방지
         event.preventDefault();
         const formData = new FormData(form);
 
@@ -230,7 +230,6 @@ const replylistjson = function () {
         replyList.innerHTML = '';
 
         data.forEach(item => {
-            console.log(item.urole);
 
             if (item.urole === 1) {
                 item.urole = 'student';
@@ -243,8 +242,6 @@ const replylistjson = function () {
             let ele_li = document.createElement('li');
             let ele_txt1 = document.createTextNode("[" + item.urole + item.uid + "] " + item.content);
             ele_li.appendChild(ele_txt1);
-
-            console.log(item.urole);
 
             if (String(sessionId) === String(item.uid) || params.role === 'admin') {
                 let ele_delbtn = document.createElement('button');
@@ -284,7 +281,6 @@ const replydelete = function (rid) {
         console.log('Error: ', error);
     }).finally(() => {
         console.log("delete reply finally");
-        // console.log(rid);
     });
 
 }
