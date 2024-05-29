@@ -1,9 +1,11 @@
 .detail_wrap {
     padding: 50px;
-    border: 1px solid silver;
+    border: 1px solid #ECFBFB;
     width: 74%;
     border-radius: 20px;
     margin: 5% auto 0;
+    background: #ECFBFB;
+    box-shadow: 0px 5px 10px 0 rgba(211, 211, 211, 70%);
 }
 
 .detail_top {
@@ -15,20 +17,22 @@
 }
 
 .lec_thumbnail {
-    border: 1px solid silver;
     border-radius: 10px;
     width: min-content;
     margin: 0 5%;
     padding: 10px;
+    background: white;
+    box-shadow: 0px 2px 20px 0 rgba(211, 211, 211, 50%);
 }
 
 .lec_thumbnail img {
-    width: 422px;
-    height: 247px;
+    width: 20vw;
+    object-fit: fill;
 }
 
 .lec_thumbnail p {
     text-align: center;
+    margin: 0;
 }
 
 .lec_thumbnail p span {
@@ -43,7 +47,7 @@
 
 .lec_info {
     width: max-content;
-    margin: 0 5%;
+    margin-left: 2%;
 }
 
 .lec_info ul {
@@ -67,11 +71,12 @@
     border-radius: 20px;
     background: #78C2AD;
     font-weight: 700;
-    color: black;
+    color: white;
 }
 
 .btns a:hover {
     background: #ECFBFB;
+    color : #78C2AD;
 }
 
 .lec_enter_btn, .lec_regi_btn {
@@ -84,11 +89,12 @@
     line-height: 30px;
     border-radius: 20px;
     background: #78C2AD;
-    color: black;
+    color: white;
     font-weight: 700;
     font-size: medium;
     margin: 10px 10px 0 15px;
     font-family: "Noto Sans KR", sans-serif;
+    box-shadow: 0px 3px 5px 0 rgba(211, 211, 211, 70%);
 }
 
 .lec_block_btn {
@@ -106,20 +112,13 @@
     font-weight: 700;
     font-size: medium;
     margin: 10px 10px 0 15px;
+    box-shadow: 0px 3px 5px 0 rgba(211, 211, 211, 70%);
 }
 
 .lec_enter_btn:hover, .lec_regi_btn:hover {
     background: #ECFBFB;
+    color: #78C2AD;
 }
-
-hr {
-    /*width: -webkit-fill-available;*/
-}
-
-/* .lec_line{
-    position: relative;
-    top: -150px;
-} */
 
 .lec_description {
     width: max-content;

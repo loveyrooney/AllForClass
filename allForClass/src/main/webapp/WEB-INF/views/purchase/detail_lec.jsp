@@ -19,7 +19,9 @@
     <div class="detail_top">
         <section class="lec_thumbnail">
             <img src="/getImage/${dto.imgpath}" alt="lecture_img">
-            <p><span id="startdate">${dto.startdate}</span> | <span id="timesession">${dto.timesession}</span></p>
+            <p><span id="startdate">${dto.startdate}</span><br>
+                <span id="timesession">${dto.timesession}</span>
+            </p>
         </section>
         <section class="lec_info">
             <ul>
