@@ -252,7 +252,15 @@ const loadFileList = function () {
                             const ele_li2 = document.createElement('li');
                             ele_li2.textContent = fileName;
                             ele_ul.appendChild(ele_li2);
-                        }
+                                if(!document.getElementById("notOpen")){
+                                    const div_deleteBtn = document.getElementById('deleteBtn');
+                                    let ele_span = document.createElement('span');
+                                    ele_span.id = 'notOpen';
+                                    ele_span.textContent = '오픈시간이 아닙니다.'
+                                    div_deleteBtn.appendChild(ele_span);
+                                }
+                            }
+
                     }
                     ele_ul.appendChild(ele_li);
                 });
@@ -289,12 +297,13 @@ const loadFileList = function () {
 
                     };
 
-                } else {
-                    const div_deleteBtn = document.getElementById('deleteBtn');
-                    let ele_span = document.createElement('span');
-                    ele_span.textContent = '오픈시간이 아닙니다.'
-                    div_deleteBtn.appendChild(ele_span);
                 }
+                // else {
+                //     // const div_deleteBtn = document.getElementById('deleteBtn');
+                //     // let ele_span = document.createElement('span');
+                //     // ele_span.textContent = '오픈시간이 아닙니다.'
+                //     // div_deleteBtn.appendChild(ele_span);
+                // }
             } else {
                 fileListContainer.textContent = '자료가 없습니다.';
             }

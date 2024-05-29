@@ -92,7 +92,7 @@ public class PurchaseController {
                         model.addAttribute("pid",pid);
                         model.addAttribute("enterroom",1);
                     }
-                } else {
+                } else if ((role.equals("teacher") && dto.getTid()==sessionId) || role.equals("admin")) {
                     model.addAttribute("enterroom",1);
                 }
         }
