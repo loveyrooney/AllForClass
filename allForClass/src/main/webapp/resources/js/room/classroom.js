@@ -209,7 +209,7 @@ const uploadFiles = function () {
 
 // 파일 리스트
 const loadFileList = function () {
-    fetch('/getFileList')
+    fetch('/getFileList/'+params.lid)
         .then(response => response.json())
         .then(files => {
             const fileListContainer = document.getElementById('fileListContainer');

@@ -1,5 +1,6 @@
 import com.chunjae.allforclass.dto.LecDTO;
 import com.chunjae.allforclass.service.AdminService;
+import com.chunjae.allforclass.service.PurchaseService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +16,9 @@ public class AdminTest {
 
     @Autowired
     private AdminService aservice;
+
+    @Autowired
+    private PurchaseService pservice;
 
 
     @Test
@@ -42,4 +46,5 @@ public class AdminTest {
         int result =  aservice.deleteLec(80);
         assertEquals(1, result);
     }
+
 }

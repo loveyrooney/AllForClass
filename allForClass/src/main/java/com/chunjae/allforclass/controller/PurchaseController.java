@@ -66,6 +66,8 @@ public class PurchaseController {
     public String detail_lec(@PathVariable int lid, HttpServletRequest request, Model model){
         // 모든 사용자에게 공통으로 보여질 정보 - 강의 상세정보, 수강신청 오픈기간 여부
         LecDTO dto = pservice.detailLec(lid);
+        if(!dto.isConfirm())
+            throw new NullPointerException();
         model.addAttribute("dto",dto);
         boolean available = LocalDate.now().isBefore(LocalDate.parse(dto.getStartdate()));
         if(available)

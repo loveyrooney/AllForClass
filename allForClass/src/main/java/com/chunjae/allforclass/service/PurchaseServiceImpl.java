@@ -46,10 +46,7 @@ public class PurchaseServiceImpl implements PurchaseService{
 
     @Override
     public LecDTO detailLec(int lid){
-        LecDTO dto = lmapper.detailLec(lid);
-        if(!dto.isConfirm())
-            throw new NullPointerException();
-        return dto;
+        return lmapper.detailLec(lid);
     }
 
     @Override

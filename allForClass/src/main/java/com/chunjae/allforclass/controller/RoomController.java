@@ -163,8 +163,8 @@ public class RoomController {
     }
 
     // 자료 리스트
-    @GetMapping("/getFileList")
-    public @ResponseBody List<Map<String, String>> getFileList(HttpServletRequest request) {
+    @GetMapping("/getFileList/{lid}")
+    public @ResponseBody List<Map<String, String>> getFileList(HttpServletRequest request, @PathVariable int lid) {
         String path = "/uploadFile";
         String realpath = request.getSession().getServletContext().getRealPath(path);
 
@@ -173,11 +173,17 @@ public class RoomController {
 
         List<Map<String, String>> fileList = new ArrayList<>();
         if (files != null) {
+            List<RefDTO> refnames = rservice.detailref(lid);
             for (File file : files) {
                 if (file.isFile()) {
-                    Map<String, String> fileData = new HashMap<>();
-                    fileData.put("fileName", file.getName());
-                    fileList.add(fileData);
+                    for(RefDTO dto : refnames){
+                        if(dto.getRefpath().equals(file.getName())){
+                            Map<String, String> fileData = new HashMap<>();
+                            fileData.put("fileName", file.getName());
+                            fileList.add(fileData);
+                        }
+                    }
+
                 }
             }
         }
