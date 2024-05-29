@@ -51,6 +51,9 @@
                     <input type="reset" id="updatereset_btn" value="되돌리기">
                     <input type="submit" id="updateuser_btn" value="수정하기">
                 </li>
+                <li>
+                    <div id="update_check"></div>
+                </li>
             </ul>
         </form>
     </section>

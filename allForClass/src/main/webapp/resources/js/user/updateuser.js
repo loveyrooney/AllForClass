@@ -1,17 +1,41 @@
 /** 이메일 중복체크 */
 let updatebtn = document.getElementById('updateuser_btn');
 
+// 이메일 인풋이 변경 되었을 때
 let emailinput = document.getElementById('email');
 emailinput.addEventListener('change', function () {
+
+    let existingSpan2 = document.getElementById('update-check-span');
+    if (existingSpan2) {
+        document.getElementById("update_check").removeChild(existingSpan2);
+    }
+
     updatebtn.disabled = true;  // input이 변경되면 수정 버튼 비활성화
     updatebtn.style.background = '#F5F5F5';
     updatebtn.style.border = '2px solid #F5F5F5';
     updatebtn.style.color = 'gray';
+
+    // 새로운 span 요소를 생성하고 ID 부여
+    let updatespan = document.createElement('span');
+    updatespan.id = 'update-check-span';
+
+    let updatetext = document.createTextNode('이메일 중복체크를 해주세요.');
+
+    updatespan.appendChild(updatetext);
+    updatespan.style.color = "red";
+
+    document.getElementById("update_check").appendChild(updatespan);
+
 });
 
 
 let emailvalue;
 document.getElementById('emailCk').onclick = function () {
+
+    let existingSpan2 = document.getElementById('update-check-span');
+    if (existingSpan2) {
+        document.getElementById("update_check").removeChild(existingSpan2);
+    }
     emailvalue = document.getElementById('email').value;
     console.log("Email to check: ", emailvalue); // 디버깅용 로그 추가
     fetch("/emailCheck", {
