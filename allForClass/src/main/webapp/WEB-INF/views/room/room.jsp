@@ -21,11 +21,8 @@
 
         <form id="insertVideoForm" method="post" action="/insertvid" enctype="multipart/form-data">
             <input type="hidden" name="lid" id="lid" value="${ldto.lid}">
-
             <div id="video_title"></div>
-            <div id="video_upload">
-
-            </div>
+            <div id="video_upload"></div>
         </form>
 
         <form method="post" action="/deletevideo/${vdto.vid}">
@@ -44,20 +41,14 @@
 
         <%-- 등록된 자료 리스트 / 다운로드 --%>
         강의자료
-        <ul id="reflist">
-            <c:forEach var="i" items="${reflist}" varStatus="status">
-                <c:set var="decodedRef" value="${decodeRef[status.index]}"/>
-                <c:forTokens var="path" items="${i.refpath}" delims=",">
-                    <li><a href="/download/${path}">${decodedRef}</a></li>
-                </c:forTokens>
-            </c:forEach>
-        </ul>
+        <div id="deleteBtn"></div>
+        <div id="fileListContainer">
+        </div>
 
         <%-- 자료 등록  --%>
         <form id="fileUploadForm" method="post" action="/insertref" enctype="multipart/form-data">
-            <div id="file_upload">
-                <input type="hidden" name="lid" id="reflid" value="${ldto.lid}">
-            </div>
+            <input type="hidden" name="lid" id="reflid" value="${ldto.lid}">
+            <div id="file_upload"></div>
         </form>
     </div>
 
@@ -73,9 +64,7 @@
             <button type="button" id="append_btn">쓰기</button>
         </form>
         <%-- 댓글 리스트 --%>
-        <ul id="replyList">
-
-        </ul>
+        <ul id="replyList"></ul>
     </div>
 </div>
 

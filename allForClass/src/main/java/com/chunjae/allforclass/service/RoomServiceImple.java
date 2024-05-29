@@ -125,4 +125,9 @@ public class RoomServiceImple implements RoomService {
         return rmapper.deleteVid(vid);
     }
 
+    @Override
+    public int deleteRef(String fileName) {
+        return rmapper.deleteRef(fileName);
+    }
+
 }

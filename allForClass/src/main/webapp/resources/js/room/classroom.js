@@ -15,7 +15,6 @@ let minutes = ('0' + today.getMinutes()).slice(-2);
 let dateString = year + '-' + month + '-' + day;
 let timeString = hours + ':' + minutes;
 
-
 // 비디오 업로드
 const uploadVideo = function () {
 
@@ -208,7 +207,102 @@ const uploadFiles = function () {
 
 }
 
+// 파일 리스트
+const loadFileList = function () {
+    fetch('/getFileList')
+        .then(response => response.json())
+        .then(files => {
+            const fileListContainer = document.getElementById('fileListContainer');
+            fileListContainer.innerHTML = '';
 
+            if (files.length > 0) {
+                const ele_ul = document.createElement('ul');
+                ele_ul.id = 'reflist';
+
+                files.forEach(file => {
+
+                    // 파일이름 디코드
+                    const decodedFileName = decodeURIComponent(file.fileName);
+                    // uuid 제거
+                    const fileName = decodedFileName.substring(37);
+                    const ele_li = document.createElement('li');
+
+                    // 권한자만 삭제 / 영상 오픈 시간과 관계없이
+                    if (('teacher' === String(params.role) && String(params.sessionId) === String(params.tid)) || 'admin' === String(params.role)) {
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.value = file.fileName;
+                        checkbox.className = 'file-checkbox';
+                        ele_li.appendChild(checkbox);
+
+                        const ele_a = document.createElement('a');
+                        ele_a.href = `/download/${file.fileName}`;
+                        ele_a.textContent = fileName;
+                        ele_li.appendChild(ele_a);
+                    } else {
+                        // 수강생은 오픈 시간에만 다운로드 가능
+                        let startTime = params.tsession.substring(6, 11); // ex 00:00
+                        let endTime = params.tsession.substring(12, 17);
+                        if (dateString === params.startdate && startTime <= timeString && timeString <= endTime) {
+                            const ele_a = document.createElement('a');
+                            ele_a.href = `/download/${file.fileName}`;
+                            ele_a.textContent = fileName;
+                            ele_li.appendChild(ele_a);
+                        } else {
+                            const ele_li2 = document.createElement('li');
+                            ele_li2.textContent = fileName;
+                            ele_ul.appendChild(ele_li2);
+                        }
+                    }
+                    ele_ul.appendChild(ele_li);
+                });
+                fileListContainer.appendChild(ele_ul);
+
+                if (('teacher' === String(params.role) && String(params.sessionId) === String(params.tid)) || 'admin' === String(params.role)) {
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.id = 'deleteFilesBtn';
+                    deleteBtn.type = 'button';
+                    deleteBtn.textContent = '삭제';
+                    const div_deleteBtn = document.getElementById('deleteBtn');
+                    div_deleteBtn.appendChild(deleteBtn);
+
+                    document.getElementById("deleteFilesBtn").onclick = function () {
+                        const checkboxes = document.querySelectorAll('.file-checkbox:checked');
+                        const filesToDelete = Array.from(checkboxes).map(checkbox => checkbox.value);
+
+                        fetch(`/deleteFiles`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({files: filesToDelete})
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                window.location.reload();
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+
+                    };
+
+                } else {
+                    const div_deleteBtn = document.getElementById('deleteBtn');
+                    let ele_span = document.createElement('span');
+                    ele_span.textContent = '오픈시간이 아닙니다.'
+                    div_deleteBtn.appendChild(ele_span);
+                }
+            } else {
+                fileListContainer.textContent = '자료가 없습니다.';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
 
 // 댓글 리스트
 const replylistjson = function () {
@@ -288,6 +382,7 @@ window.onload = function () {
     replylistjson();
     uploadFiles();
     uploadVideo();
+    loadFileList();
 
     // 댓글 추가
     document.querySelector('#append_btn').onclick = function () {

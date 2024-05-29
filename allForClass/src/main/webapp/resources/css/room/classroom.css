@@ -137,9 +137,30 @@ a:hover {
 }
 
 #video #video_delbtn:hover {
+    position: relative;
+    width: 102px;
+    height: 28px;
     background-color: #78C2AD;
     cursor: pointer;
 }
+
+#deleteBtn{
+    position: relative;
+    display: inline;
+}
+
+#deleteBtn #deleteFilesBtn{
+    width: 70px;
+    border-radius: 15px;
+    border: 2px solid #78C2AD;
+    background: #ECFBFB;
+}
+
+#deleteBtn #deleteFilesBtn:hover{
+    background-color: #78C2AD;
+    cursor: pointer;
+}
+
 
 /* ================================== */
 
@@ -203,6 +224,7 @@ input[type="file"] {
     margin: 5px 20px 0 0;
     padding: 5px;
     width: 85%;
+    max-width: 85%;
     min-height: 50px;
     border: 1px solid #78C2AD;
     border-radius: 8px;
@@ -212,6 +234,8 @@ input[type="file"] {
     margin: 7px;
 }
 
+#reflist li a{
+}
 /* ================================== */
 
 

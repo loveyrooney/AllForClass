@@ -25,4 +25,5 @@ public interface RoomService {
 
     int deleteVid(int vid);
 
+    int deleteRef(String fileName);
 }
