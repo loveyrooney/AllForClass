@@ -18,20 +18,15 @@ let timeString = hours + ':' + minutes;
 
 // 비디오 업로드
 const uploadVideo = function () {
-    let lid = document.querySelector('#lid').value;
-    let videopath = document.querySelector('#videopath').value;
-    let role = document.querySelector('#role').value;
-    let tid = document.querySelector('#tid').value;
-    let sessionId = document.querySelector('#sessionId').value;
 
     let video = document.getElementById("vidPlayer");
     let form = document.getElementById('insertVideoForm'); // 폼 요소 가져오기
     let div_form = document.getElementById('video_upload');
 
-    if ((role === 'teacher' && String(sessionId) === String(tid)) || role === 'admin') {
-        if (videopath !== '') {
+    if ((params.role === 'teacher' && String(params.sessionId) === String(params.tid)) || params.role === 'admin') {
+        if (params.videopath !== '') {
             let ele_vid = document.createElement('video');
-            ele_vid.src = `/getVideo/${videopath}`;
+            ele_vid.src = `/getVideo/${params.videopath}`;
             ele_vid.setAttribute("controls", "controls");
             video.appendChild(ele_vid);
 
@@ -39,7 +34,7 @@ const uploadVideo = function () {
             ele_delbtn.textContent = '영상 삭제';
             ele_delbtn.id = 'video_delbtn';
             ele_delbtn.onclick = function () {
-                deleteVideo(videopath);
+                deleteVideo(params.videopath);
             };
             div_form.appendChild(ele_delbtn);
         } else {
@@ -81,7 +76,7 @@ const uploadVideo = function () {
         // 형식이 같으면 연산 가능
         if (dateString === params.startdate && startTime <= timeString && timeString <= endTime) {
             let ele_vid = document.createElement('video');
-            ele_vid.src = `/getVideo/${videopath}`;
+            ele_vid.src = `/getVideo/${params.videopath}`;
             ele_vid.setAttribute("controls", "controls");
             video.appendChild(ele_vid);
         } else {
@@ -123,9 +118,9 @@ const uploadVideo = function () {
     });
 }
 
+
 // 비디오 삭제
 const deleteVideo = function (videopath) {
-    let vid = document.querySelector('#vid').value;
 
     const confirm_check = confirm("정말로 삭제하시겠습니까?");
 
@@ -134,7 +129,7 @@ const deleteVideo = function (videopath) {
             videopath: videopath
         };
 
-        fetch(`/deletevideo/${vid}`, {
+        fetch(`/deletevideo/${params.vid}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -159,14 +154,11 @@ const deleteVideo = function (videopath) {
 // 파일 업로드
 const uploadFiles = function () {
 
-    let role = document.querySelector('#role').value;
-    let tid = document.querySelector('#tid').value;
-    let sessionId = document.querySelector('#sessionId').value;
     let form = document.getElementById('fileUploadForm');
     let div_form = document.getElementById('file_upload');
 
     // 강사(자신이 올린 강의) / 관리자일 경우에만 파일 추가 버튼 생성
-    if (('teacher' === String(role) && String(sessionId) === String(tid)) || 'admin' === String(role)) {
+    if (('teacher' === String(params.role) && String(params.sessionId) === String(params.tid)) || 'admin' === String(params.role)) {
         let ele_input = document.createElement('input');
         ele_input.setAttribute('type', 'file');
         ele_input.setAttribute('name', 'files');
@@ -216,12 +208,12 @@ const uploadFiles = function () {
 
 }
 
+
+
 // 댓글 리스트
 const replylistjson = function () {
-    let lid = document.querySelector('#rlid').value;
-    let sessionId = document.querySelector('#sessionId').value;
 
-    fetch('/replylist/' + lid, {
+    fetch('/replylist/' + params.lid, {
         method: 'GET',
         headers: {
             'Accept': 'application/json'
@@ -249,7 +241,7 @@ const replylistjson = function () {
             let ele_txt1 = document.createTextNode("[" + item.urole + item.uid + "] " + item.content);
             ele_li.appendChild(ele_txt1);
 
-            if (String(sessionId) === String(item.uid) || params.role === 'admin') {
+            if (String(params.sessionId) === String(item.uid) || params.role === 'admin') {
                 let ele_delbtn = document.createElement('button');
                 ele_delbtn.innerHTML = '삭제';
                 ele_delbtn.id = 'delbtn' + item.rid;
@@ -300,14 +292,12 @@ window.onload = function () {
     // 댓글 추가
     document.querySelector('#append_btn').onclick = function () {
         let content = document.querySelector('#content').value;
-        let lid = document.querySelector('#rlid').value;
-        let sessionId = document.querySelector('#sessionId').value;
 
         if (String(content) !== '') {
             let r = {
                 'content': content,
-                'lid': lid,
-                'uid': sessionId
+                'lid': params.lid,
+                'uid': params.sessionId
             };
             document.querySelector('#content').value = '';
 
