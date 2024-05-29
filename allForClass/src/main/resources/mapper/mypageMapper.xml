@@ -39,11 +39,11 @@
 
     <select id="findMyLecList" parameterType="hashmap" resultType="com.chunjae.allforclass.dto.LecDTO">
         SELECT lid
-             , subject
-             , lname
-             , price
-             , startdate
-             , SUBSTRING_INDEX(timesession,'*', -1) AS timesession
+        , subject
+        , lname
+        , price
+        , startdate
+        , SUBSTRING_INDEX(timesession,'*', -1) AS timesession
         FROM lecture
         WHERE teacher_id = #{uid}
         <if test="lectype!=null and lectype !='' and !lectype.equals('')">
@@ -51,25 +51,15 @@
                 <when test="lectype=='pastmylec'">
                     AND confirm = 1
                     <![CDATA[
-                    AND startdate < #{curr_day}
+                    AND ( startdate < #{curr_day} or ( startdate = #{curr_day} and SUBSTRING(timesession, 5, 1) < #{curr_session} ) )
                     ]]>
-                    <if test="!curr_session.equals('5')">
-                        <![CDATA[
-                        or ( startdate = #{curr_day} and SUBSTRING(timesession, 5, 1) < #{curr_session} )
-                        ]]>
-                    </if>
                     ORDER BY startdate DESC, timesession DESC
                 </when>
                 <when test="lectype=='confirmedmylec'">
                     AND confirm = 1
                     <![CDATA[
-                    AND startdate > #{curr_day}
-                    ]]>
-                    <if test="!curr_session.equals('5')">
-                        <![CDATA[
-                        or ( startdate = #{curr_day} and SUBSTRING(timesession, 5, 1) >= #{curr_session} )
+                    AND (  startdate > #{curr_day} or ( startdate = #{curr_day} and SUBSTRING(timesession, 5, 1) >= #{curr_session} ) )
                         ]]>
-                    </if>
                     ORDER BY startdate, timesession
                 </when>
                 <when test="lectype=='waitmylec'">
@@ -80,49 +70,49 @@
         </if>
     </select>
 
-<!--    <select id="lecTotalCount" parameterType="hashmap" resultType="int">-->
-<!--        SELECT count(*)-->
-<!--        FROM lecture-->
-<!--        WHERE teacher_id = #{uid}-->
-<!--        <if test="lectype!=null and lectype !='' and !lectype.equals('')">-->
-<!--            <choose>-->
-<!--                <when test="lectype=='pastmylec'">-->
-<!--                    AND confirm = 1-->
-<!--                    <![CDATA[-->
-<!--                    AND startdate < #{curr_day}-->
-<!--                    ]]>-->
-<!--                    <if test="!curr_session.equals('5')">-->
-<!--                        <![CDATA[-->
-<!--                        or ( startdate = #{curr_day} and SUBSTRING(timesession, 5, 1) < #{curr_session} )-->
-<!--                        ]]>-->
-<!--                    </if>-->
-<!--                    ORDER BY startdate DESC, timesession DESC-->
-<!--                </when>-->
-<!--                <when test="lectype=='confirmedmylec'">-->
-<!--                    AND confirm = 1-->
-<!--                    <![CDATA[-->
-<!--                    AND startdate > #{curr_day}-->
-<!--                    ]]>-->
-<!--                    <if test="!curr_session.equals('5')">-->
-<!--                        <![CDATA[-->
-<!--                        or ( startdate = #{curr_day} and SUBSTRING(timesession, 5, 1) >= #{curr_session} )-->
-<!--                        ]]>-->
-<!--                    </if>-->
-<!--                    ORDER BY startdate, timesession-->
-<!--                </when>-->
-<!--                <when test="lectype=='waitmylec'">-->
-<!--                    AND confirm = 0-->
-<!--                    ORDER BY startdate, timesession-->
-<!--                </when>-->
-<!--            </choose>-->
-<!--        </if>-->
-<!--    </select>-->
+    <!--    <select id="lecTotalCount" parameterType="hashmap" resultType="int">-->
+    <!--        SELECT count(*)-->
+    <!--        FROM lecture-->
+    <!--        WHERE teacher_id = #{uid}-->
+    <!--        <if test="lectype!=null and lectype !='' and !lectype.equals('')">-->
+    <!--            <choose>-->
+    <!--                <when test="lectype=='pastmylec'">-->
+    <!--                    AND confirm = 1-->
+    <!--                    <![CDATA[-->
+    <!--                    AND startdate < #{curr_day}-->
+    <!--                    ]]>-->
+    <!--                    <if test="!curr_session.equals('5')">-->
+    <!--                        <![CDATA[-->
+    <!--                        or ( startdate = #{curr_day} and SUBSTRING(timesession, 5, 1) < #{curr_session} )-->
+    <!--                        ]]>-->
+    <!--                    </if>-->
+    <!--                    ORDER BY startdate DESC, timesession DESC-->
+    <!--                </when>-->
+    <!--                <when test="lectype=='confirmedmylec'">-->
+    <!--                    AND confirm = 1-->
+    <!--                    <![CDATA[-->
+    <!--                    AND startdate > #{curr_day}-->
+    <!--                    ]]>-->
+    <!--                    <if test="!curr_session.equals('5')">-->
+    <!--                        <![CDATA[-->
+    <!--                        or ( startdate = #{curr_day} and SUBSTRING(timesession, 5, 1) >= #{curr_session} )-->
+    <!--                        ]]>-->
+    <!--                    </if>-->
+    <!--                    ORDER BY startdate, timesession-->
+    <!--                </when>-->
+    <!--                <when test="lectype=='waitmylec'">-->
+    <!--                    AND confirm = 0-->
+    <!--                    ORDER BY startdate, timesession-->
+    <!--                </when>-->
+    <!--            </choose>-->
+    <!--        </if>-->
+    <!--    </select>-->
 
     <select id="checkLecTime" parameterType="hashmap" resultType="int">
         select count(*)
         from lecture
         where teacher_id = #{uid}
-              and startdate = #{startdate}
-              and timesession = #{timesession}
+        and startdate = #{startdate}
+        and timesession = #{timesession}
     </select>
 </mapper>
