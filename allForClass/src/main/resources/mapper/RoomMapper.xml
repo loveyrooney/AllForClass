@@ -15,7 +15,7 @@
     <select id="detailref" resultType="com.chunjae.allforclass.dto.RefDTO" parameterType="int">
         SELECT refpath
         FROM ref r INNER JOIN lecture l
-        ON r.lid = l.lid
+          ON r.lid = l.lid
         WHERE l.lid = #{lid}
     </select>
 
@@ -58,6 +58,11 @@
     <delete id="deleteVid" parameterType="int">
         DELETE FROM video
         WHERE vid = #{vid}
+    </delete>
+
+    <delete id="deleteRef" parameterType="string">
+        DELETE FROM ref
+        WHERE refpath = #{fileName}
     </delete>
 
 </mapper>

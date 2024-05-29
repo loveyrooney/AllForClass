@@ -28,10 +28,7 @@ import java.io.InputStream;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 public class RoomController {
@@ -60,21 +57,21 @@ public class RoomController {
 
         LecDTO ldto = rservice.detailLec(lid);
         VideoDTO vdto = rservice.detailvideo(lid);
-        List<RefDTO> reflist = rservice.detailref(lid);
+        List<RefDTO> refdto = rservice.detailref(lid);
 
         model.addAttribute("ldto", ldto);
         model.addAttribute("vdto", vdto);
+        model.addAttribute("refdto", refdto);
 
         // 첨부 파일 이름 디코드
-        List<String> decodeRef = new ArrayList<>();
-        for (int i = 0; i < reflist.size(); i++) {
-            String refname = rservice.detailref(lid).get(i).getRefpath();
-            refname = URLDecoder.decode(refname, StandardCharsets.UTF_8).substring(37);
-            System.out.println("........" + refname);
-            decodeRef.add(refname);
-        }
-        model.addAttribute("reflist", reflist);
-        model.addAttribute("decodeRef", decodeRef);
+//        List<String> decodeRef = new ArrayList<>();
+//        for (int i = 0; i < reflist.size(); i++) {
+//            String refname = rservice.detailref(lid).get(i).getRefpath();
+//            refname = URLDecoder.decode(refname, StandardCharsets.UTF_8).substring(37);
+//            System.out.println("........" + refname);
+//            decodeRef.add(refname);
+//        }
+//        model.addAttribute("decodeRef", decodeRef);
 
         model.addAttribute("body", "room/room.jsp");
         model.addAttribute("title", "온라인 강의 시청하기 - " + ldto.getLname());
@@ -164,6 +161,60 @@ public class RoomController {
         String realpath = request.getSession().getServletContext().getRealPath(path);
         rservice.insertref(realpath, refdto);
     }
+
+    // 자료 리스트
+    @GetMapping("/getFileList")
+    public @ResponseBody List<Map<String, String>> getFileList(HttpServletRequest request) {
+        String path = "/uploadFile";
+        String realpath = request.getSession().getServletContext().getRealPath(path);
+
+        File dir = new File(realpath);
+        File[] files = dir.listFiles();
+
+        List<Map<String, String>> fileList = new ArrayList<>();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    Map<String, String> fileData = new HashMap<>();
+                    fileData.put("fileName", file.getName());
+                    fileList.add(fileData);
+                }
+            }
+        }
+        return fileList;
+    }
+
+    // 자료 삭제
+    @PostMapping("/deleteFiles")
+    public @ResponseBody void deleteFiles(@RequestBody Map<String, List<String>> files, HttpServletRequest request) {
+        String path = "/uploadFile";
+        String realpath = request.getSession().getServletContext().getRealPath(path);
+
+        List<String> filesToDelete = files.get("files");
+        if (filesToDelete != null) {
+            for (String fileName : filesToDelete) {
+                File file = new File(realpath, fileName);
+
+                if (file.exists()) {
+                    if(file.delete()){
+                        int result = rservice.deleteRef(fileName);
+                        if (result <= 0) {
+                            // DB 삭제 실패 처리
+                            throw new RuntimeException("Failed to delete ref from DB");
+                        }
+                    } else {
+                        // 파일 삭제 실패 처리
+                        throw new RuntimeException("Failed to delete ref file");
+                    }
+                } else {
+                    // 파일이 존재하지 않을 경우
+                    throw new RuntimeException("ref file does not exist");
+                }
+            }
+        }
+
+    }
+
 
     // 자료 다운로드
     @GetMapping(value = "/download/{filename}")

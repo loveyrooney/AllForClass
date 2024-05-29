@@ -27,4 +27,6 @@ public interface RoomMapper {
     int insertVid(VideoDTO vdto);
 
     int deleteVid(int vid);
+
+    int deleteRef(String fileName);
 }
