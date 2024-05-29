@@ -17,15 +17,10 @@
 <div id="container">
     <%-- 강의 영상  --%>
     <div id="video">
-
         <div id="vidPlayer"></div>
 
         <form id="insertVideoForm" method="post" action="/insertvid" enctype="multipart/form-data">
             <input type="hidden" name="lid" id="lid" value="${ldto.lid}">
-            <input type="hidden" name="videopath" id="videopath" value="${vdto.videopath}">
-            <input type="hidden" name="sessionId" id="sessionIdvid" value="${sessionId}">
-            <input type="hidden" name="role" id="rolevid" value="${role}">
-            <input type="hidden" name="tid" id="tidvid" value="${ldto.tid}">
 
             <div id="video_title"></div>
             <div id="video_upload">
@@ -34,9 +29,7 @@
         </form>
 
         <form method="post" action="/deletevideo/${vdto.vid}">
-            <input type="hidden" name="lid" value="${ldto.lid}">
-            <input type="hidden" name="vid" id="vid" value="${vdto.vid}">
-            <input type="hidden" name="videopath" value="${vdto.videopath}">
+
         </form>
     </div>
 
@@ -62,13 +55,8 @@
 
         <%-- 자료 등록  --%>
         <form id="fileUploadForm" method="post" action="/insertref" enctype="multipart/form-data">
-            <input type="hidden" name="lid" id="reflid" value="${ldto.lid}">
-            <input type="hidden" name="sessionId" id="sessionId" value="${sessionId}">
-            <input type="hidden" name="role" id="role" value="${role}">
-            <input type="hidden" name="tid" id="tid" value="${ldto.tid}">
-
             <div id="file_upload">
-
+                <input type="hidden" name="lid" id="reflid" value="${ldto.lid}">
             </div>
         </form>
     </div>
@@ -81,8 +69,6 @@
     <%-- 댓글 --%>
     <div id="reply">
         <form>
-            <input type="hidden" name="rlid" id="rlid" value="${ldto.lid}">
-
             <input type="text" name="content" id="content" placeholder="궁굼한 점이 있으신가요?">
             <button type="button" id="append_btn">쓰기</button>
         </form>
@@ -92,9 +78,15 @@
         </ul>
     </div>
 </div>
+
 <script>
     let inits = {
-        role: '${role}'
+        lid: '${ldto.lid}'
+        , tid: '${ldto.tid}'
+        , vid: '${vdto.vid}'
+        , videopath: '${vdto.videopath}'
+        , sessionId: '${sessionId}'
+        , role: '${role}'
         , startdate: '${ldto.startdate}'
         , tsession: '${ldto.timesession}'
     }
