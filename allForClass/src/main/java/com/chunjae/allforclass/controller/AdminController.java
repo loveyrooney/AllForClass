@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class AdminController {
     }
 
     @GetMapping("/admin")
-    public String admin(HttpServletRequest request, Model model){
+    public String admin(HttpServletRequest request, Model model) {
 
         HttpSession session = request.getSession(false);
         if (session != null) {
@@ -51,27 +52,31 @@ public class AdminController {
         model.addAttribute("leclist", leclist);
         model.addAttribute("uList", uList);
         model.addAttribute("body", "admin/admin.jsp");
-        model.addAttribute("title","관리자 페이지");
+        model.addAttribute("title", "관리자 페이지");
         return "main";
     }
 
-    /**강의 수정/승인 폼*/
+    /**
+     * 강의 수정/승인 폼
+     */
     @GetMapping("/updatelec/{lid}")
-    public String updatelec(@PathVariable int lid, Model model){
+    public String updatelec(@PathVariable int lid, Model model) {
 
         //강의 정보 가져오기
         LecDTO dto = pservice.detailLec(lid);
 
         model.addAttribute("dto", dto);
-        model.addAttribute("body","admin/updatelec.jsp");
-        model.addAttribute("title","모두의 국영수 - 강의등록확인");
+        model.addAttribute("body", "admin/updatelec.jsp");
+        model.addAttribute("title", "모두의 국영수 - 강의등록확인");
 
         return "main";
     }
 
-    /**강의 정보 수정*/
+    /**
+     * 강의 정보 수정
+     */
     @PostMapping("/updatelec_result")
-    public String updatelec_result(LecDTO dto, Model model){
+    public String updatelec_result(LecDTO dto, Model model) {
 
         int result = aservice.updateLecResult(dto);
         model.addAttribute("result", result);
@@ -80,9 +85,11 @@ public class AdminController {
         return "admin/updatealert";
     }
 
-    /**강의 승인*/
+    /**
+     * 강의 승인
+     */
     @GetMapping("/confirm/{lid}")
-    public @ResponseBody Integer confirm(@PathVariable int lid, @RequestParam int tid, Model model){
+    public @ResponseBody Integer confirm(@PathVariable int lid, @RequestParam int tid, Model model) {
 
         int result = aservice.confirm(lid);
 
@@ -98,12 +105,42 @@ public class AdminController {
     }
 
 
-
-    /**강의 삭제*/
+    /**
+     * 강의 삭제
+     */
     @GetMapping("/deletelec/{lid}")
-    public @ResponseBody Integer deletelec(@PathVariable int lid){
-        int result = aservice.deleteLec(lid);
+    public @ResponseBody Integer deletelec(@PathVariable int lid, HttpServletRequest request) {
 
+        LecDTO dto = pservice.detailLec(lid);
+
+        String base = "/uploadImg";
+        String imgpath = dto.getImgpath();
+        String realpath = request.getSession().getServletContext().getRealPath(base);
+
+        File file = new File(realpath, imgpath);
+
+        int result = 0;
+
+        if (imgpath.equals("default.png")) {
+            result = aservice.deleteLec(lid);
+        } else {
+
+            if (file.exists()) {
+                if (file.delete()) {
+                    result = aservice.deleteLec(lid);
+                    if (result != 1) {
+                        // DB 삭제 실패 처리
+                        throw new RuntimeException("Failed to delete image from DB");
+                    }
+                } else {
+                    // 파일 삭제 실패 처리
+                    throw new RuntimeException("Failed to delete image file");
+                }
+            } else {
+                // 파일이 존재하지 않을 경우
+                throw new RuntimeException("image file does not exist");
+            }
+        }
         return result;
     }
 }

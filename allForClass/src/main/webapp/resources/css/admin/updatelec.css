@@ -1,6 +1,6 @@
 ul li {
     list-style: none;
-    margin: 2px;
+    margin: 5px;
     width: 100%;
 }
 .form_container{
@@ -74,7 +74,7 @@ ul li {
 }
 
 .update_desc{
-    margin: 40px 0 0;
+    margin: 60px 0 0;
 }
 .update_desc label{
     margin: 40px 0 20px;
