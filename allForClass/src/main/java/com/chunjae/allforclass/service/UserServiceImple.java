@@ -29,8 +29,8 @@ public class UserServiceImple implements UserService{
         //System.out.println(pwdFromDB);
         boolean result=false;
 
-        if(BCrypt.checkpw(pwd,pwdFromDB))
-        //if(pwd.equals(pwdFromDB))
+        //if(BCrypt.checkpw(pwd,pwdFromDB))
+        if(pwd.equals(pwdFromDB))
             result=true;
 
         return result;

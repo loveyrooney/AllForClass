@@ -60,7 +60,7 @@
     <%-- 댓글 --%>
     <div id="reply">
         <form>
-            <input type="text" name="content" id="content" placeholder="궁굼한 점이 있으신가요?">
+            <input type="text" name="content" id="content" placeholder="궁금한 점이 있으신가요?">
             <button type="button" id="append_btn">쓰기</button>
         </form>
         <%-- 댓글 리스트 --%>
