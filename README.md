@@ -9,7 +9,7 @@
 
 |김보경 (25%)|김혜연 (25%)|송미라 (25%)|양세현 (25%)| 
 |:---:|:---:|:---:|:---:|
-|<img src="https://avatars.githubusercontent.com/ppodaejang" width="100" > <p>마이페이지,관리자페이지</p> |<img src="https://avatars.githubusercontent.com/loveyrooney" width="100" > <p>수강신청/결제, 이메일안내</p>|<img src="https://avatars.githubusercontent.com/mummyyyyy" width="100"> <p>회원가입/로그인, 메인페이지</p>| <img src="https://avatars.githubusercontent.com/ysh71034" width="100"> <p>강의실, 관리자페이지</p>|
+|<img src="https://avatars.githubusercontent.com/ppodaejang" width="100" > <p>마이페이지,관리자페이지</p>UI, 스토리 보드 |<img src="https://avatars.githubusercontent.com/loveyrooney" width="100" > <p>수강신청/결제, 이메일안내</p>Github 관리, 요구 사항 분석|<img src="https://avatars.githubusercontent.com/mummyyyyy" width="100"> <p>회원가입/로그인, 메인페이지</p>일정체, 이슈 원인 분석| <img src="https://avatars.githubusercontent.com/ysh71034" width="100"> <p>강의실, 관리자페이지</p>DB 관리, 문서 관리|
 |<a href="https://github.com/ppodaejang"><img src="https://img.shields.io/badge/GitHub-181717?style=plastic&logo=GitHub&logoColor=white"/></a>|<a href="https://github.com/loveyrooney"><img src="https://img.shields.io/badge/GitHub-181717?style=plastic&logo=GitHub&logoColor=white"/></a>|<a href="https://github.com/mummyyyyy"><img src="https://img.shields.io/badge/GitHub-181717?style=plastic&logo=GitHub&logoColor=white"/></a>|<a href="https://github.com/ysh71034"><img src="https://img.shields.io/badge/GitHub-181717?style=plastic&logo=GitHub&logoColor=white"/></a>|
 
 
@@ -48,52 +48,35 @@ apache tomcat 9.89</br>
 
 <h2>프로젝트 주요이슈</h2>
 <h4>결제 및 수강신청 관련</h4>
-<h6>⚠️문제 상황</h6>
-<ol>
-  <li>결제와 수강신청 플로우가 길다보니 경계가 모호해지는 문제</li>
-  <li>실패하는 경우의 문제 </li>
-</ol>
-
-<h6>📌해결 과정</h6>
-<ol>
-  <li>
-    <ul>
-      <li>⚙️플로우 구조화  :  수강신청 가능여부 - 결제 - 결제확인 - 수강신청 - 응답</li>
-      <li>클라이언트에서는 결제만 직접 api 접근하고, 결제확인 및 결제취소의 경우는 서버에서 api 요청으로 접근</li>
-      <li>결제 관련 로직은 controller 메서드에서, 수강신청 관련 로직은 service 단에서 처리</li>
-    </ul>
-  </li>
-  <br>
-  <li>
-    <ul>
-      <li>결제 및 수강신청의 흐름에서 발생하는 예외들을 각각 커스텀 지정하여 알리도록 함.</li>
-      <li>ex) 결제는 성공하였으나 결제 내역 확인 중 장애 발생한 경우의 메시지</li>
-      <li>👉[결제확인불가] 수강신청에 실패하였습니다. 관리자에게 문의 바랍니다. </li>
-    </ul>
-  </li>
-</ol>
-
-<h4>강의실 관련</h4> 
-<h6>⚠️문제 상황</h6>
-<ol>
-  <li>역할에 따라 접근 가능한 기능 분배의 문제</li>
-</ol>
-<h6>📌해결 과정</h6>
-<ol>
-  <li>
-    <ul>
-      <li>최초 시도 시에는 뷰 렌더링 할 때 전부 요소를 보낸 뒤 css hidden 처리를 통해 구현</li>
-      <li>⚠️브라우저 개발자도구에서 벗길 수 있는 문제 발생</li>
-    </ul>
-  </li>
-  <br>
-  <li>
-    <ul>
-      <li>뷰 렌더시에는 강의 정보 관련 요소와 현재 접속자의 role 만 띄운다</li>
-      <li>role에 따라 해당 기능과 관련된 요소를 fetch 요청을 통해 동적으로 생성</li>
-    </ul>
-  </li>
-</ol>
+<p>⚠️구현 관련하여 발생한 문제</p>
+<ul>
+  <li>결제 및 수강 신청의 흐름이 길어져 경계가 모호</li>
+  <li>⚠️<strong>실패하는 경우</strong>의 수가 다양해 서비스 운영 시의 문제 대응 어려움</li>
+</ul>
+<br>
+<p>📌 비즈니스 flow 를 구조화하고, 각 영역에 따른 custom exception 처리 </p>
+<ul>
+  <li>수강 신청 가능 여부 체크 → 결제 → 결제 확인 → 수강 신청 → 응답  으로 flow 구조화</li>
+  <li>구조에 따른 로직 처리 영역 분리 (결제는 클라이언트에서 직접 API 요청 / 결제확인은 서버단에서 API요청) </li>
+  <li>예외 처리는 결제 자체의 실패 / 결제 확인 단계의 실패 / 수강 신청 단계의 실패 로 구성</li>
+</ul>
+<h4>강의실, 관리자 페이지, 마이페이지 관련</h4> 
+<p>⚠️구현 방법과 관련한 논의 사항<p>
+<ul>
+  <li>method 1. 여러 종류의 비즈니스 리스트를 한번에 받아와서 css 처리로 탭 구현</li>
+  <li>method 2. 각각의 탭에서 해당  비즈니스 리스트를 받아오도록 구현</li>
+</ul>
+<p>📌 <strong>관리자 페이지, 마이페이지는 특정 role 유저만 접근한 상태</strong><p>
+<ul>
+  <li>비즈니스 리스트를 직접 변경할 일이 없음</li>
+  <li>method 1 방법으로 구현하여 리스트 요청 횟수 최소화</li>
+</ul>
+<p>📌 <strong>강의실 에서는 role 에 따른 접근 통제가 필요</strong><p>
+<ul>
+  <li>⚠️ role 마다 다른 UI 요소의 css hidden 처리 시 , 브라우저에서 hidden 해제 가능</li>
+  <li>뷰 렌더 시에는 강의 정보 관련 요소와 현재 접속자의 role 만 띄운다</li>
+  <li>method 2 방법으로 구현하여 role 마다 다른 UI 요소는 fetch 요청을 통해 동적으로 생성</li>
+</ul>
 
 <h2>프로젝트 주요기능</h2>
 
